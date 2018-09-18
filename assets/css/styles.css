@@ -1,0 +1,11 @@
+
+
+textarea, input{
+	width:100%;
+}
+
+@media (max-width: 992px) {
+    .mtAfterc {
+        margin-top:25px;
+    }
+}
