@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="shadow-lg rounded">
+        <div class="card my-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Post Product</h3><br>
+            <form>
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <!-- first column -->
+                  <img id="myImg" class="mx-auto" src="../../assets/img/image-not-found.png" alt="Upload image" width="100%"
+                    height="200" style="border: 1px solid #ddd" />
+                  <br><br>
+                  <label for="imageUpload" class="btn btn-secondary btn-block">Click
+                    here to upload an image</label>
+                  <input type="file" id="imageUpload" accept="image/*" style="display: none" multiple>
+                </div> <!-- col-md-4 -->
+
+                <div class="col-md-1">
+                  <!---------------- empty column ---------------->
+                </div>
+
+                <div class="col-md-7">
+                  <!-- second column -->
+                  <div class="form-group row">
+                    <!-- first row -->
+                    <div class="col-sm-3">
+                      <label for="ProductTitle">Product Title</label>
+                    </div>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="" id="ProductTitle" style="width: 100%;" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <!-- second row -->
+                    <div class="col-sm-3">
+                      <label for="ProductTitle">Product Description</label>
+                    </div>
+
+                    <div class="col-sm-9">
+                      <textarea class="" id="ProductDesription" rows="7" style="width: 100%;" required></textarea>
+                    </div>
+                  </div>
+                  <br>
+
+                  <div class="row">
+                    <!-- third row -->
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <div class="form-group">
+                          <label for="DepositePrice">Deposite Price $ </label><br />
+                          <input type="number" min="0" max="10000" class="" id="DepositePrice" style="width: 100%;" required>
+                        </div> <!-- form-group row -->
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="form-group">
+                          <label for="RentalPrice">Rental Price $ (per day)</label><br />
+                          <input type="number" min="0" max="500" class="" id="RentalPrice" size="15" style="width: 100%;" required>
+                        </div> <!-- form-group row -->
+                      </div>
+                    </div> <!-- col-sm-6 -->
+
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <div class="form-group">
+                          <label for="DatePurchased">Date Purchased</label><br />
+                          <input type="date" class="" id="DatePurchased" required>
+                        </div> <!-- form-group row -->
+                      </div>
+                    </div> <!-- col-sm-6 -->
+                  </div> <!-- row -->
+
+                </div>
+              </div> <!-- col-sm-8 -->
+              <div class="text-center">
+                <button class="btn btn-lg btn-primary text-uppercase" type="submit">&emsp;&emsp;Post&emsp;&emsp;</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

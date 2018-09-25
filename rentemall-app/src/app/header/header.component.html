@@ -1,0 +1,55 @@
+<div id="header">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-11">
+        <a routerLink="/main"><img id="navbar-logo" src="../../assets/img/logo.png"></a>
+        <div class="row float-right">
+          <ul id="header-inline">
+            <li class="d-inline"><a routerLink="/login">Login</a></li>
+            <p class="d-inline p-2"> | </p>
+            <li class="d-inline"><a routerLink="/register">Register</a></li>
+            <p class="d-inline p-2"> | </p>
+            <li class="d-inline"><a href="#">About us</a></li>
+            <p class="d-inline p-2"> | </p>
+            <li class="d-inline"><a href="#">Services</a></li>
+            <p class="d-inline p-2"> | </p>
+            <li class="d-inline"><a href="#">FAQ</a></li>
+            <p class="d-inline p-2"> | </p>
+            <li class="d-inline"><a href="#">Contact us</a></li>
+          </ul>
+        </div>
+        <br />
+
+        <div class="row" id="searchbar-row">
+          <form class="form-inline">
+            <select class="form-control mr-sm-2">
+              <option>Category</option>
+              <option>Homeware</option>
+              <option>Tools & Equip</option>
+              <option>Sports & Rec</option>
+              <option>Entertainment</option>
+              <option>Babys & Kids</option>
+              <option>Fashion</option>
+            </select>
+
+            <input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?"
+              aria-label="Search">
+            <button id="btn-list" class="btn btn-primary my-2 mr-sm-2" type="submit">List</button>
+            <button id="btn-map" class="btn btn-primary my-2 my-sm-0" type="submit">Map</button>
+          </form>
+
+          <div id="features">
+            <a routerLink="/post-item" id="btn-post" class="btn btn-danger my-2 mr-sm-2">Post Item</a>
+            <a routerLink="/user-profile" id="btn-mypage" class="btn btn-danger my-2 my-sm-0">My Page</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="user">
+          <i class="fas fa-user fa-3x"></i>
+          <p id="user-id">guest</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
