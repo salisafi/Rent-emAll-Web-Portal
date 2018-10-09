@@ -1,0 +1,53 @@
+<div class="container-fluid" id="header">
+    <div class="row">
+        <div class="col-sm-11">
+            <img id="navbar-logo" src="img/logo.png" onclick="linkClick('main')">
+            <div class="row float-right">
+                <ul id="header-inline">
+                    <li class="d-inline" onclick="linkClick('login')">Login</li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline" onclick="linkClick('register')">Register</li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline" onclick="linkClick('about-us')">About us</li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline">Services</li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline" onclick="linkClick('faq')">FAQ</li>
+                    <p class="d-inline p-2"> | </p>
+                    <li class="d-inline">Contact us</li>
+                </ul>
+            </div>
+            <br />
+
+            <div class="row" id="searchbar-row">
+                <form class="form-inline">
+                    <select class="form-control mr-sm-2">
+                        <option>Category</option>
+                        <option>Homeware</option>
+                        <option>Tools &amp; Equip</option>
+                        <option>Sports &amp; Rec</option>
+                        <option>Entertainment</option>
+                        <option>Babys &amp; Kids</option>
+                        <option>Fashion</option>
+                    </select>
+
+                    <input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?"
+                        aria-label="Search">
+                    <button id="btn-list" class="btn btn-primary my-2 mr-sm-2" type="submit">List</button>
+                    <button id="btn-map" class="btn btn-primary my-2" type="submit" onclick="linkClick('localmap')">Map</button>
+                </form>
+
+                <div id="features">
+                    <input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post Item" onclick="linkClick('post-item')">
+                    <input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page" onclick="linkClick('user-profile')">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="user">
+                <i class="fas fa-user fa-3x" onclick="linkClick('cart')"></i>
+                <p id="user-id">guest</p>
+            </div>
+        </div>
+    </div>
+</div>
