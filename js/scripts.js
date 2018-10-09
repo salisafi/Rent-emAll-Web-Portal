@@ -2,7 +2,7 @@
 $('#header').load('header.html');
 $('#navbar').load('navbar.html');
 $('#footer').load('footer.html');
-$('#content').load('cart.html');
+$('#content').load('main.html');
 
 // FAIL
 // $('#link').click(function () {
