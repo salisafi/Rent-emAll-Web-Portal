@@ -1,0 +1,170 @@
+/* You can add global styles to this file, and also import other style files */
+#header {
+    width: 100%;
+    background-color: #eee;
+    padding: 5px 30px 5px 30px;
+}
+#header-inline {
+    margin: 0 auto;
+    font-size: 12px;
+    color: #3e3e3e;
+}
+#header-inline li:hover {
+    color: #b5b5b5;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#searchbar {
+    width: 30vw;
+}
+#content {
+    /* padding-top: 140px; */
+}
+#navbar-logo {
+    height: auto;
+    width: 180px;
+    display: block;
+    margin-top: -5px;
+    position: absolute;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .5));
+    cursor: pointer;
+    z-index: 99;
+}
+#navbarSupportedContent {
+    margin-left: 220px;
+}
+#searchbar-row {
+    margin-left: 200px;
+}
+#features {
+    margin-left: 30px;
+}
+#features button {
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, .3));
+}
+.user {
+    text-align: center;
+}
+.user button {
+    background-color: transparent;
+}
+.user i {
+    margin: auto;
+    padding: 5px;
+    color: #225079;
+}
+.user #user-id {
+    font-size: 10px;
+    color: #8e8e8e;
+    margin: 0 5px 5px 5px;
+}
+.navbar {
+    border-radius: 0;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .5);
+}
+.navbar-nav>li {
+	margin: 0 20px 0 20px;
+}
+#carousel-slider {
+    margin-bottom: 50px;
+    z-index: 0;
+}
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+}
+.dropbtn {
+    background-color: transparent;
+    color: #fff;
+    padding: 8px 18px 8px 18px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #225079;
+    padding: 12px 16px 18px 16px;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+.dropdown-content-r {
+    right: 0;
+}
+.dropdown-content a {
+    color: #fff;
+    padding: 8px 0 14px;
+    margin-left: 20px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    color: #f3ff4d;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    background-color: #225079;
+}
+
+/*********************************** Item Page ***********************************/
+span.star-prototype, span.star-prototype > * {
+    height: 16px; 
+    background: url(http://i.imgur.com/YsyS5y8.png) 0 -16px repeat-x;
+    width: 80px;
+    display: inline-block;
+}
+span.star-prototype > * {
+    background-position: 0 0;
+    max-width:80px; 
+}
+
+
+.vl {
+    border-left: 1px solid rgb(179, 179, 179);
+    height: 100%;
+    position: absolute;
+    margin-left: -20px;
+}
+
+/********************************** Lender's Page **********************************/
+.lender-list {
+    padding: 10px 40px 10px 40px;
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 560px); */
+}
+.lender-list .item-box {
+    padding: 0 40px 60px 40px;
+
+}
+.lender-list .item-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+.lender-list .item-box .item-price {
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height: 120px;
+    border: 1px solid #d8d8d8;
+    border-radius: 18px;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+}
+.lender-list .item-box .item-price .item-price-content {
+    left: 0;
+    right: 0;
+    margin: auto;
+}
