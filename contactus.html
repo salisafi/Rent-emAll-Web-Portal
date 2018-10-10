@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="card shadow-lg rounded mx-auto my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="font-weight-bold my-4 ml-5">Contact Us</h2>
+                <div class="ml-5" id="ourMap" style="width:80%;height:300px;"></div>
+                <div class="my-4 ml-5">
+                    <h5 class="text-primary font-weight-bold">Rent'em All</h5>
+                    <p>
+                        70 The Pond Rd.<br> North York, ON M3J3M6<br> (416) 491-5050<br> contactus@rentemall.ca
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-top: 200px;">
+                <h2 class="text-danger">Any Questions?</h2>
+                <form>
+                    <div class="form-row mt-4">
+                        <label class="col-3 pt-1" for="contactName">Your Name</label>
+                        <input type="text" id="contactName" name="contactName" class="col-7 form-control" style="background: #D0F2FE;" required>
+                    </div>
+                    <div class="form-row mt-3">
+                        <label class="col-3 pt-1" for="contaceEmail">Your Email</label>
+                        <input type="text" id="contaceEmail" name="contaceEmail" class="col-7 form-control" style="background: #D0F2FE;" required>
+                    </div>
+                    <div class="form-row my-3">
+                        <label class="col-3 pt-1" for="message">Message</label>
+                        <textarea id="message" name="message" class="col-7 form-control" rows="7" style="background: #D0F2FE; height: 200px;" required></textarea>
+                    </div>
+                    <div class="row my-4">
+                        <button class="col-3 offset-7 btn btn-primary px-5" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/localmap.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI1XWsjGukJ6Nm6nF87K7dn78rzKEuBfA&callback=rentemAllMap"></script>
