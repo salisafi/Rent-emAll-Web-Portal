@@ -1,354 +1,379 @@
-
-  <div class="container">
-    <div class="row">
-      <div class="card my-5 col-md-3">
-        <div class="card-body">
-          <form>
-            <h6>Category:</h6>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="home" name="home" value="home" />
-              <label class="form-check-label" for="home">Home</label>
+<div class="container">
+  <div class="row">
+    <div class="card my-5 col-md-3">
+      <div class="card-body">
+        <form>
+          <h6>Category:</h6>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="home" name="home" value="home" />
+            <label class="form-check-label" for="home">Home</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" />
+            <label class="form-check-label" for="tools">Tools and Equipment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" />
+            <label class="form-check-label" for="sports">Sports and Recreations</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
+            <label class="form-check-label" for="entertainment">Entertainment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" />
+            <label class="form-check-label" for="babies">Babies and Kids</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" />
+            <label class="form-check-label" for="fashion">Fashion</label>
+          </div>
+          <br>
+          <h6>Location:</h6>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="toronto" name="toronto" value="toronto" />
+            <label class="form-check-label" for="fashion">City of Toronto</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="markham" name="markham" value="markham" />
+            <label class="form-check-label" for="fashion">Markham / York Region</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="mississauga" name="mississauga" value="mississauga" />
+            <label class="form-check-label" for="fashion">Mississauga / Peel Region</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="oakville" name="oakville" value="oakville" />
+            <label class="form-check-label" for="fashion">Oakville / Halton Region</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="oshawa" name="oshawa" value="oshawa" />
+            <label class="form-check-label" for="fashion">Oshawa / Durham Region</label>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="deposit">
+              <h6>Deposit Price:</h6>
+            </label>
+            <div class="d-flex justify-content-center">
+              <span class="mr-2">$0</span>
+              <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10"
+                value="500" />
+              <span class="ml-2">$1000</span>
             </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" />
-              <label class="form-check-label" for="tools">Tools and Equipment</label>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="rate">
+              <h6>Rental Price Per Day:</h6>
+            </label>
+            <div class="d-flex justify-content-center">
+              <span class="mr-2">$0</span>
+              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" />
+              <span class="ml-2">$50</span>
             </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" /> 
-              <label class="form-check-label" for="sports">Sports and Recreations</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
-              <label class="form-check-label" for="entertainment">Entertainment</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" /> 
-              <label class="form-check-label" for="babies">Babies and Kids</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" />
-              <label class="form-check-label" for="fashion">Fashion</label>
-            </div>
-            <br>
-            <h6>Location:</h6>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="toronto" name="toronto" value="toronto" />
-              <label class="form-check-label" for="fashion">City of Toronto</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="markham" name="markham" value="markham" />
-              <label class="form-check-label" for="fashion">Markham / York Region</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="mississauga" name="mississauga" value="mississauga" /> <label class="form-check-label" for="fashion">Mississauga / Peel Region</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="oakville" name="oakville" value="oakville" />
-              <label class="form-check-label" for="fashion">Oakville / Halton Region</label>
-            </div>
-            <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="oshawa" name="oshawa" value="oshawa" />
-              <label class="form-check-label" for="fashion">Oshawa / Durham Region</label>
-            </div>
-            <br>
-            <div class="form-group">
-              <label for="deposit"><h6>Deposit Price:</h6></label>
-              <div class="d-flex justify-content-center">
-                <span class="mr-2">$0</span>
-                <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value="500" />
-                <span class="ml-2">$1000</span>
-              </div>
-            </div>
-            <br>
-            <div class="form-group">
-              <label for="rate"><h6>Rental Price Per Day:</h6></label>
-              <div class="d-flex justify-content-center">
-                <span class="mr-2">$0</span>
-                <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" />
-                <span class="ml-2">$50</span>
-              </div>
-            </div><br>
-            <button class="btn btn-primary float-right" type="submit">Apply Filter</button>
-          </form>
-        </div>
+          </div><br>
+          <button class="btn btn-primary float-right" type="submit">Apply Filter</button>
+        </form>
       </div>
+    </div>
 
-      <div class="col-md-9">
-        <div class="card my-5">
-          <div class="card-body">
-            <span class="font-italic float-left">10 results</span>
-            <div class="float-right">
-              <form class="form-inline">
-                <span class="mr-2 mb-2">Sort by:</span>
-                <select class="form-control btn btn-sm btn-info mb-2" id="sortBy">
-                  <option value="PostedDate">Posted Date</option>
-                  <option value="Availability">Availability</option>
-                  <option value="Price">Price</option>
-                </select>
-              </form>
-            </div>
-            <div class="table-responsive table-wrapper-scroll-y" style="height:570px">
-              <table id="itemTable" class="table table-condensed table-hover">
-                <tbody>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <div class="border border-info rounded pb-4 px-1">
-                        <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                        <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                        <div id="rating" class="text-center mt-2">
-                          <span class="fa fa-star text-warning"></span>
-                          <span class="fa fa-star text-warning"></span>
-                          <span class="fa fa-star text-warning"></span>
-                          <span class="fa fa-star text-secondary"></span>
-                          <span class="fa fa-star text-secondary"></span>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <!--Hard Coded-->
-                  <tr>
-                    <td>
-                      <img id="itemImg" src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
+    <div class="col-md-9">
+      <div class="card my-5">
+        <div class="card-body">
+          <span class="font-italic float-left">10 results</span>
+          <div class="float-right">
+            <form class="form-inline">
+              <span class="mr-2 mb-2">Sort by:</span>
+              <select class="form-control btn btn-sm btn-info mb-2" id="sortBy">
+                <option value="PostedDate">Posted Date</option>
+                <option value="Availability">Availability</option>
+                <option value="Price">Price</option>
+              </select>
+            </form>
+          </div>
+          <div class="table-responsive table-wrapper-scroll-y" style="height:570px">
+            <table id="itemTable" class="table table-condensed table-hover">
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <div class="border border-info rounded pb-4 px-1">
                       <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
                       <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
+                      <div id="rating" class="text-center mt-2">
                         <span class="fa fa-star text-warning"></span>
                         <span class="fa fa-star text-warning"></span>
                         <span class="fa fa-star text-warning"></span>
                         <span class="fa fa-star text-secondary"></span>
                         <span class="fa fa-star text-secondary"></span>
                       </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src="../img/logo.png">
-                    </td>
-                    <td>
-                      <h3 id="itemName">itemName</h3>
-                      <p id="itemDescription">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit quae ex vero suscipit ducimus,
-                        alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur asperiores
-                        corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
-                      </p>
-                      <span id="postedDate">Posted on September 30, 2018</span>
-                    </td>
-                    <td style="width:150px">
-                      <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
-                      <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
-                      <div id="rating" class="text-center">
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-warning"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                        <span class="fa fa-star text-secondary"></span>
-                      </div>
-                    </td>
-                  </tr>
-                  <!--Hard Coded-->
-                </tbody>
-              </table>
-            </div>
+                    </div>
+                  </td>
+                </tr>
+                <!--Hard Coded-->
+                <tr>
+                  <td>
+                    <img id="itemImg" src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="../img/logo.png">
+                  </td>
+                  <td>
+                    <h3 id="itemName">itemName</h3>
+                    <p id="itemDescription">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aperiam ullam dignissimos sit
+                      quae ex vero suscipit ducimus,
+                      alias iste laborum rem cumque nostrum molestiae quos aspernatur praesentium consequatur
+                      asperiores
+                      corporis perferendis ipsa beatae dolores amet. Sapiente voluptatum alias aperiam!
+                    </p>
+                    <span id="postedDate">Posted on September 30, 2018</span>
+                  </td>
+                  <td style="width:150px">
+                    <span class="display-4 text-danger font-weight-bold" id="price">$4</span> / day
+                    <span class="font-weight-bold" id="username">Lender: mpark61</span><br>
+                    <div id="rating" class="text-center">
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-warning"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                      <span class="fa fa-star text-secondary"></span>
+                    </div>
+                  </td>
+                </tr>
+                <!--Hard Coded-->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
