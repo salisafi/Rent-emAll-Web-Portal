@@ -3,25 +3,36 @@
     <div class="card my-5 col-md-3">
       <div class="card-body">
         <form action="#">
-          <label for="category">
-            <h6>Category:</h6>
-          </label>
-          <div class="form-check" id="category">
-            <input type="checkbox" class="form-check-input" id="home" name="home" value="home" /> Home <br>
-            <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" /> Tools and
-            Equipment <br>
-            <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" /> Sports and
-            Recreations <br>
-            <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
-            Entertainment <br>
-            <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" /> Babies and Kids
-            <br>
-            <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" /> Fashion <br><br>
-          </div>
+          <h6>Category:</h6>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="home" name="home" value="home" />
+              <label class="form-check-label" for="home">Home</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" />
+              <label class="form-check-label" for="tools">Tools and Equipment</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" /> 
+              <label class="form-check-label" for="sports">Sports and Recreations</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
+              <label class="form-check-label" for="entertainment">Entertainment</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" /> 
+              <label class="form-check-label" for="babies">Babies and Kids</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" />
+              <label class="form-check-label" for="fashion">Fashion</label>
+            </div><br>
+            
           <h6>Location:</h6>
           <div class="form-check">
             <input type="radio" class="form-check-input" id="5" name="radio" value="5" />
-            <label class="form-check-label" for"5">5km</label>
+            <label class="form-check-label" for "5">5km</label>
           </div>
           <div class="form-check">
             <input type="radio" class="form-check-input" id="10" name="radio" value="10" />
@@ -41,21 +52,16 @@
           </div><br>
 
           <div class="form-group">
-            <label for="deposit">
-              <h6>Deposit Price:</h6>
-            </label>
+            <label for="deposit"><h6>Deposit Price:</h6></label>
             <div class="d-flex justify-content-center">
               <span class="mr-2">$0</span>
-              <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10"
-                value="500" />
+              <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value="500" />
               <span class="ml-2">$1000</span>
             </div>
           </div>
           <br>
           <div class="form-group">
-            <label for="rate">
-              <h6>Rental Price Per Day:</h6>
-            </label>
+            <label for="rate"><h6>Rental Price Per Day:</h6></label>
             <div class="d-flex justify-content-center">
               <span class="mr-2">$0</span>
               <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" />
@@ -77,40 +83,5 @@
   </div>
 </div>
 
-<script>
-  var map, infoWindow;
-  function localMap() {
-    map = new google.maps.Map(document.getElementById('localMap'), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 15
-    });
-    infoWindow = new google.maps.InfoWindow;
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Current Location');
-        infoWindow.open(map);
-        map.setCenter(pos);
-      }, function () {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
-    } else {
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
-  }
-
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-      'Error: The Geolocation service failed.' :
-      'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-  }
-</script>
+<script src="js/localmap.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI1XWsjGukJ6Nm6nF87K7dn78rzKEuBfA&callback=localMap"></script>
