@@ -19,13 +19,15 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="password">PASSWORD</label></div>
                                     <div class="col-md-4">
-                                        <button class="btn btn-primary" id="ChangePasswordBtn">Change Password</button>
-                                        <!-- <input type="password" id="password" name="password" class="form-control" required> -->
+                                        <input type="button" class="btn btn-primary" id="ChangePasswordBtn" value="Change Password">
+                                        <input type="password" id="password" name="password" class="form-control retype"
+                                            required>
                                     </div>
-                                    <!-- <div class="col-md-2"><label for="retypePW">RETYPE PASSWORD</label></div>
-                        <div class="col-md-4">
-                          <input type="password" id="retypePW" name="retypePW" class="form-control" required>
-                        </div> -->
+                                    <div class="col-md-2 retype"><label for="retypePW">RETYPE PASSWORD</label></div>
+                                    <div class="col-md-4 retype">
+                                        <input type="password" id="retypePW" name="retypePW" class="form-control"
+                                            required>
+                                    </div>
                                 </div>
                             </div>
                             <hr class="my-4">
@@ -75,3 +77,11 @@
         </div>
     </div>
 </div>
+<script>
+    /**************************** User Profile Retype Password ****************************/
+    $('.retype').hide();
+    $('#ChangePasswordBtn').click(function () {
+        $(this).hide();
+        $('.retype').show();
+    })
+</script>
