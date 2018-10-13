@@ -1,7 +1,7 @@
 // Load components into divs (Please check 'index.html' file)
-$('#header').load('header.html');
-$('#navbar').load('navbar.html');
-$('#footer').load('footer.html');
+$('#header').load('shared/header.html');
+$('#navbar').load('shared/navbar.html');
+$('#footer').load('shared/footer.html');
 $('#content').load('main.html');
 
 // FAIL
