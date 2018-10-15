@@ -3,20 +3,21 @@
     <div class="col-md-8 mx-auto card my-5 shadow-lg rounded">
       <div class="card-body">
         <h2 class="card-title text-center mb-4">Registration</h2>
-        <form name="register_form" method="POST" action="" onsubmit="return register_validation();">
+        <form name="register_form" method="POST" action="/signup" onsubmit="return formValidation();">
           <div class="form-group mb-3 w-50">
             <label for="username">USERNAME</label>
             <input type="text" id="username" name="username" class="form-control" autofocus>
-            <div id="username_errors" style="color:red; font-size:12px;"></div>
+            <div class="errorMsg" id="username_errors"></div>
           </div>
           <div class="form-group form-row mb-3">
             <div class="col">
               <label for="password">PASSWORD</label>
-              <input type="password" id="password" name="password" class="form-control" required>
+              <input type="password" id="password" name="password" class="form-control">
+              <div class="errorMsg" id="password_errors"></div>
             </div>
             <div class="col">
               <label for="retypePW">RETYPE PASSWORD</label>
-              <input type="password" id="retypePW" name="retypePW" class="form-control" required>
+              <input type="password" id="retypePW" name="retypePW" class="form-control">
             </div>
           </div>
 
@@ -25,26 +26,30 @@
           <div class="form-group form-row mb-3">
             <div class="col">
               <label for="firstname">FIRSTNAME</label>
-              <input type="text" id="firstname" name="firstname" class="form-control" required>
+              <input type="text" id="firstname" name="firstname" class="form-control">
+              <div class="errorMsg" id="name_errors"></div>
             </div>
             <div class="col">
               <label for="lastname">LASTNAME</label>
-              <input type="text" id="lastname" name="lastname" class="form-control" required>
+              <input type="text" id="lastname" name="lastname" class="form-control">
             </div>
           </div>
           <div class="form-group form-row mb-3">
             <div class="col">
               <label for="email">EMAIL</label>
-              <input type="email" id="email" name="email" class="form-control" required>
+              <input type="text" id="email" name="email" class="form-control">
+              <div class="errorMsg" id="email_errors"></div>
             </div>
             <div class="col">
               <label for="phoneNum">PHONE# (Optional)</label>
               <input type="tel" id="phoneNum" name="phoneNum" class="form-control">
+              <div class="errorMsg" id="phone_errors"></div>
             </div>
           </div>
           <div class="form-group mb-5 w-50">
             <label for="postalcode">POSTAL CODE</label>
-            <input type="text" id="postalcode" name="postalcode" class="form-control" required>
+            <input type="text" id="postalcode" name="postalcode" class="form-control">
+            <div class="errorMsg" id="postal_errors"></div>
           </div>
           <div class="text-center">
             <button class="btn btn-lg btn-primary text-uppercase px-5 mb-3" type="submit">Submit</button>
@@ -55,11 +60,160 @@
   </div>
 </div>
 
+<style>
+  .errorMsg {
+    margin: 5px;
+    color: #ff0000;
+    font-size: 12px;
+  }
+</style>
+
 <script>
-  function register_validation() {
-    if (document.register_form.username.value == "") {
-      document.getElementById('username_errors').innerHTML = "* Please enter a username";
+  /********** Validate when submit **********/
+  function formValidation() {
+    // clearErrors();
+    $(".errorMsg").empty();
+    return validUsername() && validPassword() && validFirstName() && validLastName() && validEmail() && validPhoneNum() && validPostalCode();
+  }
+
+  /********** Username validation **********/
+  function validUsername() {
+    var elem = document.querySelector("#username");
+    var input = elem.value.trim();
+    if (input.length < 8) {
+      showErrors('username_errors', "Username must have at least 8 characters.");
+      elem.focus();
       return false;
     }
+    input = input.toUpperCase();
+    if (input.charAt(0) < "A" || input.charAt(0) > "Z") {
+      showErrors('username_errors', "Username must start with a letter")
+      elem.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /********** Password validation **********/
+  function validPassword() {
+    var valid = false;
+    var alphaCap = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var elem = document.querySelector("#password");
+    var input = elem.value.trim();
+    if (input.length < 8) {
+      showErrors('password_errors', "Password must have at least 8 characters.");
+      elem.focus();
+      return false;
+    }
+    for (var i = 0; i < input.length; i++) {
+      if (alphaCap.indexOf(input.substr(i, 1)) >= 0) {
+        valid = true;
+      }
+    }
+    if (valid) {
+      var digit = 0;
+      for (var i = 0; i < input.length; i++) {
+        if (parseInt(input[i])) {
+          digit++;
+        }
+      }
+      if (digit == 0) {
+        valid = false;
+      }
+    }
+    if (!valid) {
+      showErrors('password_errors', "Password Must have at least 1 digit and 1 uppercase.");
+      elem.focus();
+      return false;
+    }
+    var elem2 = document.querySelector("#retypePW");
+    var input2 = elem2.value.trim();
+    if (input != input2) {
+      showErrors('password_errors', "Password does not match the confirm password.");
+      elem2.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /********** Name validation **********/
+  function validFirstName() {
+    return validName("#firstname");
+  }
+  function validLastName() {
+    return validName("#lastname");
+  }
+  function validName(name) {
+    var validChar = true;
+    var elem = document.querySelector(name);
+    var input = elem.value.trim();
+    if (input.length == 0) {
+      showErrors('name_errors', "Name is required.");
+      elem.focus();
+      return false;
+    }
+    input = input.toUpperCase();
+    for (var i = 0; i < input.length; i++) {
+      if (input.charAt(i) < "A" || input.charAt(i) > "Z") {
+        validChar = false;
+      }
+    }
+    if (!validChar) {
+      showErrors('name_errors', "Name must contain letters.");
+      elem.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /********** Email address validation **********/
+  function validEmail() {
+    var elem = document.querySelector("#email");
+    var input = elem.value.trim();
+    var regex = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;   // regex format: abc123@email.com
+    if (!regex.test(input)) {
+      showErrors('email_errors', "Email address is not valid.");
+      elem.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /********** Phone number validation **********/
+  function validPhoneNum() {
+    var valid = false;
+    var elem = document.querySelector("#phoneNum");
+    var input = elem.value.trim();
+    var regex1 = /^\d{3}-\d{3}-\d{4}$/;   // regex format: 416-123-2345
+    var regex2 = /^[0-9]{10}$/;           // regex format: 4161232345
+    if (input.length > 0) {
+      if (!regex1.test(input) && !regex2.test(input)) {
+        showErrors('phone_errors', "Phone number is not valid.");
+        elem.focus();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /********** Postal code validation **********/
+  function validPostalCode() {
+    var elem = document.querySelector("#postalcode");
+    var input = elem.value.trim();
+    var regex = /^[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]$/;   // regex format: A1A1A1
+    if (!regex.test(input)) {
+      showErrors('postal_errors', "Postal code is not valid.");
+      elem.focus();
+      return false;
+    }
+    return true;
+  }
+
+  /********** Show error message function **********/
+  function showErrors(id, message) {
+    document.getElementById(id).innerHTML = message;
+  }
+  function clearErrors() {
+    document.querySelector(".errorMsg").innerHTML = "";
   }
 </script>
