@@ -1,55 +1,65 @@
 <div class="container">
-    <div class="row">
-      <div class="col-md-8 mx-auto card my-5 shadow-lg rounded">
-        <div class="card-body">
-          <h2 class="card-title text-center mb-4">Registration</h2>
-          <form>
-            <div class="form-group mb-3 w-50">
-              <label for="username">USERNAME</label>
-              <input type="text" id="username" name="username" class="form-control" required autofocus>
-            </div>
-            <div class="form-group form-row mb-3">
-              <div class="col">
+  <div class="row">
+    <div class="col-md-8 mx-auto card my-5 shadow-lg rounded">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Registration</h2>
+        <form name="register_form" method="POST" action="" onsubmit="return register_validation();">
+          <div class="form-group mb-3 w-50">
+            <label for="username">USERNAME</label>
+            <input type="text" id="username" name="username" class="form-control" autofocus>
+            <div id="username_errors" style="color:red; font-size:12px;"></div>
+          </div>
+          <div class="form-group form-row mb-3">
+            <div class="col">
               <label for="password">PASSWORD</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-              </div>
-              <div class="col">
-                <label for="retypePW">RETYPE PASSWORD</label>
-                <input type="password" id="retypePW" name="retypePW" class="form-control" required>
-              </div>
+              <input type="password" id="password" name="password" class="form-control" required>
             </div>
-            
-            <hr class="my-4">
+            <div class="col">
+              <label for="retypePW">RETYPE PASSWORD</label>
+              <input type="password" id="retypePW" name="retypePW" class="form-control" required>
+            </div>
+          </div>
 
-            <div class="form-group form-row mb-3">
-              <div class="col">
-                <label for="firstname">FIRSTNAME</label>
-                <input type="text" id="firstname" name="firstname" class="form-control" required>
-              </div>
-              <div class="col">
-                <label for="lastname">LASTNAME</label>
-                <input type="text" id="lastname" name="lastname" class="form-control" required>
-              </div>
+          <hr class="my-4">
+
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="firstname">FIRSTNAME</label>
+              <input type="text" id="firstname" name="firstname" class="form-control" required>
             </div>
-            <div class="form-group form-row mb-3">
-              <div class="col">
-                <label for="email">EMAIL</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-              </div>
-              <div class="col">
-                <label for="phoneNum">PHONE# (Optional)</label>
-                <input type="tel" id="phoneNum" name="phoneNum" class="form-control">
-              </div>
+            <div class="col">
+              <label for="lastname">LASTNAME</label>
+              <input type="text" id="lastname" name="lastname" class="form-control" required>
             </div>
-            <div class="form-group mb-5 w-50">
-              <label for="postalcode">POSTAL CODE</label>
-              <input type="text" id="postalcode" name="postalcode" class="form-control" required>
+          </div>
+          <div class="form-group form-row mb-3">
+            <div class="col">
+              <label for="email">EMAIL</label>
+              <input type="email" id="email" name="email" class="form-control" required>
             </div>
-            <div class="text-center">
-              <button class="btn btn-lg btn-primary text-uppercase px-5 mb-3" type="submit">Submit</button>
+            <div class="col">
+              <label for="phoneNum">PHONE# (Optional)</label>
+              <input type="tel" id="phoneNum" name="phoneNum" class="form-control">
             </div>
+          </div>
+          <div class="form-group mb-5 w-50">
+            <label for="postalcode">POSTAL CODE</label>
+            <input type="text" id="postalcode" name="postalcode" class="form-control" required>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-lg btn-primary text-uppercase px-5 mb-3" type="submit">Submit</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function register_validation() {
+    if (document.register_form.username.value == "") {
+      document.getElementById('username_errors').innerHTML = "* Please enter a username";
+      return false;
+    }
+  }
+</script>
