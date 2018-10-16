@@ -157,8 +157,8 @@
       showErrors('name_errors', "Name must be maximum 30 characters.");
       elem.focus(); return false;
     }
-    if (/[^a-zA-Z0-9\-\']/.test(input)) {
-      showErrors('name_errors', "Only alphanumeric and apostrophe/hyphen are allowed.")
+    if (/[^a-zA-Z\-\']/.test(input)) {
+      showErrors('name_errors', "Only alphabets and apostrophe/hyphen are allowed.")
       elem.focus(); return false;
     }
     input = input.toUpperCase();
