@@ -72,8 +72,7 @@ app.post('/signup', function (req, res) {
   connection.query("INSERT INTO UserTbl (firstName, lastName, userName, password, emailAddress, phoneNumber, postalCode) VALUES (?, ?, ?, ?, ?, ?, ?)", [
       body.firstname, body.lastname, body.username, cipheredOutput, body.email, body.phoneNum, body.postalcode
     ], function() {
-    alert("User has been added.");
-    res.end();
+    res.redirect('/');
   });
 });
 
