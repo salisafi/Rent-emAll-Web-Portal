@@ -73,7 +73,7 @@ app.post('/signup', function (req, res) {
       body.firstname, body.lastname, body.username, cipheredOutput, body.email, body.phoneNum, body.postalcode
     ], function() {
     alert("User has been added.");
-    res.redirect('/');
+    res.end();
   });
 });
 
