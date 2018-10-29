@@ -171,7 +171,7 @@ app.post('/userProfile', function(req, res) {
   var sess = req.session;
 
   //connection.query('SELECT * FROM UserTbl WHERE BINARY userName = ?', [userid], function(err, result) {
-  connection.query('SELECT * FROM UserTbl WHERE BINARY userName = "Abcabc123"', 5 , function(err, result, fields) {
+  connection.query('SELECT * FROM UserTbl WHERE BINARY userName = "Abcabc123"', 5 , function(err, result) {
     if (err) {
       console.log('Error: ' + err);
     } else {
@@ -179,21 +179,29 @@ app.post('/userProfile', function(req, res) {
 	res.send('Invalid Username!');
       } else {
 	console.log('check password');
+		
+	console.log(result);
 	
-		console.log(result);
 	
-	  sess.firstName = result[0].firstName;
-	  sess.lastName = result[0].lastName;
-	  sess.userName = result[0].userName;
-	   
-	   
+	var firstName = result[0].firstName;
+	var  lastName = result[0].lastName;
+	var userName = result[0].userName;
+
+    console.log(firstName,  lastName);
+	
+	//  sess.firstName = result[0].firstName;
+	//  sess.lastName = result[0].lastName;
+	//  sess.userName = result[0].userName;
+	  
+	  
+ 
 	  res.redirect('/');
       }
     }
   });
 });
 
-
+ 
 /*************** 404 Not Found **************/
 
 app.all('*', function (req, res) {
