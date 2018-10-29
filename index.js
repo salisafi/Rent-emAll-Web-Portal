@@ -182,8 +182,11 @@ app.post('/userProfile', function(req, res) {
 	
 		console.log(result);
 	
-	  sess.username = result[0].userName;
-	  sess.name = result[0].firstName + ' ' + result[0].lastName;
+	  sess.firstName = result[0].firstName;
+	  sess.lastName = result[0].lastName;
+	  sess.userName = result[0].userName;
+	   
+	   
 	  res.redirect('/');
       }
     }
