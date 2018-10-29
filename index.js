@@ -148,13 +148,12 @@ app.post('/postItem', function (req, res) {
 
  // connection.query("INSERT INTO ItemTbl (categoryId, name, description, brand, madeYear, color, weight, purchasedYear, purchasedPrice, postalCode, province, photoURL, creationDate) VALUES (?, ?, ?, ?, ?, ?, ?)", [
   //    "2", body.name, body.description, body.brand , "1985" , "red" , "54.24" , "2004" , "50.00". , "L3T2E9" , "Toronto" , body.photoURL , "Oct 28,2017"
-  connection.query("INSERT INTO testTbl (testId, name, description) VALUES (?, ?, ?)", [
-      3, body.name, body.description  
+  connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
+      body.name, body.description  
     ], function() {
     res.redirect('/');
   });
 });
-
 
 
 /*************** 404 Not Found **************/
