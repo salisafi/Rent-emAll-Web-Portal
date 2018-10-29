@@ -8,10 +8,10 @@
                         <form class="" method="POST" action="/userProfile">
                             <div class="form-label-group">
                                 <div class="row">
-                                    <div class=col-md-2><label for="username">USERNAME</label></div>
+                                    <div class=col-md-2><label for="userName">USER NAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="username" name="username" class="form-control"
-                                            placeholder="Username 123" readonly>
+                                        <input type="text" id="userName" name="userName" class="form-control"
+                                            placeholder="username 123" readonly>
                                     </div>
                                 </div>
                             </div><br>
@@ -33,40 +33,56 @@
                             <hr class="my-4">
                             <div class="form-label-group">
                                 <div class="row">
-                                    <div class="col-md-2"><label for="firstname">FIRSTNAME</label></div>
+                                    <div class="col-md-2"><label for="firstname">FIRST NAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="firstname" name="firstname" class="form-control" placeholder="John" readonly>
+                                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="John" readonly>
                                     </div>
-                                    <div class=col-md-2><label for="postalcode">POSTAL CODE</label></div>
+									<div class="col-md-2"><label for="lastName">LAST NAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="postalcode" name="postalcode" class="form-control"
-                                            placeholder="M3J3M6">
+                                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Doe" readonly>
                                     </div>
                                 </div>
                             </div><br>
                             <div class="form-label-group">
                                 <div class="row">
-                                    <div class="col-md-2"><label for="lastname">LASTNAME</label></div>
+									<div class="col-md-2"><label for="postalCode">POSTAL CODE</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="lastname" name="lastname" class="form-control"
-                                            placeholder="Doe" readonly>
+                                        <input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="M3J3M6">
                                     </div>
-                                    <div class="col-md-2"><label for="phoneNum">PHONE#</label></div>
+                                    <div class="col-md-2"><label for="phoneNumber">Province</label></div>
                                     <div class="col-md-4">
-                                        <input type="tel" id="phoneNum" name="phoneNum" class="form-control"
+										<select>
+											<option value="AB">Alberta</option>
+											<option value="BC">British Columbia</option>
+											<option value="MB">Manitoba</option>
+											<option value="NB">New Brunswick</option>
+											<option value="NL">Newfoundland and Labrador</option>
+											<option value="NS">Nova Scotia</option>
+											<option value="ON">Ontario</option>
+											<option value="PE">Prince Edward Island</option>
+											<option value="QC">Quebec</option>
+											<option value="SK">Saskatchewan</option>
+											<option value="NT">Northwest Territories</option>
+											<option value="NU">Nunavut</option>
+											<option value="YT">Yukon</option>
+										</select>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-label-group">
+                                <div class="row">
+									<div class="col-md-2"><label for="phoneNumber">PHONE#</label></div>
+                                    <div class="col-md-4">
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control"
                                             placeholder="4164915050">
                                     </div>
-                                </div>
-                            </div><br>
-                            <div class="form-label-group">
-                                <div class="row">
-                                    <div class="col-md-2"><label for="email">EMAIL</label></div>
+                                    <div class="col-md-2"><label for="emailAddress">EMAIL</label></div>
                                     <div class="col-md-6">
-                                        <input type="email" id="email" name="email" class="form-control" placeholder="john.doe99@email.com">
+                                        <input type="email" id="emailAddress" name="emailAddress" class="form-control" placeholder="john.doe99@email.com">
                                     </div>
                                 </div>
                             </div><br>
-                            <div class="text-center">
+							<div class="text-center">
                                 <button class="btn btn-lg btn-primary text-uppercase" type="submit">&emsp;&emsp;Submit&emsp;&emsp;</button>
                             </div>
                         </form>
