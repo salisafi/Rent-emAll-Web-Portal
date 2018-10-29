@@ -161,6 +161,37 @@ app.post('/postItem', function (req, res) {
 	});
 
 });
+<<<<<<< HEAD
+=======
+
+
+
+app.post('/userProfile', function(req, res) {
+  var userid = req.body.username;
+  var password = req.body.password;
+  var key = 'myKey';
+  var sess = req.session;
+
+  //connection.query('SELECT * FROM UserTbl WHERE BINARY userName = ?', [userid], function(err, result) {
+  connection.query('SELECT * FROM UserTbl WHERE BINARY userName = "Abcabc123"', 5 , function(err, result) {
+    if (err) {
+      console.log('Error: ' + err);
+    } else {
+      if (result.length === 0) {
+	res.send('Invalid Username!');
+      } else {
+	console.log('check password');
+	
+	  sess.username = result[0].userName;
+	  sess.name = result[0].firstName + ' ' + result[0].lastName;
+	  res.redirect('/');
+      }
+    }
+  });
+});
+
+
+>>>>>>> parent of eec3c31... userProfile.html updates
 /*************** 404 Not Found **************/
 
 app.all('*', function (req, res) {
