@@ -5,6 +5,7 @@ const http = require('http');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -114,6 +115,31 @@ app.post('/forgotuser', function(req, res) {
 
 app.post('/forgotpass', function(req, res) {
 
+});
+
+app.post('/sendemail', function(req, res) {
+  var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'rentemallapp@gmail.com',
+      pass: 'xfchjinuvfpucgcb'
+    }
+  });
+  var mailOpts = {
+    from: req.body.contactName + ' &lt;' + req.body.contaceEmail + '&gt;',
+    to: 'rentemallapp@gmail.com',
+    subject: 'RentemAll Question Request',
+    text: `${req.body.contactName} (${req.body.contaceEmail}) says: ${req.body.message}`
+  };
+  transporter.sendMail(mailOpts, function(error, response) {
+    if (error) {
+      res.end("Email send failed");
+    } else {
+      res.redirect('/');
+    }
+  });
 });
 
 
