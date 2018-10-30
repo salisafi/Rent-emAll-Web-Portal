@@ -1,20 +1,22 @@
 <div class="container-fluid" id="header">
     <div class="row">
         <div class="col-sm-11">
-            <img id="navbar-logo" src="../asset/img/logo.png" onclick="linkClick('main')">
+            <a href="/"><img id="navbar-logo" src="../asset/img/logo.png"></a>
             <div class="row float-right">
                 <ul id="header-inline">
-                    <li class="d-inline" onclick="linkClick('login')">Login</li>
+                    <% if(!sess.username) { %>
+                    <li class="d-inline"><a href="/login">Login</a></li>
                     <p class="d-inline p-2"> | </p>
-                    <li class="d-inline" onclick="linkClick('register')">Register</li>
+                    <li class="d-inline"><a href="/register">Register</a></li>
+                    <% } else { %>
+                    <li class="d-inline"><a href="/logout">Logout</a></li>
+                    <% } %>
                     <p class="d-inline p-2"> | </p>
-                    <li class="d-inline" onclick="linkClick('about-us')">About us</li>
+                    <li class="d-inline"><a href="/aboutus">About us</a></li>
                     <p class="d-inline p-2"> | </p>
-                    <li class="d-inline">Services</li>
+                    <li class="d-inline"><a href="/faq">FAQ</a></li>
                     <p class="d-inline p-2"> | </p>
-                    <li class="d-inline" onclick="linkClick('faq')">FAQ</li>
-                    <p class="d-inline p-2"> | </p>
-                    <li class="d-inline" onclick="linkClick('contactus')">Contact us</li>
+                    <li class="d-inline"><a href="/contactus">Contact us</a></li>
                 </ul>
             </div>
             <br />
@@ -33,20 +35,25 @@
 
                     <input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?"
                         aria-label="Search">
-                    <input type="button" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List" onclick="linkClick('itemlisting')">
-                    <input type="button" id="btn-map" class="btn btn-primary my-2" value="Map" onclick="linkClick('localmap')">
+                    <a href="/list"><input type="button" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List"></a>
+                    <a href="/map"><input type="button" id="btn-map" class="btn btn-primary my-2" value="Map"></a>
                 </form>
-
+                <% if(sess.username) { %>
                 <div id="features">
-                    <input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post Item" onclick="linkClick('post-item')">
-                    <input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page" onclick="linkClick('user-profile')">
+                    <a href="/post"><input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post Item"></a>
+                    <a href="/profile"><input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page"></a>
                 </div>
+                <% } %>
             </div>
         </div>
         <div class="col-sm-1">
             <div class="user">
-                <i class="fas fa-user fa-3x" onclick="linkClick('cart')"></i>
+                <a href="/cart"><i class="fas fa-user fa-3x"></i></a>
+                <% if(!sess.username) { %>
                 <p id="user-id">guest</p>
+                <% } else { %>
+                <p id="user-id"><%= sess.username %></p>
+                <% } %>
             </div>
         </div>
     </div>

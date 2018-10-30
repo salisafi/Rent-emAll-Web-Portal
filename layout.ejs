@@ -28,10 +28,16 @@
 </head>
 
 <body>
-    <div id="header"></div>
-    <div id="navbar"></div>
-    <div id="content"></div>
-    <div id="footer"></div>
+    <header>
+        <% include ./shared/header %>
+        <% include ./shared/navbar %>
+    </header>
+
+    <%- body %>
+
+    <footer>
+        <% include ./shared/footer %>
+    </footer>
 
     <!-- Custom JavaScript -->
     <script src="asset/js/scripts.js"></script>
