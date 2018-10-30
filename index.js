@@ -161,8 +161,6 @@ app.post('/postItem', function (req, res) {
 	});
 
 });
-<<<<<<< HEAD
-=======
 
 
 
@@ -181,17 +179,29 @@ app.post('/userProfile', function(req, res) {
 	res.send('Invalid Username!');
       } else {
 	console.log('check password');
+		
+	console.log(result);
 	
-	  sess.username = result[0].userName;
-	  sess.name = result[0].firstName + ' ' + result[0].lastName;
+	
+	var firstName = result[0].firstName;
+	var  lastName = result[0].lastName;
+	var userName = result[0].userName;
+
+    console.log(firstName,  lastName);
+	
+	//  sess.firstName = result[0].firstName;
+	//  sess.lastName = result[0].lastName;
+	//  sess.userName = result[0].userName;
+	  
+	  
+ 
 	  res.redirect('/');
       }
     }
   });
 });
 
-
->>>>>>> parent of eec3c31... userProfile.html updates
+ 
 /*************** 404 Not Found **************/
 
 app.all('*', function (req, res) {
