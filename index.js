@@ -179,11 +179,9 @@ app.post('/login', function (req, res) {
           sess.name = result[0].firstName + ' ' + result[0].lastName;
           sess.firstname = result[0].firstName
           sess.lastname = result[0].lastName;
-          sess.postalcode = result[0].postalcode;
-          sess.phone = result[0].phoneNum;
-          sess.email = result[0].email;
-          console.log(result[0].postalcode);
-          console.log(result[0].phoneNum);
+          sess.postalcode = result[0].postalCode;
+          sess.phone = result[0].phoneNumber;
+          sess.email = result[0].emailAddress;
           res.redirect('/');
         }
       }
