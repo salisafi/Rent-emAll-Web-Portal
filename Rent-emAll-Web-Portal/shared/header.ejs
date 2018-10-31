@@ -22,21 +22,20 @@
             <br />
 
             <div class="row" id="searchbar-row">
-                <form class="form-inline">
-                    <select class="form-control mr-sm-2">
-                        <option>Category</option>
-                        <option>Homeware</option>
-                        <option>Tools &amp; Equip</option>
-                        <option>Sports &amp; Rec</option>
-                        <option>Entertainment</option>
-                        <option>Babys &amp; Kids</option>
-                        <option>Fashion</option>
+                <form action="/list" method="get" class="form-inline">
+                    <select name="category" class="form-control mr-sm-2">
+                        <option value="0">Category</option>
+                        <option value="1">Homeware</option>
+                        <option value="2">Tools &amp; Equip</option>
+                        <option value="3">Sports &amp; Rec</option>
+                        <option value="4">Entertainment</option>
+                        <option value="5">Babys &amp; Kids</option>
+                        <option value="6">Fashion</option>
                     </select>
 
-                    <input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?"
-                        aria-label="Search">
-                    <a href="/list"><input type="button" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List"></a>
-                    <a href="/map"><input type="button" id="btn-map" class="btn btn-primary my-2" value="Map"></a>
+                    <input id="searchbar" name="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?" aria-label="Search">
+                    <input type="submit" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List">
+                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary my-2" value="Map">
                 </form>
                 <% if(sess.username) { %>
                 <div id="features">
