@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
+const moment = require('moment');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -95,7 +96,34 @@ app.get('/contactus', function (req, res) {
 });
 
 app.get('/list', function (req, res) {
-  res.render('itemlisting');
+  var searchKeyword = req.query.searchbar;
+  var category = req.query.category;
+  var sql = "";
+  var params = [];
+  
+  if (category == 0) {
+    sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
+  } else {
+    sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' AND categoryId = ? ORDER BY creationDate DESC";
+    params = [category];
+  }
+  
+  connection.query(sql, params, function(err, results) {
+    if (err) throw err;
+
+    let mDates = [];
+    let fDates = [];
+
+    for (var i = 0; i < results.length; i++) {
+      mDates[i] = moment(results[i].creationDate);
+      fDates[i] = mDates[i].format('LL');
+    }
+
+    res.render('itemlisting', {
+      items: results,
+      postedDates: fDates
+    });
+  });
 });
 
 app.get('/item', function (req, res) {
