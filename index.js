@@ -8,10 +8,10 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 
-// const hostname = '10.10.193.142';
-// const port = 10034;
-const hostname = 'localhost';
-const port = 3030;
+const hostname = '10.10.193.142';
+const port = 10034;
+// const hostname = 'localhost';
+// const port = 3030;
 
 var crypto = require('crypto');
 
@@ -111,10 +111,11 @@ app.get('/post', function (req, res) {
 });
 
 app.get('/profile', function (req, res) {
-  if (!req.session.username) {
+  var sess = req.session;
+  if (!sess.username) {
     res.render('main');
   } else {
-    res.render('user-profile', { sess: req.session });
+    res.render('user-profile', { sess: sess });
   }
 });
 
@@ -181,8 +182,8 @@ app.post('/login', function (req, res) {
           sess.postalcode = result[0].postalcode;
           sess.phone = result[0].phoneNum;
           sess.email = result[0].email;
-          console.log(sess.postalcode);
-          console.log(sess);
+          console.log(result[0].postalcode);
+          console.log(result[0].phoneNum);
           res.redirect('/');
         }
       }
