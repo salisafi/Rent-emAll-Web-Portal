@@ -10,11 +10,8 @@ const expressLayouts = require('express-ejs-layouts');
 
 const hostname = '10.10.193.142';
 const port = 10034;
-<<<<<<< HEAD
-=======
 // const hostname = 'localhost';
 // const port = 3030;
->>>>>>> 1e5bde61dd17be43d0b2a328ef91eae3e83b7f4b
 
 var crypto = require('crypto');
 
