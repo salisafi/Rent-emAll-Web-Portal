@@ -172,3 +172,10 @@ span.star-prototype > * {
     right: 0;
     margin: auto;
 }
+
+/*********************************** Error Message ***********************************/
+.errorMsg {
+    margin: 5px;
+    color: #ff0000;
+    font-size: 12px;
+  }

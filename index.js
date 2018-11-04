@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
 var crypto = require('crypto');
 
@@ -100,15 +100,15 @@ app.get('/list', function (req, res) {
   var category = req.query.category;
   var sql = "";
   var params = [];
-  
+
   if (category == 0) {
     sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
   } else {
     sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' AND categoryId = ? ORDER BY creationDate DESC";
     params = [category];
   }
-  
-  connection.query(sql, params, function(err, results) {
+
+  connection.query(sql, params, function (err, results) {
     if (err) throw err;
 
     let mDates = [];
@@ -194,14 +194,14 @@ app.post('/login', function (req, res) {
       console.log('Error: ' + err);
     } else {
       if (result.length === 0) {
-        res.send('Invalid Username!');
+        res.render('error', { errormessage: 'Invalid Username!' });
       } else {
         var decipher = crypto.createDecipher('aes192', key);
         decipher.update(result[0].password, 'base64', 'utf8');
         var decipheredOutput = decipher.final('utf8');
-        console.log('check password');
+
         if (password != decipheredOutput) {
-          res.send('Invalid Password!');
+          res.render('error', { errormessage: 'Invalid Password!' });
         } else {
           sess.username = result[0].userName;
           sess.name = result[0].firstName + ' ' + result[0].lastName;
@@ -256,11 +256,51 @@ app.post('/postItem', function (req, res) {
   console.log("Post Item is clicked!!!");
 
   connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
-          body.name, body.description
-    ], function() {
+    body.name, body.description
+  ], function () {
     res.write('success');
     res.end();
   });
+});
+
+app.post('/profile', function (req, res) {
+  var sess = req.session;
+  var body = req.body;
+
+  if (body.password === '') {
+    connection.query('UPDATE UserTbl SET postalCode = ?, phoneNumber = ?, emailAddress = ? WHERE BINARY userName = ?', [
+      body.postalcode, body.phoneNum, body.email, body.username
+    ], function (err, result) {
+      if (err) {
+        console.log('Error: ' + err);
+      } else {
+        sess.postalcode = body.postalcode;
+        sess.phone = body.phoneNum;
+        sess.email = body.email;
+        console.log(sess);
+        res.redirect('/profile');
+      }
+    });
+  } else {
+    var key = 'myKey';
+    var cipher = crypto.createCipher('aes192', key);
+    cipher.update(body.password, 'utf8', 'base64');
+    var cipheredOutput = cipher.final('base64');
+
+    connection.query('UPDATE UserTbl SET password = ?, postalCode = ?, phoneNumber = ?, emailAddress = ? WHERE BINARY userName = ?', [
+      cipheredOutput, body.postalcode, body.phoneNum, body.email, body.username
+    ], function (err, result) {
+      if (err) {
+        console.log('Error: ' + err);
+      } else {
+        sess.postalcode = body.postalcode;
+        sess.phone = body.phoneNum;
+        sess.email = body.email;
+        console.log(sess);
+        res.redirect('/profile');
+      }
+    });
+  }
 });
 
 /*************** 404 Not Found **************/
