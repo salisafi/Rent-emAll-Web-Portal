@@ -176,11 +176,20 @@ app.post('/signup', function (req, res) {
   cipher.update(body.password, 'utf8', 'base64');
   var cipheredOutput = cipher.final('base64');
 
-  connection.query("INSERT INTO UserTbl (firstName, lastName, userName, password, emailAddress, phoneNumber, postalCode) VALUES (?, ?, ?, ?, ?, ?, ?)", [
-    body.firstname, body.lastname, body.username, cipheredOutput, body.email, body.phoneNum, body.postalcode
-  ], function () {
-    res.redirect('login');
-  });
+  var province = verifyProvince(body.postalcode);
+  if (province) {
+    connection.query("INSERT INTO UserTbl (firstName, lastName, userName, password, emailAddress, phoneNumber, province, postalCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [
+      body.firstname, body.lastname, body.username, cipheredOutput, body.email, body.phoneNum, province, body.postalcode
+    ], function (err, result) {
+      if (err) {
+        res.render('error', { errormessage: 'Unable to register a new user.' });
+      } else {
+        res.redirect('login');
+      }
+    });
+  } else {
+    res.render('error', { errormessage: 'Postal code does not exist.' });
+  }
 });
 
 app.post('/login', function (req, res) {
@@ -194,14 +203,14 @@ app.post('/login', function (req, res) {
       console.log('Error: ' + err);
     } else {
       if (result.length === 0) {
-        res.render('error', { errormessage: 'Invalid Username!' });
+        res.render('error', { errormessage: 'You just entered invalid username.' });
       } else {
         var decipher = crypto.createDecipher('aes192', key);
         decipher.update(result[0].password, 'base64', 'utf8');
         var decipheredOutput = decipher.final('utf8');
 
         if (password != decipheredOutput) {
-          res.render('error', { errormessage: 'Invalid Password!' });
+          res.render('error', { errormessage: 'You just entered invalid password.' });
         } else {
           sess.username = result[0].userName;
           sess.name = result[0].firstName + ' ' + result[0].lastName;
@@ -236,7 +245,7 @@ app.post('/sendemail', function (req, res) {
     }
   });
   var mailOpts = {
-    from: req.body.contactName + ' &lt;' + req.body.contaceEmail + '&gt;',
+    from: `${req.body.contactName} <${req.body.contaceEmail}>`,
     to: 'rentemallapp@gmail.com',
     subject: 'RentemAll Question Request',
     text: `${req.body.contactName} (${req.body.contaceEmail}) says: ${req.body.message}`
@@ -310,3 +319,23 @@ app.all('*', function (req, res) {
 });
 
 
+/*************** Verify province function **************/
+function verifyProvince(postalcode) {
+  var postalFirstLetter = postalcode.substr(0, 1).toUpperCase();
+  var province = '';
+  if (postalFirstLetter === 'A') province = 'NL';
+  else if (postalFirstLetter === 'B') province = 'NS';
+  else if (postalFirstLetter === 'C') province = 'PE';
+  else if (postalFirstLetter === 'E') province = 'NB';
+  else if (postalFirstLetter === 'G' || postalFirstLetter === 'H' || postalFirstLetter === 'J') province = 'QC';
+  else if (postalFirstLetter === 'K' || postalFirstLetter === 'L' || postalFirstLetter === 'M' || postalFirstLetter === 'N' || postalFirstLetter === 'P') province = 'ON';
+  else if (postalFirstLetter === 'R') province = 'MB';
+  else if (postalFirstLetter === 'S') province = 'SK';
+  else if (postalFirstLetter === 'T') province = 'AB';
+  else if (postalFirstLetter === 'V') province = 'BC';
+  else if (postalFirstLetter === 'X') province = 'NN';
+  else if (postalFirstLetter === 'Y') province = 'YT';
+  else province = null;
+
+  return province;
+}
