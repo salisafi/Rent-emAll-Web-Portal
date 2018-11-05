@@ -138,6 +138,13 @@ span.star-prototype > * {
     margin-left: -20px;
 }
 
+/********************************** Post Item Page **********************************/
+#myImg {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
 /********************************** Lender's Page **********************************/
 .lender-list {
     padding: 10px 40px 10px 40px;
@@ -178,4 +185,4 @@ span.star-prototype > * {
     margin: 5px;
     color: #ff0000;
     font-size: 12px;
-  }
+}
