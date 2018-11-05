@@ -6,18 +6,18 @@
         <form name="register_form" method="POST" action="/signup" onsubmit="return formValidation();">
           <div class="form-group mb-3 w-50">
             <label for="username">USERNAME</label>
-            <input type="text" id="username" name="username" class="form-control" autofocus>
+            <input type="text" id="username" name="username" maxlength="20" class="form-control" autofocus>
             <div class="errorMsg" id="username_errors"></div>
           </div>
           <div class="form-group form-row mb-3">
             <div class="col">
               <label for="password">PASSWORD</label>
-              <input type="password" id="password" name="password" class="form-control">
+              <input type="password" id="password" name="password" maxlength="20" class="form-control">
               <div class="errorMsg" id="password_errors"></div>
             </div>
             <div class="col">
               <label for="retypePW">CONFIRM PASSWORD</label>
-              <input type="password" id="retypePW" name="retypePW" class="form-control">
+              <input type="password" id="retypePW" name="retypePW" maxlength="20" class="form-control">
             </div>
           </div>
 
@@ -26,12 +26,12 @@
           <div class="form-group form-row mb-3">
             <div class="col">
               <label for="firstname">FIRSTNAME</label>
-              <input type="text" id="firstname" name="firstname" class="form-control">
+              <input type="text" id="firstname" name="firstname" maxlength="30" class="form-control">
               <div class="errorMsg" id="name_errors"></div>
             </div>
             <div class="col">
               <label for="lastname">LASTNAME</label>
-              <input type="text" id="lastname" name="lastname" class="form-control">
+              <input type="text" id="lastname" name="lastname" maxlength="30" class="form-control">
             </div>
           </div>
           <div class="form-group form-row mb-3">
@@ -42,13 +42,13 @@
             </div>
             <div class="col">
               <label for="phoneNum">PHONE# (Optional)</label>
-              <input type="tel" id="phoneNum" name="phoneNum" class="form-control">
+              <input type="tel" id="phoneNum" name="phoneNum" maxlength="10" class="form-control">
               <div class="errorMsg" id="phone_errors"></div>
             </div>
           </div>
           <div class="form-group mb-5 w-50">
             <label for="postalcode">POSTAL CODE</label>
-            <input type="text" id="postalcode" name="postalcode" class="form-control">
+            <input type="text" id="postalcode" name="postalcode" maxlength="6" class="form-control">
             <div class="errorMsg" id="postal_errors"></div>
           </div>
           <div class="text-center">
