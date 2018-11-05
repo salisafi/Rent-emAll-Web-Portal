@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 
-// const hostname = '10.10.193.142';
-// const port = 10034;
-const hostname = 'localhost';
-const port = 3030;
+const hostname = '10.10.193.142';
+const port = 10034;
+// const hostname = 'localhost';
+// const port = 3030;
 
 var crypto = require('crypto');
 
