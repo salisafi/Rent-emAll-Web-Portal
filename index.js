@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
 var crypto = require('crypto');
 
@@ -42,7 +42,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: '@#@$MYSIGN#@$#$',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 24 * 3600 * 1000
+  }
 }));
 app.use(function (req, res, next) {
   res.locals.sess = req.session;
@@ -219,6 +222,7 @@ app.post('/login', function (req, res) {
           sess.postalcode = result[0].postalCode;
           sess.phone = result[0].phoneNumber;
           sess.email = result[0].emailAddress;
+          sess.prov = result[0].province;
           res.redirect('/');
         }
       }
@@ -283,11 +287,16 @@ app.post('/profile', function (req, res) {
       if (err) {
         console.log('Error: ' + err);
       } else {
-        sess.postalcode = body.postalcode;
-        sess.phone = body.phoneNum;
-        sess.email = body.email;
-        console.log(sess);
-        res.redirect('/profile');
+        var province = verifyProvince(body.postalcode);
+        if (province) {
+          sess.postalcode = body.postalcode;
+          sess.phone = body.phoneNum;
+          sess.email = body.email;
+          sess.prov = province;
+          res.redirect('/profile');
+        } else {
+          res.render('error', { errormessage: 'Postal code does not exist.' });
+        }
       }
     });
   } else {
@@ -302,11 +311,16 @@ app.post('/profile', function (req, res) {
       if (err) {
         console.log('Error: ' + err);
       } else {
-        sess.postalcode = body.postalcode;
-        sess.phone = body.phoneNum;
-        sess.email = body.email;
-        console.log(sess);
-        res.redirect('/profile');
+        var province = verifyProvince(body.postalcode);
+        if (province) {
+          sess.postalcode = body.postalcode;
+          sess.phone = body.phoneNum;
+          sess.email = body.email;
+          sess.prov = province;
+          res.redirect('/profile');
+        } else {
+          res.render('error', { errormessage: 'Postal code does not exist.' });
+        }
       }
     });
   }
