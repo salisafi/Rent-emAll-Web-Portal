@@ -29,9 +29,26 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function (err) {
-  if (err) throw err;
+  if (err) {
+    console.log("Cannot establish a connection with the database.");
+    connection = reconnect(connection);
+  };
   console.log("Database connected successfully.");
 });
+
+function reconnect(connection) {
+  console.log("Try a new connection...");
+  if (connection) connection.destroy();
+  var connection = mysql_npm.createConnection(db_config);
+  connection.connect(function (err) {
+    if (err) {
+      setTimeout(reconnect, 2000);
+    } else {
+      console.log("New connection established with the database.")
+      return connection;
+    }
+  });
+}
 
 app.set('views', __dirname + '/Rent-emAll-Web-Portal');
 app.set('view engine', 'ejs');
