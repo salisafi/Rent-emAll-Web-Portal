@@ -155,7 +155,11 @@ app.get('/map', function (req, res) {
 });
 
 app.get('/post', function (req, res) {
-  res.render('post-item');
+  if (req.session.username) {
+    res.render('post-item');
+  } else {
+    res.redirect('/');
+  }
 });
 
 app.get('/profile', function (req, res) {
@@ -232,6 +236,7 @@ app.post('/login', function (req, res) {
         if (password != decipheredOutput) {
           res.render('error', { errormessage: 'You just entered invalid password.' });
         } else {
+          sess.userid = result[0].userId;
           sess.username = result[0].userName;
           sess.name = result[0].firstName + ' ' + result[0].lastName;
           sess.firstname = result[0].firstName
@@ -281,16 +286,26 @@ app.post('/sendemail', function (req, res) {
 });
 
 app.post('/postItem', function (req, res) {
+  var sess = req.session;
   var body = req.body;
 
-  console.log("Post Item is clicked!!!");
+  res.write('*** below is a collecting data test result ***\n\n');
+  res.write(sess.userid + '\n');
+  res.write(body.category + '\n');
+  res.write(body.name + '\n');
+  res.write(body.description + '\n');
+  res.write(body.purchasedYear + '\n');
+  res.write(body.rentPerDay + '\n');
+  res.write(body.depositPrice + '\n');
+  res.write(sess.postalcode + '\n');
+  res.write(sess.prov + '\n');
+  res.end();
 
-  connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
-    body.name, body.description
-  ], function () {
-    res.write('success');
-    res.end();
-  });
+  // connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
+  //   body.name, body.description
+  // ], function () {
+
+  // });
 });
 
 app.post('/profile', function (req, res) {
