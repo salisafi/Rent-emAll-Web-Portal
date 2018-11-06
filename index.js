@@ -50,6 +50,12 @@ function reconnect(connection) {
   });
 }
 
+connection.on('error', function (err){
+  if(err.code === 'ETIMEDOUT' ){
+      connection.connect();
+  }
+});
+
 app.set('views', __dirname + '/Rent-emAll-Web-Portal');
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
