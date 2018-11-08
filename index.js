@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
 var crypto = require('crypto');
 
@@ -21,40 +21,41 @@ const server = http.createServer(app).listen(port, hostname, () => {
 });
 
 var connection = mysql.createConnection({
-  database: 'prj566_182a08',
-  host: 'zenit.senecac.on.ca',
-  user: 'prj566_182a08',
-  password: 'jaMW2249',
+  database: 'prj566_183a15',
+  host: 'mymysql.senecacollege.ca',
+  user: 'prj566_183a15',
+  password: 'pdXT9724',
   multipleStatements: true
 });
 
 connection.connect(function (err) {
   if (err) {
-    console.log("Cannot establish a connection with the database.");
-    connection = reconnect(connection);
+    throw err;
+    // console.log("Cannot establish a connection with the database.");
+    // connection = reconnect(connection);
   };
   console.log("Database connected successfully.");
 });
 
-function reconnect(connection) {
-  console.log("Try a new connection...");
-  if (connection) connection.destroy();
-  var connection = mysql_npm.createConnection(db_config);
-  connection.connect(function (err) {
-    if (err) {
-      setTimeout(reconnect, 2000);
-    } else {
-      console.log("New connection established with the database.")
-      return connection;
-    }
-  });
-}
+// function reconnect(connection) {
+//   console.log("Try a new connection...");
+//   if (connection) connection.destroy();
+//   var connection = mysql_npm.createConnection(db_config);
+//   connection.connect(function (err) {
+//     if (err) {
+//       setTimeout(reconnect, 2000);
+//     } else {
+//       console.log("New connection established with the database.")
+//       return connection;
+//     }
+//   });
+// }
 
-connection.on('error', function (err){
-  if(err.code === 'ETIMEDOUT' ){
-      connection.connect();
-  }
-});
+// connection.on('error', function (err){
+//   if(err.code === 'ETIMEDOUT' ){
+//       connection.connect();
+//   }
+// });
 
 app.set('views', __dirname + '/Rent-emAll-Web-Portal');
 app.set('view engine', 'ejs');
