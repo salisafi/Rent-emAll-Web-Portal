@@ -22,7 +22,7 @@
             <br />
 
             <div class="row" id="searchbar-row">
-                <form action="/list" method="get" class="form-inline">
+                <form method="get" class="form-inline">
                     <select name="category" class="form-control mr-sm-2">
                         <option value="0">Category</option>
                         <option value="1">Homeware</option>
@@ -34,7 +34,7 @@
                     </select>
 
                     <input id="searchbar" name="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?" aria-label="Search">
-                    <input type="submit" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List">
+                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List">
                     <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary my-2" value="Map">
                 </form>
                 <% if(sess.username) { %>

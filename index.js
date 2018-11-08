@@ -24,7 +24,8 @@ var connection = mysql.createConnection({
   database: 'prj566_182a08',
   host: 'zenit.senecac.on.ca',
   user: 'prj566_182a08',
-  password: 'jaMW2249'
+  password: 'jaMW2249',
+  multipleStatements: true
 });
 
 connection.connect(function (err) {
@@ -121,38 +122,78 @@ app.get('/contactus', function (req, res) {
 });
 
 app.get('/list', function (req, res) {
-  var searchKeyword = req.query.searchbar;
-  var category = req.query.category;
-  var sql = "";
+  const searchKeyword = req.query.searchbar;
+  const category = req.query.category;
+  const sortby = req.query.sortby;
+  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
   var params = [];
 
-  if (category == 0) {
-    sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
-  } else {
-    sql = "SELECT itemId, userId, name, description, deposit, rental_price_daily, photoURL, creationDate, item_rate from ItemTbl WHERE name LIKE '%" + searchKeyword + "%' AND categoryId = ? ORDER BY creationDate DESC";
-    params = [category];
-  }
-
-  connection.query(sql, params, function (err, results) {
-    if (err) throw err;
-
-    let mDates = [];
-    let fDates = [];
-
-    for (var i = 0; i < results.length; i++) {
-      mDates[i] = moment(results[i].creationDate);
-      fDates[i] = mDates[i].format('LL');
+  if (!searchKeyword)
+    res.redirect('/');
+  else {
+    if (category == 0) {
+      sql += " ORDER BY creationDate DESC";
+    } else {
+      sql += " AND categoryId = ? ORDER BY creationDate DESC";
+      params = [category];
     }
 
-    res.render('itemlisting', {
-      items: results,
-      postedDates: fDates
+    connection.query(sql + ";SELECT rating FROM ReviewTbl", params, function (err, results) {
+      if (err) throw err;
+      
+      let mDates = [];
+      let fDates = [];
+      var averageRate = 0;
+
+      for (var i = 0; i < results[0].length; i++) {
+        mDates[i] = moment(results[0][i].creationDate);
+        fDates[i] = mDates[i].format('LL');
+      }
+
+      for (var i = 0; i < results[1].length; i++)
+        averageRate += results[1][i].rating;
+
+      averageRate /= results[1].length;
+
+      res.render('itemlisting', {
+        items: results[0],
+        postedDates: fDates,
+        averageRate: averageRate
+      });
     });
-  });
+  }
 });
 
-app.get('/item', function (req, res) {
-  res.render('item');
+app.get("/item/:id", function (req, res) {
+  var itemId = req.params.id;
+
+  connection.query("SELECT * FROM ItemTbl WHERE itemId = ?; SELECT * FROM ReviewTbl WHERE itemId = ?", [itemId, itemId], 
+  function(err, results) {
+    if (err) throw err;
+    
+    var itemPostedDate = moment(results[0][0].creationDate);
+    var fItemPostedDate = itemPostedDate.format('LL');
+
+    var reviewPostedDate = [];
+    var fReviewPostedDate = [];
+    var averageRate = 0;
+
+    for (var i = 0; i < results[1].length; i++) {
+      reviewPostedDate[i] = moment(results[1][i].creationDate);
+      fReviewPostedDate[i] = reviewPostedDate[i].format('LL');
+      averageRate += results[1][i].rating;
+    }
+
+    averageRate /= results[1].length;
+
+    res.render('item', {
+      item: results[0][0],
+      itemPostedDate: fItemPostedDate,
+      review: results[1],
+      reviewPostedDate: fReviewPostedDate,
+      averageRate: averageRate
+    });
+  });
 });
 
 app.get('/map', function (req, res) {

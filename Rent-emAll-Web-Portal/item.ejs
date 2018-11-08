@@ -4,11 +4,11 @@
             <div class="shadow-lg rounded">
                 <div class="card my-5">
                     <div class="card-body">
+
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;">Item
-                                        Title</h4><br>
+                                    <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;"><%= item.name %></h4><br>
                                 </div>
                             </div>
                             <div class="row">
@@ -18,10 +18,10 @@
                                             <div class="form-group row">
                                                 <div class="col-md-5">
                                                     <!-- first column -->
-                                                    <img id="myImg" class="mx-auto" src="asset/img/3_720p.jpg" alt="Upload image"
+                                                    <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
                                                         width="95%" height="300" style="object-fit: cover; border: 1px solid #ddd" />
                                                     <br>
-                                                    <span>Posted: month/date/year</span>
+                                                    <span>Posted: <%= itemPostedDate %></span>
                                                 </div> <!-- col-md-5 -->
 
                                                 <div class="col-md-7">
@@ -29,29 +29,16 @@
                                                     <div class="form-group row">
                                                         <!-- first row -->
                                                         <h5>Lender:&nbsp;&nbsp;</h5>
-                                                        <h5>Username123</h5>
+                                                        <h5><%= item.userId %></h5>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <span class="star-prototype">4.5</span>
+                                                        <span class="star-prototype"><%= item.item_rate %></span>
                                                     </div>
 
                                                     <div class="form-group row">
                                                         <!-- second row -->
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                                            sed
-                                                            do eiusmod tempor incididunt ut labore et dolore magna
-                                                            aliqua. Ut enim ad minim veniam, quis nostrud
-                                                            exercitation
-                                                            ullamco laboris nisi ut aliquip ex ea commodo
-                                                            consequat.
-                                                            Duis aute irure dolor in reprehenderit in voluptate
-                                                            velit
-                                                            esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                                                            sint
-                                                            occaecat cupidatat non proident, sunt in culpa qui
-                                                            officia
-                                                            deserunt mollit anim id est laborum.</p>
+                                                        <p><%= item.description %></p>
                                                         <br /><br />
-                                                        <p>Date Purchased: YYYY/MM/DD</p>
+                                                        <p>Purchased Year: <%= item.purchasedYear %></p>
                                                     </div>
                                                     <br>
 
@@ -59,7 +46,7 @@
                                                         <!-- third row -->
                                                         <span>Deposit Price:</span>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <h3>$200.00</h3>
+                                                        <h3>$<%= item.deposit %></h3>
                                                     </div> <!-- row -->
                                                     <br>
                                                     <br>
@@ -68,7 +55,7 @@
                                                         <!-- fourth row -->
                                                         <span>Rental Price:</span>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <h3>$4.00</h3>
+                                                        <h3>$<%= item.rental_price_daily %></h3>
                                                     </div> <!-- row -->
                                                     <br>
                                                 </div>
@@ -89,102 +76,36 @@
                         <div class="container">
                             <h5 class="font-weight-bold">Renter Reviews</h5>
                             <div class="d-inline" id="avgRating">
-                                <span class="fa fa-star text-warning" id="star-1"></span>
+                                <!--<span class="fa fa-star text-warning" id="star-1"></span>
                                 <span class="fa fa-star text-warning" id="star-2"></span>
                                 <span class="fa fa-star text-warning" id="star-3"></span>
                                 <span class="fa fa-star text-warning" id="star-4"></span>
-                                <span class="fa fa-star text-secondary" id="star-5"></span>
-                                <span class="ml-2 text-info" id="noOfReviews">(5)</span>
-                                <span class="d-block text-info mt-2" id="noOfStars">4.1 out of 5 stars</span>
+                                <span class="fa fa-star text-secondary" id="star-5"></span>-->
+                                <span class="star-prototype"><%= averageRate %></span>
+                                <span class="ml-2 text-info" id="noOfReviews">(<%= review.length %>)</span>
+                                <span class="d-block text-info mt-2" id="noOfStars"><%= averageRate %> out of 5 stars</span>
                             </div>
-                            <h4 class="text-right text-info">[itemName] ([Availability])</h4>
-                            <h5 class="text-right">Lender: [Username123]</h5>
+                            <h4 class="text-right text-info"><%= item.name %></h4>
+                            <h5 class="text-right">Lender: <%= item.userId %></h5>
 
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%;" id="reviews">
-                                <div class="d-inline" id="individualRating">
+                            <% for (var i = 0; i < review.length; i++) { %>
+                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%; background: #FEF9E1;" id="reviews">
+                                <!--<div class="d-inline" id="individualRating">
                                     <span class="fa fa-star text-warning" id="star-1"></span>
                                     <span class="fa fa-star text-warning" id="star-2"></span>
                                     <span class="fa fa-star text-warning" id="star-3"></span>
                                     <span class="fa fa-star text-warning" id="star-4"></span>
                                     <span class="fa fa-star text-secondary" id="star-5"></span>
-                                </div>
-                                <span class="font-weight-bold ml-3" id="reviewTitle">[Review Title]</span><br>
-                                <span id="username">By [Username]</span><span class="ml-2" id="postedDate">on [Posted Date]</span>
-                                <br><br>
-                                <p id="reviewContent">
-                                    [Review Content] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic rerum culpa doloribus quidem voluptates molestiae, provident blanditiis, delectus sint minima.
-                                </p>
-                            </div>
-
-                            <!--Hard Coded-->
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%;" id="reviews">
-                                <div class="d-inline" id="individualRating">
-                                    <span class="fa fa-star text-warning" id="star-1"></span>
-                                    <span class="fa fa-star text-warning" id="star-2"></span>
-                                    <span class="fa fa-star text-warning" id="star-3"></span>
-                                    <span class="fa fa-star text-warning" id="star-4"></span>
-                                    <span class="fa fa-star text-secondary" id="star-5"></span>
-                                </div>
-                                <span class="font-weight-bold ml-3" id="reviewTitle">[Review Title]</span><br>
-                                <span id="username">By [Username]</span><span class="ml-2" id="postedDate">on [Posted Date]</span>
-                                <br><br>
-                                <p id="reviewContent">
-                                    [Review Content] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic rerum culpa doloribus quidem voluptates molestiae, provident blanditiis, delectus sint minima.
-                                </p>
-                            </div>
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%;" id="reviews">
-                                <div class="d-inline" id="individualRating">
-                                    <span class="fa fa-star text-warning" id="star-1"></span>
-                                    <span class="fa fa-star text-warning" id="star-2"></span>
-                                    <span class="fa fa-star text-warning" id="star-3"></span>
-                                    <span class="fa fa-star text-warning" id="star-4"></span>
-                                    <span class="fa fa-star text-secondary" id="star-5"></span>
-                                </div>
-                                <span class="font-weight-bold ml-3" id="reviewTitle">[Review Title]</span><br>
-                                <span id="username">By [Username]</span><span class="ml-2" id="postedDate">on [Posted Date]</span>
-                                <br><br>
-                                <p id="reviewContent">
-                                    [Review Content] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic rerum culpa doloribus quidem voluptates molestiae, provident blanditiis, delectus sint minima.
-                                </p>
-                            </div>
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%;" id="reviews">
-                                <div class="d-inline" id="individualRating">
-                                    <span class="fa fa-star text-warning" id="star-1"></span>
-                                    <span class="fa fa-star text-warning" id="star-2"></span>
-                                    <span class="fa fa-star text-warning" id="star-3"></span>
-                                    <span class="fa fa-star text-warning" id="star-4"></span>
-                                    <span class="fa fa-star text-secondary" id="star-5"></span>
-                                </div>
-                                <span class="font-weight-bold ml-3" id="reviewTitle">[Review Title]</span><br>
-                                <span id="username">By [Username]</span><span class="ml-2" id="postedDate">on [Posted Date]</span>
-                                <br><br>
-                                <p id="reviewContent">
-                                    [Review Content] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic rerum culpa doloribus quidem voluptates molestiae, provident blanditiis, delectus sint minima.
-                                </p>
-                            </div>
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%;" id="reviews">
-                                <div class="d-inline" id="individualRating">
-                                    <span class="fa fa-star text-warning" id="star-1"></span>
-                                    <span class="fa fa-star text-warning" id="star-2"></span>
-                                    <span class="fa fa-star text-warning" id="star-3"></span>
-                                    <span class="fa fa-star text-warning" id="star-4"></span>
-                                    <span class="fa fa-star text-secondary" id="star-5"></span>
-                                </div>
-                                <span class="font-weight-bold ml-3" id="reviewTitle">[Review Title]</span><br>
-                                <span id="username">By [Username]</span><span class="ml-2" id="postedDate">on [Posted Date]</span>
-                                <br><br>
-                                <p id="reviewContent">
-                                    [Review Content] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic rerum culpa doloribus quidem voluptates molestiae, provident blanditiis, delectus sint minima.
-                                </p>
-                            </div>
-                            <!--Hard Coded-->
-
-                                <!--<div class="speech-bubble">
-                                    <div class="arrow bottom"></div>
-                                    
                                 </div>-->
+                                <span class="star-prototype"><%= review[i].rating %></span>
+                                <span class="font-weight-bold ml-3" id="reviewTitle"><%= review[i].reviewTitle %></span><br>
+                                <span id="username">By <%= review[i].userId %></span><span class="ml-2" id="postedDate">on <%= reviewPostedDate[i] %></span>
+                                <br><br>
+                                <p id="reviewContent"><%= review[i].reviewText %></p>
                             </div>
+                            <% } %>
                         </div>
+
                     </div>
                 </div>
             </div>
