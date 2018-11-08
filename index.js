@@ -23,7 +23,6 @@ const server = http.createServer(app).listen(port, hostname, () => {
 var connection = mysql.createConnection({
   database: 'prj566_182a08',
   host: 'zenit.senecac.on.ca',
-  path: '/phpMyAdmin/',
   user: 'prj566_182a08',
   password: 'jaMW2249'
 });
