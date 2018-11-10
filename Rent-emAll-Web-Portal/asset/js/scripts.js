@@ -262,6 +262,7 @@ $(function () {
 
     $('#itemform').submit(function () {
         $('.errorMsg').text('');
+        var img = $('#photoURL').val();
         var category = $('#categoryselect').val();
         var title = $('#name').val();
         var description = $('#description').val();
@@ -270,6 +271,10 @@ $(function () {
         var date = $('#purchasedYear').val();
         var valid = true;
 
+        if (!img) {
+            $('#imgError').text('Please upload an image.');
+            valid = false;
+        }
         if (!category) {
             $('#categoryError').text('Please select a category.');
             valid = false;
