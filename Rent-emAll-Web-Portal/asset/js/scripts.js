@@ -252,6 +252,14 @@ $(function () {
             .height(200);
     };
 
+    $('.date-own').datepicker({
+        format: "yyyy",
+        viewMode: "years", 
+        minViewMode: "years",
+        endDate: '+0d',
+        autoclose: true,
+    });
+
     $('#itemform').submit(function () {
         $('.errorMsg').text('');
         var category = $('#categoryselect').val();
@@ -295,7 +303,13 @@ $(function () {
             valid = false;
         }
         if (!date) {
-            $('#dateError').text('Please enter a purchased date.');
+            $('#dateError').text('Please enter a purchased year.');
+            valid = false;
+        } else if (date.length != 4) {
+            $('#dateError').text('Purchased year must be 4 digits.');
+            valid = false;
+        } else if (isNaN(date)) {
+            $('#dateError').text('Purchased year must be numbers.');
             valid = false;
         }
         return valid;

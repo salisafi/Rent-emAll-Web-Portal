@@ -5,10 +5,10 @@ const http = require('http');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const multer = require('multer');
 const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
-const multer = require('multer');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -329,37 +329,27 @@ app.post('/sendemail', function (req, res) {
 var upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'Rent-emAll-Web-Portal/uploads/images');
+      cb(null, './Rent-emAll-Web-Portal/uploads/images/');
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname + "-" + Date.now());
+      cb(null, Date.now() + "-" + file.originalname);
     }
   })
 });
-
 app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var sess = req.session;
   var body = req.body;
-  console.log(req.file);
-
-  res.write('*** below is a collecting data test result ***\n\n');
-  res.write(sess.userid + '\n');
-  res.write(body.category + '\n');
-  res.write(body.name + '\n');
-  res.write(body.description + '\n');
-  res.write(body.purchasedYear + '\n');
-  res.write(body.rentPerDay + '\n');
-  res.write(body.depositPrice + '\n');
-  res.write(sess.postalcode + '\n');
-  res.write(sess.prov + '\n');
-  // res.write(req.file.path + '\n');
-  res.end();
-
-  // connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
-  //   body.name, body.description
-  // ], function () {
-
-  // });
+  var filePath = '../uploads/images/' + req.file.filename;
+  
+  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
+    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
+  ], function (err, result) {
+    if (err) {
+      res.render('error', { errormessage: 'Unable to post your item.' });
+    } else {
+      res.redirect('/');
+    }
+  });
 });
 
 app.post('/profile', function (req, res) {

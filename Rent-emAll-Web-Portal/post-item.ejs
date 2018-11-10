@@ -3,7 +3,7 @@
         <div class="col-md-10 mx-auto card my-5 shadow-lg rounded">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Post Product</h2><br>
-                <form id="itemform" name="itemform" method="POST" action="/postItem">
+                <form id="itemform" name="itemform" enctype="multipart/form-data" method="POST" action="/postItem">
                     <div class="form-group row">
                         <div class="col-md-4">
                             <!-- first column -->
@@ -30,12 +30,12 @@
                                 <div class="col-sm-5">
                                     <select id="categoryselect" name="category" class="form-control mr-sm-2" style="background-color: rgb(223, 244, 255);">
                                         <option value="">Please select one...</option>
-                                        <option value="homeware">Homeware</option>
-                                        <option value="tools">Tools &amp; Equip</option>
-                                        <option value="sports">Sports &amp; Rec</option>
-                                        <option value="entertainment">Entertainment</option>
-                                        <option value="babies">Babies &amp; Kids</option>
-                                        <option value="fashion">Fashion</option>
+                                        <option value="1">Homeware</option>
+                                        <option value="2">Tools &amp; Equip</option>
+                                        <option value="3">Sports &amp; Rec</option>
+                                        <option value="4">Entertainment</option>
+                                        <option value="5">Babies &amp; Kids</option>
+                                        <option value="6">Fashion</option>
                                     </select>
                                     <div class="errorMsg" id="categoryError"></div>
                                 </div>
@@ -90,8 +90,8 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="purchasedYear">Date Purchased</label><br />
-                                            <input type="date" class="form-control" id="purchasedYear" name="purchasedYear">
+                                            <label for="purchasedYear">Year Purchased</label><br />
+                                            <input type="text" class="date-own form-control" id="purchasedYear" name="purchasedYear">
                                             <div class="errorMsg" id="dateError"></div>
                                         </div> <!-- form-group row -->
                                     </div>
@@ -110,15 +110,6 @@
 </div>
 <script>
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd
-    }
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("purchasedYear").setAttribute("max", today);
+    document.getElementById("purchasedYear").setAttribute("max", yyyy);
 </script>
