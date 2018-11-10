@@ -8,6 +8,7 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
+const multer = require('multer');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -324,9 +325,22 @@ app.post('/sendemail', function (req, res) {
   });
 });
 
-app.post('/postItem', function (req, res) {
+/**************** Post Item ****************/
+var upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'Rent-emAll-Web-Portal/uploads/images');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname + "-" + Date.now());
+    }
+  })
+});
+
+app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var sess = req.session;
   var body = req.body;
+  console.log(req.file);
 
   res.write('*** below is a collecting data test result ***\n\n');
   res.write(sess.userid + '\n');
@@ -338,6 +352,7 @@ app.post('/postItem', function (req, res) {
   res.write(body.depositPrice + '\n');
   res.write(sess.postalcode + '\n');
   res.write(sess.prov + '\n');
+  // res.write(req.file.path + '\n');
   res.end();
 
   // connection.query("INSERT INTO testTbl(name, description) VALUES (?,?)", [
