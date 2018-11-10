@@ -20,42 +20,34 @@ const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
 });
 
-var connection = mysql.createConnection({
+var dbConfig = {
   database: 'prj566_183a15',
   host: 'mymysql.senecacollege.ca',
   user: 'prj566_183a15',
   password: 'pdXT9724',
   multipleStatements: true
-});
+};
 
-connection.connect(function (err) {
-  if (err) {
-    throw err;
-    // console.log("Cannot establish a connection with the database.");
-    // connection = reconnect(connection);
-  };
-  console.log("Database connected successfully.");
-});
+var connection;
+function handleDisconnect() {
+  connection = mysql.createConnection(dbConfig);
+  connection.connect(function onConnect(err) {
+    if (err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 10000);
+    }
+  });
 
-// function reconnect(connection) {
-//   console.log("Try a new connection...");
-//   if (connection) connection.destroy();
-//   var connection = mysql_npm.createConnection(db_config);
-//   connection.connect(function (err) {
-//     if (err) {
-//       setTimeout(reconnect, 2000);
-//     } else {
-//       console.log("New connection established with the database.")
-//       return connection;
-//     }
-//   });
-// }
-
-// connection.on('error', function (err){
-//   if(err.code === 'ETIMEDOUT' ){
-//       connection.connect();
-//   }
-// });
+  connection.on('error', function onError(err) {
+    console.log('db error', err);
+    if (err.code == 'PROTOCOL_CONNECTION_LOST' || err.code == 'ETIMEDOUT') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+handleDisconnect();
 
 app.set('views', __dirname + '/Rent-emAll-Web-Portal');
 app.set('view engine', 'ejs');
@@ -141,7 +133,7 @@ app.get('/list', function (req, res) {
 
     connection.query(sql + ";SELECT rating FROM ReviewTbl", params, function (err, results) {
       if (err) throw err;
-      
+
       let mDates = [];
       let fDates = [];
       var averageRate = 0;
@@ -168,33 +160,33 @@ app.get('/list', function (req, res) {
 app.get("/item/:id", function (req, res) {
   var itemId = req.params.id;
 
-  connection.query("SELECT * FROM ItemTbl WHERE itemId = ?; SELECT * FROM ReviewTbl WHERE itemId = ?", [itemId, itemId], 
-  function(err, results) {
-    if (err) throw err;
-    
-    var itemPostedDate = moment(results[0][0].creationDate);
-    var fItemPostedDate = itemPostedDate.format('LL');
+  connection.query("SELECT * FROM ItemTbl WHERE itemId = ?; SELECT * FROM ReviewTbl WHERE itemId = ?", [itemId, itemId],
+    function (err, results) {
+      if (err) throw err;
 
-    var reviewPostedDate = [];
-    var fReviewPostedDate = [];
-    var averageRate = 0;
+      var itemPostedDate = moment(results[0][0].creationDate);
+      var fItemPostedDate = itemPostedDate.format('LL');
 
-    for (var i = 0; i < results[1].length; i++) {
-      reviewPostedDate[i] = moment(results[1][i].creationDate);
-      fReviewPostedDate[i] = reviewPostedDate[i].format('LL');
-      averageRate += results[1][i].rating;
-    }
+      var reviewPostedDate = [];
+      var fReviewPostedDate = [];
+      var averageRate = 0;
 
-    averageRate /= results[1].length;
+      for (var i = 0; i < results[1].length; i++) {
+        reviewPostedDate[i] = moment(results[1][i].creationDate);
+        fReviewPostedDate[i] = reviewPostedDate[i].format('LL');
+        averageRate += results[1][i].rating;
+      }
 
-    res.render('item', {
-      item: results[0][0],
-      itemPostedDate: fItemPostedDate,
-      review: results[1],
-      reviewPostedDate: fReviewPostedDate,
-      averageRate: averageRate
+      averageRate /= results[1].length;
+
+      res.render('item', {
+        item: results[0][0],
+        itemPostedDate: fItemPostedDate,
+        review: results[1],
+        reviewPostedDate: fReviewPostedDate,
+        averageRate: averageRate
+      });
     });
-  });
 });
 
 app.get('/map', function (req, res) {
