@@ -46,7 +46,7 @@ function profileValidation() {
     // clearErrors();
     var validPW = true;
     $(".errorMsg").empty();
-    if($('#ChangePasswordBtn').data('clicked')) {
+    if ($('#ChangePasswordBtn').data('clicked')) {
         validPW = validPassword()
     }
     return validPW && validEmail() && validPhoneNum() && validPostalCode();
@@ -234,3 +234,84 @@ $('#userprofile')
     })
     .find('input:submit, button:submit')
     .prop('disabled', true);
+
+
+/**************************** Post Item Validation ****************************/
+$(function () {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("purchasedYear").setAttribute("max", today);
+
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    function imageIsLoaded(e) {
+        $('#myImg').attr('src', e.target.result)
+            .width(auto)
+            .height(200);
+    };
+
+    $('#itemform').submit(function () {
+        $('.errorMsg').text('');
+        var category = $('#categoryselect').val();
+        var title = $('#name').val();
+        var description = $('#description').val();
+        var deposit = $('#depositPrice').val();
+        var rent = $('#rentPerDay').val();
+        var date = $('#purchasedYear').val();
+        var valid = true;
+
+        if (!category) {
+            $('#categoryError').text('Please select a category.');
+            valid = false;
+        }
+        if (!title) {
+            $('#nameError').text('Please enter a title.');
+            valid = false;
+        }
+        if (!description) {
+            $('#descError').text('Please enter a description.');
+            valid = false;
+        }
+        if (!deposit) {
+            $('#depositError').text('Please enter a deposit amount.');
+            valid = false;
+        } else if (deposit < 0) {
+            $('#depositError').text('Deposit must be positive value.');
+            valid = false;
+        } else if (deposit > 10000) {
+            $('#depositError').text('Deposit must be maximum $10000.');
+            valid = false;
+        }
+        if (!rent) {
+            $('#rentError').text('Please enter a rental price per day.');
+            valid = false;
+        } else if (rent < 0) {
+            $('#rentError').text('Rental price must be positive value.');
+            valid = false;
+        } else if (rent > 500) {
+            $('#rentError').text('Rental price must be maximum $500.');
+            valid = false;
+        }
+        if (!date) {
+            $('#dateError').text('Please enter a purchased date.');
+            valid = false;
+        }
+        return valid;
+    })
+});

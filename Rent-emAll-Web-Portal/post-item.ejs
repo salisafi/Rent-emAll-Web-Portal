@@ -3,7 +3,7 @@
         <div class="col-md-10 mx-auto card my-5 shadow-lg rounded">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Post Product</h2><br>
-                <form name="itemform" method="POST" action="/postItem">
+                <form id="itemform" name="itemform" method="POST" action="/postItem">
                     <div class="form-group row">
                         <div class="col-md-4">
                             <!-- first column -->
@@ -29,9 +29,8 @@
                                 </div>
 
                                 <div class="col-sm-5">
-                                    <select id="categoryselect" name="category" class="form-control mr-sm-2" required
-                                        style="background-color: rgb(223, 244, 255);">
-                                        <option value="0">Please select one...</option>
+                                    <select id="categoryselect" name="category" class="form-control mr-sm-2" style="background-color: rgb(223, 244, 255);">
+                                        <option value="">Please select one...</option>
                                         <option value="homeware">Homeware</option>
                                         <option value="tools">Tools &amp; Equip</option>
                                         <option value="sports">Sports &amp; Rec</option>
@@ -39,6 +38,7 @@
                                         <option value="babies">Babies &amp; Kids</option>
                                         <option value="fashion">Fashion</option>
                                     </select>
+                                    <div class="errorMsg" id="categoryError"></div>
                                 </div>
                             </div>
 
@@ -49,8 +49,8 @@
                                 </div>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name" name="name" maxlength="100"
-                                        required>
+                                    <input type="text" class="form-control" id="name" name="name" maxlength="100">
+                                    <div class="errorMsg" id="nameError"></div>
                                 </div>
                             </div>
 
@@ -62,7 +62,8 @@
 
                                 <div class="col-sm-9">
                                     <textarea class="form-control" id="description" name="description" rows="7"
-                                        maxlength="255" required></textarea>
+                                        maxlength="255"></textarea>
+                                    <div class="errorMsg" id="descError"></div>
                                 </div>
                             </div>
                             <br>
@@ -73,16 +74,16 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="depositPrice">Deposite Price $ </label><br />
-                                            <input type="number" min="0" max="10000" class="form-control" id="depositPrice"
-                                                name="depositPrice" required>
+                                            <input type="number" class="form-control" id="depositPrice" name="depositPrice">
+                                            <div class="errorMsg" id="depositError"></div>
                                         </div> <!-- form-group row -->
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="rentPerDay">Rental Price $ (per day)</label><br />
-                                            <input type="number" min="0" max="500" class="form-control" id="rentPerDay"
-                                                name="rentPerDay" required>
+                                            <input type="number" class="form-control" id="rentPerDay" name="rentPerDay">
+                                            <div class="errorMsg" id="rentError"></div>
                                         </div> <!-- form-group row -->
                                     </div>
                                 </div> <!-- col-sm-6 -->
@@ -91,8 +92,8 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="purchasedYear">Date Purchased</label><br />
-                                            <input type="date" class="form-control" id="purchasedYear" name="purchasedYear"
-                                                required>
+                                            <input type="date" class="form-control" id="purchasedYear" name="purchasedYear">
+                                            <div class="errorMsg" id="dateError"></div>
                                         </div> <!-- form-group row -->
                                     </div>
                                 </div> <!-- col-sm-6 -->
@@ -101,42 +102,10 @@
                         </div>
                     </div> <!-- col-sm-8 -->
                     <div class="text-center">
-                        <button class="btn btn-lg btn-primary text-uppercase" type="submit">&emsp;&emsp;Post&emsp;&emsp;</button>
+                        <input form="itemform" class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Post&emsp;&emsp;">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd
-    }
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("purchasedYear").setAttribute("max", today);
-
-    $(function () {
-        $(":file").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = imageIsLoaded;
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-    });
-
-    function imageIsLoaded(e) {
-        $('#myImg').attr('src', e.target.result)
-            .width(auto)
-            .height(200);
-    };
-</script>
