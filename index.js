@@ -292,24 +292,91 @@ app.post('/login', function (req, res) {
   });
 });
 
-app.post('/forgotuser', function (req, res) {
+// Nodemailer Transporter
+var transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'rentemallapp@gmail.com',
+    pass: 'xfchjinuvfpucgcb'
+  }
+});
 
+app.post('/forgotuser', function (req, res) {
+  var email = req.body.email;
+
+  connection.query('SELECT * FROM UserTbl WHERE emailAddress = ?', [email], function (err, result) {
+    if (err) {
+      console.log('Error: ' + err);
+    } else {
+      if (result.length === 0) {
+        res.render('error', { errormessage: 'Email address does not exist.' });
+      } else {
+        var mailOpts = {
+          from: 'rentemallapp@gmail.com',
+          to: email,
+          subject: 'RentemAll Username Request',
+          text: `Hi ${result[0].firstName},\n\nYour username is "${result[0].userName}"`
+        };
+        transporter.sendMail(mailOpts, function (error, response) {
+          if (error) {
+            res.end("Email send failed");
+          } else {
+            res.redirect('/');
+          }
+        });
+      }
+    }
+  });
 });
 
 app.post('/forgotpass', function (req, res) {
+  var username = req.body.username;
+  var email = req.body.email;
 
+  connection.query('SELECT * FROM UserTbl WHERE emailAddress = ? AND BINARY userName = ?', [email, username], function (err, result) {
+    if (err) {
+      console.log('Error: ' + err);
+    } else {
+      if (result.length === 0) {
+        res.render('error', { errormessage: 'Invalid email and/or username.' });
+      } else {
+        var newPW = randomPassword();
+        console.log('your new password is ' + newPW);
+
+        var key = 'myKey';
+        var cipher = crypto.createCipher('aes192', key);
+        cipher.update(newPW, 'utf8', 'base64');
+        var cipheredOutput = cipher.final('base64');
+
+        connection.query('UPDATE UserTbl SET password = ? WHERE userName = ?', [cipheredOutput, username], function (err, result) {
+          if (err) {
+            console.log('Error: ' + err);
+          } else {
+            res.redirect('/');
+          }
+        });
+
+        var mailOpts = {
+          from: 'rentemallapp@gmail.com',
+          to: email,
+          subject: 'RentemAll Password Reset Request',
+          text: `Hi ${result[0].firstName},\n\nYour new password is "${newPW}". After login, Please go to user profile page and change your password.`
+        };
+        transporter.sendMail(mailOpts, function (error, response) {
+          if (error) {
+            res.end("Email send failed");
+          } else {
+            res.redirect('/');
+          }
+        });
+      }
+    }
+  });
 });
 
 app.post('/sendemail', function (req, res) {
-  var transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: 'rentemallapp@gmail.com',
-      pass: 'xfchjinuvfpucgcb'
-    }
-  });
   var mailOpts = {
     from: `${req.body.contactName} <${req.body.contaceEmail}>`,
     to: 'rentemallapp@gmail.com',
@@ -340,7 +407,7 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var sess = req.session;
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
-  
+
   connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
     sess.userid, body.category, body.name, body.description, body.purchasedYear, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
   ], function (err, result) {
@@ -428,4 +495,20 @@ function verifyProvince(postalcode) {
   else province = null;
 
   return province;
+}
+
+/*************** Random password generator **************/
+function randomPassword() {
+  var randomPW = "";
+  var possibleUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var possibleLower = "abcdefghijklmnopqrstuvwxyz";
+  var possibleNum = "0123456789";
+
+  for (var i = 0; i < 4; i++) {
+    randomPW += possibleUpper.charAt(Math.floor(Math.random() * possibleUpper.length));
+    randomPW += possibleNum.charAt(Math.floor(Math.random() * possibleNum.length));
+    randomPW += possibleLower.charAt(Math.floor(Math.random() * possibleLower.length));
+  }
+
+  return randomPW;
 }
