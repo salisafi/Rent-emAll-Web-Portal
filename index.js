@@ -415,7 +415,7 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
       res.render('error', { errormessage: 'Unable to post your item.' });
     } else {
       console.log(result.insertId);
-      res.redirect('/item/:' + result.insertId);
+      res.redirect('/item/' + result.insertId);
     }
   });
 });
