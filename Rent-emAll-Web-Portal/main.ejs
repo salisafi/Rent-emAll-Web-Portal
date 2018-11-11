@@ -27,16 +27,16 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
             <% if(sess.name && sess.username){ %>
-            <h1>HELLO
+            <h3>HELLO
                 <%= name %> (
-                <%= username %>)!</h1>
+                <%= username %>)!</h3>
             <p>You have logged in.</p>
             <% } else { %>
             <h1>Welcome to Rent'emAll</h1>
-            <p>Here is your chance to make money with all your goods! Rent'emAll helps to ensure safe and satisfying
-                mutual rental transactions between users.
+            <p>Here is your chance to make money with all your goods!<br />
+                Rent'emAll helps to ensure safe and satisfying mutual rental transactions between users.
             </p>
             <% } %>
         </div>
