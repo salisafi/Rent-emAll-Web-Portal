@@ -211,6 +211,15 @@ app.get('/profile', function (req, res) {
   }
 });
 
+app.get('/lenderpage', function (req, res) {
+  var sess = req.session;
+  if (!sess.username) {
+    res.render('main');
+  } else {
+    res.render('lenders-page', { sess: sess });
+  }
+});
+
 app.get('/cart', function (req, res) {
   res.render('cart');
 });
