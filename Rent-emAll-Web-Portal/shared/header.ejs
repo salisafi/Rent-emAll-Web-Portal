@@ -1,7 +1,7 @@
 <div class="container-fluid" id="header">
     <div class="row">
         <div class="col-sm-11">
-            <a href="/"><img id="navbar-logo" src="../asset/img/logo.png"></a>
+            <div class="img-fluid"><a href="/"><img id="navbar-logo" src="../asset/img/logo.png"></a></div>
             <div class="row float-right">
                 <ul id="header-inline">
                     <% if(!sess.username) { %>
@@ -23,7 +23,7 @@
 
             <div class="row" id="searchbar-row">
                 <form method="get" class="form-inline">
-                    <select name="category" class="form-control mr-sm-2">
+                    <select name="category" class="form-control col-sm-10 col-md-3 mr-md-2 mr-2 my-2">
                         <option value="0">Category</option>
                         <option value="1">Homeware</option>
                         <option value="2">Tools &amp; Equip</option>
@@ -33,9 +33,9 @@
                         <option value="6">Fashion</option>
                     </select>
 
-                    <input id="searchbar" name="searchbar" class="form-control mr-sm-2" type="search" placeholder="What do you want to borrow?" aria-label="Search">
-                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary my-2 mr-sm-2" value="List">
-                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary my-2" value="Map">
+                    <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-4 mr-md-2 my-2 mr-2" type="search" placeholder="What to borrow?" aria-label="Search">
+                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary col-xs-4 mr-xs-4 col-sm-4 mr-ms-4 col-md-2 mr-md-2 my-2 mr-2" value="List">
+                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-4 col-md-2 my-2" value="Map">
                 </form>
                 <% if(sess.username) { %>
                 <div id="features">

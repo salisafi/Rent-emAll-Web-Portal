@@ -21,13 +21,14 @@ body {
     cursor: pointer;
 }
 #searchbar {
-    width: 26vw;
+  /*  width: 26vw; */
 }
 #navbar-logo {
     height: auto;
-    width: 180px;
+    width: 150px;
     display: block;
-    margin-top: -5px;
+    margin-left: 5px;
+    margin-top:30px;
     position: absolute;
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .5));
     cursor: pointer;
@@ -37,7 +38,7 @@ body {
     margin-left: 220px;
 }
 #searchbar-row {
-    margin-left: 200px;
+    margin-left: 160px;
 }
 #features {
     margin-left: 30px;
@@ -282,4 +283,58 @@ span.star-prototype > * {
     margin: 5px;
     color: #ff0000;
     font-size: 12px;
+}
+/*************************  Media Queries Breakpoints *************************/
+/* Small devices -sm  */
+@media (min-width: 576px){
+}
+
+/* Medium devices - md */
+@media (min-width :768px){
+
+}
+
+/* Large devices - lg */
+@media (min-width: 992px){
+
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) { 
+	.user{
+	     	margin-left: -260px;
+    		margin-top: -60px;
+	}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) { 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) { 
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
+/************   User defined breakpoints *****************/
+@media (min-width: 576px) and (max-width: 618px){
+	.user{
+	    margin-top: 50px;
+	    margin-left: -100px;
+        }
+    }
+@media(max-width: 450px){
+	.user{
+	     margin-left: -130px
+     }
 }
