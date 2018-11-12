@@ -180,12 +180,27 @@ app.get("/item/:id", function (req, res) {
 
       averageRate /= results[1].length;
 
-      res.render('item', {
-        item: results[0][0],
-        itemPostedDate: fItemPostedDate,
-        review: results[1],
-        reviewPostedDate: fReviewPostedDate,
-        averageRate: averageRate
+      function getUser(username, callback) {
+        connection.query("SELECT * FROM UserTbl WHERE userId = ?;", [results[0][0].userId],
+          function (err, results) {
+            if (err)
+              callback(err, null);
+            else
+              callback(null, results[0]);
+          });
+      }
+
+      getUser(results[0][0].userId, function (err, data) {
+        if (err) throw err;
+
+        res.render('item', {
+          item: results[0][0],
+          itemPostedDate: fItemPostedDate,
+          user: data,
+          review: results[1],
+          reviewPostedDate: fReviewPostedDate,
+          averageRate: averageRate
+        });
       });
     });
 });
