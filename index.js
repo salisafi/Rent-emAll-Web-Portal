@@ -216,9 +216,21 @@ app.get('/lenderpage', function (req, res) {
   if (!sess.username) {
     res.render('main');
   } else {
-    res.render('lenders-page', { sess: sess });
+    connection.query("SELECT * FROM ItemTbl WHERE userId = ?", [sess.userid], function (err, results) {
+      if (err) throw err;
+      res.render('lenders-page', {
+        sess: sess,
+        items: results,
+        moment: moment
+      });
+    });
   }
 });
+
+// app.get('/lenderpage/:id', function (req, res) {
+//   var sess = req.session;
+//   res.render('lenders-page', { sess: sess });
+// });
 
 app.get('/cart', function (req, res) {
   res.render('cart');
