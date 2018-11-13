@@ -102,11 +102,9 @@
             <table id="itemTable" class="table table-condensed table-hover">
               <tbody>
                 <% for (var i = 0; i < items.length; i++) { %>
-                  <tr style="cursor: pointer;">
+                  <tr onclick="window.location.assign('/item/<%= items[i].itemId %>')" style="cursor: pointer;">
                     <td>
-                      <a href="/item/<%= items[i].itemId %>">
                         <img style="width: 150px; height: auto;" src="<%= items[i].photoURL %>">
-                      </a>
                     </td>
                     <td>
                       <h3 id="itemName"><%= items[i].name %></h3>
