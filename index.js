@@ -123,7 +123,7 @@ app.get('/list', function (req, res) {
   var params = [];
 
   if (!searchKeyword)
-    res.redirect('/');
+    res.redirect('back');
   else {
     if (category == 0) {
       sql += " ORDER BY creationDate DESC";
@@ -132,33 +132,46 @@ app.get('/list', function (req, res) {
       params = [category];
     }
 
-    connection.query(sql + ";SELECT rating FROM ReviewTbl", params, function (err, results) {
+    connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl", params, function (err, results) {
       if (err) throw err;
 
       let mDates = [];
       let fDates = [];
-      var averageRate = 0;
 
       for (var i = 0; i < results[0].length; i++) {
         mDates[i] = moment(results[0][i].creationDate);
         fDates[i] = mDates[i].format('LL');
       }
 
-      for (var i = 0; i < results[1].length; i++)
-        averageRate += results[1][i].rating;
+      var rates = [];
+      var averageRate = 0;
+      
+      for (var i = 0; i < results[0].length; i++) {
+        var count = 0;
+        averageRate = 0;
 
-      averageRate /= results[1].length;
+        for (var j = 0; j < results[1].length; j++) {
+          if (results[1][j].itemId == results[0][i].itemId) {
+            averageRate += results[1][j].rating;
+            count++;
+          }
+        }
+        averageRate /= count;
+        if (averageRate)
+          rates.push(averageRate);   
+      }
 
       res.render('itemlisting', {
         items: results[0],
         postedDates: fDates,
-        averageRate: averageRate
+        rates: rates
       });
     });
   }
 });
 
 app.get("/item/:id", function (req, res) {
+  const sess = req.session;
   var itemId = req.params.id;
 
   connection.query("SELECT * FROM ItemTbl WHERE itemId = ?; SELECT * FROM ReviewTbl WHERE itemId = ?", [itemId, itemId],
@@ -172,13 +185,15 @@ app.get("/item/:id", function (req, res) {
       var fReviewPostedDate = [];
       var averageRate = 0;
 
-      for (var i = 0; i < results[1].length; i++) {
-        reviewPostedDate[i] = moment(results[1][i].creationDate);
-        fReviewPostedDate[i] = reviewPostedDate[i].format('LL');
-        averageRate += results[1][i].rating;
-      }
+      if (results[1].length > 0) {
+        for (var i = 0; i < results[1].length; i++) {
+          reviewPostedDate[i] = moment(results[1][i].creationDate);
+          fReviewPostedDate[i] = reviewPostedDate[i].format('LL');
+          averageRate += results[1][i].rating;
+        }
 
-      averageRate /= results[1].length;
+        averageRate /= results[1].length;
+      }
 
       function getUser(username, callback) {
         connection.query("SELECT * FROM UserTbl WHERE userId = ?;", [results[0][0].userId],
@@ -199,7 +214,8 @@ app.get("/item/:id", function (req, res) {
           user: data,
           review: results[1],
           reviewPostedDate: fReviewPostedDate,
-          averageRate: averageRate
+          averageRate: averageRate,
+          sess: sess
         });
       });
     });
