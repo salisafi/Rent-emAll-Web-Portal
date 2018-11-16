@@ -490,6 +490,24 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
   });
 });
 
+app.post('/deleteItem', function (req, res) {
+  var sess = req.session;
+  var body = req.body;
+  if (sess) {
+    if (sess.userid == body.userId) {
+      connection.query("DELETE FROM ItemTbl WHERE itemId = ?", [body.itemId], function (err, result) {
+        if (err) {
+          res.render('error', { errormessage: 'Unable to delete your item.' });
+        } else {
+          res.redirect('/');
+        }
+      });
+    }
+  } else {
+    res.redirect('/lenderpage');
+  }
+});
+
 app.post('/profile', function (req, res) {
   var sess = req.session;
   var body = req.body;

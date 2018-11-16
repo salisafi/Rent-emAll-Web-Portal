@@ -1,3 +1,9 @@
+$(".num-only").keypress(function (e) {
+    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        return false;
+    }
+});
+
 /*********************************** Call Review Stars ***********************************/
 $.fn.generateStars = function () {
     return this.each(function (i, e) {
@@ -237,7 +243,7 @@ $(function () {
 
     $('.date-own').datepicker({
         format: "yyyy",
-        viewMode: "years", 
+        viewMode: "years",
         minViewMode: "years",
         endDate: '+0d',
         autoclose: true,

@@ -8,7 +8,9 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;"><%= item.name %></h4><br>
+                                    <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;">
+                                        <%= item.name %>
+                                    </h4><br>
                                 </div>
                             </div>
                             <div class="row">
@@ -21,7 +23,8 @@
                                                     <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
                                                         width="95%" height="300" style="object-fit: cover; border: 1px solid #ddd" />
                                                     <br>
-                                                    <span>Posted: <%= itemPostedDate %></span>
+                                                    <span>Posted:
+                                                        <%= itemPostedDate %></span>
                                                 </div> <!-- col-md-5 -->
 
                                                 <div class="col-md-7">
@@ -29,16 +32,23 @@
                                                     <div class="form-group row">
                                                         <!-- first row -->
                                                         <h5>Lender:&nbsp;&nbsp;</h5>
-                                                        <h5><%= user.userName %></h5>
+                                                        <h5>
+                                                            <%= user.userName %>
+                                                        </h5>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <span class="star-prototype"><%= averageRate %></span>
+                                                        <span class="star-prototype">
+                                                            <%= averageRate %></span>
                                                     </div>
 
                                                     <div class="form-group row">
                                                         <!-- second row -->
-                                                        <p><%= item.description %></p>
+                                                        <p>
+                                                            <%= item.description %>
+                                                        </p>
                                                         <br /><br />
-                                                        <p>Purchased Year: <%= item.purchasedYear %></p>
+                                                        <p>Purchased Year:
+                                                            <%= item.purchasedYear %>
+                                                        </p>
                                                     </div>
                                                     <br>
 
@@ -46,7 +56,9 @@
                                                         <!-- third row -->
                                                         <span>Deposit Price:</span>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <h3>$<%= item.deposit %></h3>
+                                                        <h3>$
+                                                            <%= item.deposit %>
+                                                        </h3>
                                                     </div> <!-- row -->
                                                     <br>
                                                     <br>
@@ -55,7 +67,9 @@
                                                         <!-- fourth row -->
                                                         <span>Rental Price:</span>
                                                         <span>&nbsp;&nbsp;&nbsp;</span>
-                                                        <h3>$<%= item.rental_price_daily %></h3>
+                                                        <h3>$
+                                                            <%= item.rental_price_daily %>
+                                                        </h3>
                                                     </div> <!-- row -->
                                                     <br>
                                                 </div>
@@ -63,10 +77,39 @@
                                         </div>
                                         <div class="float-right">
                                             <% if (sess.username == user.userName) { %>
-                                                <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase" type="button" value="&emsp;&emsp;Edit&emsp;&emsp;"></a>
-                                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                                <button class="btn btn-primary text-uppercase" type="submit">&emsp;&emsp;Delete&emsp;&emsp;</button>
+                                            <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
+                                                    type="button" value="&emsp;&emsp;Edit&emsp;&emsp;"></a>
+                                            <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal"
+                                                data-target="#deleteModal">&emsp;&emsp;Delete&emsp;&emsp;</button>
                                             <% } %>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Modal -->
+                        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Delete Item</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form name="deleteform" method="POST" action="/deleteItem">
+                                        <input type="hidden" id="userId" name="userId" value="<%= item.userId %>">
+                                        <input type="hidden" id="itemId" name="itemId" value="<%= item.itemId %>">
+                                        <div class="modal-body">
+                                            <p>Do you really want to delete this item "
+                                                <%= item.name %>"?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </form>
                                 </div>
@@ -78,20 +121,34 @@
                         <div class="container">
                             <h5 class="font-weight-bold">Renter Reviews</h5>
                             <div class="d-inline" id="avgRating">
-                                <span class="star-prototype"><%= averageRate %></span>
-                                <span class="ml-2 text-info" id="noOfReviews">(<%= review.length %>)</span>
-                                <span class="d-block text-info mt-2" id="noOfStars"><%= averageRate %> out of 5 stars</span>
+                                <span class="star-prototype">
+                                    <%= averageRate %></span>
+                                <span class="ml-2 text-info" id="noOfReviews">(
+                                    <%= review.length %>)</span>
+                                <span class="d-block text-info mt-2" id="noOfStars">
+                                    <%= averageRate %> out of 5 stars</span>
                             </div>
-                            <h4 class="text-right text-info"><%= item.name %></h4>
-                            <h5 class="text-right">Lender: <%= user.userName %></h5>
+                            <h4 class="text-right text-info">
+                                <%= item.name %>
+                            </h4>
+                            <h5 class="text-right">Lender:
+                                <%= user.userName %>
+                            </h5>
 
                             <% for (var i = 0; i < review.length; i++) { %>
-                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%; background: #FEF9E1;" id="reviews">
-                                <span class="star-prototype"><%= review[i].rating %></span>
-                                <span class="font-weight-bold ml-3" id="reviewTitle"><%= review[i].reviewTitle %></span><br>
-                                <span id="username">By <%= review[i].userId %></span><span class="ml-2" id="postedDate">on <%= reviewPostedDate[i] %></span>
+                            <div class="border border-info rounded mx-auto my-5 p-3" style="width: 80%; background: #FEF9E1;"
+                                id="reviews">
+                                <span class="star-prototype">
+                                    <%= review[i].rating %></span>
+                                <span class="font-weight-bold ml-3" id="reviewTitle">
+                                    <%= review[i].reviewTitle %></span><br>
+                                <span id="username">By
+                                    <%= review[i].userId %></span><span class="ml-2" id="postedDate">on
+                                    <%= reviewPostedDate[i] %></span>
                                 <br><br>
-                                <p id="reviewContent"><%= review[i].reviewText %></p>
+                                <p id="reviewContent">
+                                    <%= review[i].reviewText %>
+                                </p>
                             </div>
                             <% } %>
                         </div>
