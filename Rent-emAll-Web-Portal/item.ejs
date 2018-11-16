@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="float-right">
                                             <% if (sess.username == user.userName) { %>
-                                                <button class="btn btn-primary text-uppercase" type="submit">&emsp;&emsp;Edit&emsp;&emsp;</button>
+                                                <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase" type="button" value="&emsp;&emsp;Edit&emsp;&emsp;"></a>
                                                 <span>&nbsp;&nbsp;&nbsp;</span>
                                                 <button class="btn btn-primary text-uppercase" type="submit">&emsp;&emsp;Delete&emsp;&emsp;</button>
                                             <% } %>

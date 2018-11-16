@@ -217,6 +217,22 @@ app.get('/post', function (req, res) {
   }
 });
 
+app.get('/edit/:id', function (req, res) {
+  if (req.session.username) {
+    var itemId = req.params.id;
+
+    connection.query("SELECT * FROM ItemTbl WHERE itemId = ?;", [itemId],
+      function (err, result) {
+        if (err) throw err;
+
+        console.log(result[0]);
+        res.render('edit-item', { item: result[0] });
+      });
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.get('/profile', function (req, res) {
   var sess = req.session;
   if (!sess.username) {
@@ -452,6 +468,24 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
     } else {
       console.log(result.insertId);
       res.redirect('/item/' + result.insertId);
+    }
+  });
+});
+
+app.post('/editItem', upload.single('photoURL'), function (req, res) {
+  var sess = req.session;
+  var body = req.body;
+  var filePath = '../uploads/images/' + req.file.filename;
+  console.log(body.itemId);
+
+  connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?, rental_price_daily = ?, deposit = ?, postalCode = ?, province = ?, photoURL = ? WHERE itemId =?", [
+    body.category, body.name, body.description, body.purchasedYear, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath, body.itemId
+  ], function (err, result) {
+    if (err) {
+      res.render('error', { errormessage: 'Unable to update your item.' });
+    } else {
+      console.log(body.itemId);
+      res.redirect('/item/' + body.itemId);
     }
   });
 });
