@@ -33,9 +33,12 @@
                         <option value="6">Fashion</option>
                     </select>
 
-                    <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-4 mr-md-2 my-2 mr-2" type="search" placeholder="What to borrow?" aria-label="Search">
-                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary col-xs-4 mr-xs-4 col-sm-4 mr-ms-4 col-md-2 mr-md-2 my-2 mr-2" value="List">
-                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-4 col-md-2 my-2" value="Map">
+                    <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-4 mr-md-2 my-2 mr-2"
+                        type="search" placeholder="What to borrow?" aria-label="Search">
+                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary col-xs-4 mr-xs-4 col-sm-2 mr-ms-4 col-md-2 mr-md-2 my-2 mr-2"
+                        value="List">
+                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-2 col-md-2 my-2"
+                        value="Map">
                 </form>
                 <% if(sess.username) { %>
                 <div id="features">
@@ -48,11 +51,14 @@
         </div>
         <div class="col-sm-1">
             <div class="user">
-                <a href="/cart"><i class="fas fa-user fa-3x"></i></a>
                 <% if(!sess.username) { %>
+                <i class="fas fa-user fa-3x"></i>
                 <p id="user-id">guest</p>
                 <% } else { %>
-                <p id="user-id"><%= sess.username %></p>
+                <a href="/cart"><i class="fas fa-cart-arrow-down fa-3x"></i></a>
+                <p id="user-id">
+                    <%= sess.username %>
+                </p>
                 <% } %>
             </div>
         </div>

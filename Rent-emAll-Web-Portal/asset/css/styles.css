@@ -21,7 +21,7 @@ body {
     cursor: pointer;
 }
 #searchbar {
-  /*  width: 26vw; */
+    width: 32vw;
 }
 #navbar-logo {
     height: auto;
