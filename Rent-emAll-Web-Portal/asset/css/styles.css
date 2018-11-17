@@ -28,14 +28,14 @@ body {
     width: 150px;
     display: block;
     margin-left: 5px;
-    margin-top:30px;
+    margin-top: 10px;
     position: absolute;
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .5));
     cursor: pointer;
     z-index: 99;
 }
 #navbarSupportedContent {
-    margin-left: 220px;
+    margin-left: 180px;
 }
 #searchbar-row {
     margin-left: 160px;
@@ -331,10 +331,22 @@ span.star-prototype > * {
 	.user{
 	    margin-top: 50px;
 	    margin-left: -100px;
-        }
     }
+    #navbar-logo {
+        margin-top: 30px;
+    }
+    #navbarSupportedContent {
+        margin-left: 30px;
+    }
+}
 @media(max-width: 450px){
-	.user{
-	     margin-left: -130px
-     }
+	.user {
+        margin-left: -130px
+    }
+    #navbar-logo {
+        margin-top: 30px;
+    }
+    #navbarSupportedContent {
+        margin-left: 30px;
+    }
 }

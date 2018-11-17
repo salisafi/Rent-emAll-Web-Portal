@@ -22,31 +22,36 @@
             <br />
 
             <div class="row" id="searchbar-row">
-                <form method="get" class="form-inline">
-                    <select name="category" class="form-control col-sm-10 col-md-3 mr-md-2 mr-2 my-2">
-                        <option value="0">Category</option>
-                        <option value="1">Homeware</option>
-                        <option value="2">Tools &amp; Equip</option>
-                        <option value="3">Sports &amp; Rec</option>
-                        <option value="4">Entertainment</option>
-                        <option value="5">Babies &amp; Kids</option>
-                        <option value="6">Fashion</option>
-                    </select>
+                <div class="col-md-6">
+                    <form method="get" class="form-inline">
+                        <!-- <select name="category" class="form-control col-sm-10 col-md-3 mr-md-2 mr-2 my-2">
+                            <option value="0">Category</option>
+                            <option value="1">Homeware</option>
+                            <option value="2">Tools &amp; Equip</option>
+                            <option value="3">Sports &amp; Rec</option>
+                            <option value="4">Entertainment</option>
+                            <option value="5">Babies &amp; Kids</option>
+                            <option value="6">Fashion</option>
+                        </select> -->
 
-                    <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-4 mr-md-2 my-2 mr-2"
-                        type="search" placeholder="What to borrow?" aria-label="Search">
-                    <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary col-xs-4 mr-xs-4 col-sm-2 mr-ms-4 col-md-2 mr-md-2 my-2 mr-2"
-                        value="List">
-                    <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-2 col-md-2 my-2"
-                        value="Map">
-                </form>
-                <% if(sess.username) { %>
-                <div id="features">
-                    <a href="/post"><input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post"></a>
-                    <a href="/profile"><input type="button" id="btn-mypage" class="btn btn-danger my-2 mr-sm-2" value="Profile"></a>
-                    <a href="/lenderpage"><input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page"></a>
+                        <input id="searchbar" name="searchbar" class="form-control col-sm-10 col-md-7 mr-md-2 my-2 mr-2"
+                            type="search" placeholder="What to borrow?" aria-label="Search">
+                        <input type="submit" formaction="/list" id="btn-list" class="btn btn-primary col-xs-4 mr-xs-4 col-sm-2 mr-ms-4 col-md-2 mr-md-2 my-2 mr-2"
+                            value="List">
+                        <input type="submit" formaction="/map" id="btn-map" class="btn btn-primary col-xs-4 col-sm-4 col-sm-2 col-md-2 my-2"
+                            value="Map">
+                    </form>
                 </div>
-                <% } %>
+                <div class="col-md-6">
+                    <% if(sess.username) { %>
+                    <div id="features">
+                        <a href="/post"><input type="button" id="btn-post" class="btn btn-danger my-2 mr-sm-2" value="Post"></a>
+                        <a href="/profile"><input type="button" id="btn-mypage" class="btn btn-danger my-2 mr-sm-2"
+                                value="Profile"></a>
+                        <a href="/lenderpage"><input type="button" id="btn-mypage" class="btn btn-danger my-2" value="My Page"></a>
+                    </div>
+                    <% } %>
+                </div>
             </div>
         </div>
         <div class="col-sm-1">
