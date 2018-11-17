@@ -10,8 +10,8 @@
                                 <div class="row">
                                     <div class=col-md-2><label for="username">USERNAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="username" name="username" class="form-control" maxlength="20" value="<%= sess.username %>"
-                                            readonly>
+                                        <input type="text" id="username" name="username" class="form-control" maxlength="20"
+                                            value="<%= sess.username %>" readonly>
                                     </div>
                                 </div>
                             </div><br>
@@ -34,12 +34,13 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="firstname">FIRSTNAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="firstname" name="firstname" maxlength="30" class="form-control" value="<%= sess.firstname %>"
-                                            readonly>
+                                        <input type="text" id="firstname" name="firstname" maxlength="30" class="form-control"
+                                            value="<%= sess.firstname %>" readonly>
                                     </div>
                                     <div class=col-md-2><label for="postalcode">POSTAL CODE</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="postalcode" name="postalcode" maxlength="6" class="form-control" value="<%= sess.postalcode %>">
+                                        <input type="text" id="postalcode" name="postalcode" maxlength="6" class="form-control"
+                                            value="<%= sess.postalcode %>">
                                         <div class="errorMsg" id="postal_errors"></div>
                                     </div>
                                 </div>
@@ -48,12 +49,13 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="lastname">LASTNAME</label></div>
                                     <div class="col-md-4">
-                                        <input type="text" id="lastname" name="lastname" maxlength="30" class="form-control" value="<%= sess.lastname %>"
-                                            readonly>
+                                        <input type="text" id="lastname" name="lastname" maxlength="30" class="form-control"
+                                            value="<%= sess.lastname %>" readonly>
                                     </div>
                                     <div class="col-md-2"><label for="phoneNum">PHONE#</label></div>
                                     <div class="col-md-4">
-                                        <input type="tel" id="phoneNum" name="phoneNum" maxlength="10" class="form-control" value="<%= sess.phone %>">
+                                        <input type="tel" id="phoneNum" name="phoneNum" maxlength="10" class="form-control"
+                                            value="<%= sess.phone %>">
                                         <div class="errorMsg" id="phone_errors"></div>
                                     </div>
                                 </div>
@@ -62,7 +64,8 @@
                                 <div class="row">
                                     <div class="col-md-2"><label for="province">PROVINCE</label></div>
                                     <div class="col-md-4">
-                                        <input type="province" id="province" name="province" class="form-control" value="<%= sess.prov %>" readonly>
+                                        <input type="province" id="province" name="province" class="form-control" value="<%= sess.prov %>"
+                                            readonly>
                                     </div>
                                 </div>
                             </div><br>
@@ -76,6 +79,8 @@
                                 </div>
                             </div><br>
                             <div class="text-center">
+                                <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel"
+                                    onclick="window.history.back();">
                                 <button class="btn btn-lg btn-primary text-uppercase" type="submit">&emsp;&emsp;Submit&emsp;&emsp;</button>
                             </div>
                         </form>
