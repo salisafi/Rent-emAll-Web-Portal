@@ -117,20 +117,20 @@ app.get('/contactus', function (req, res) {
 
 app.get('/list', function (req, res) {
   const searchKeyword = req.query.searchbar;
-  const category = req.query.category;
+  // const category = req.query.category;
   const sortby = req.query.sortby;
-  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
+  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
   var params = [];
 
   if (!searchKeyword)
     res.redirect('back');
   else {
-    if (category == 0) {
-      sql += " ORDER BY creationDate DESC";
-    } else {
-      sql += " AND categoryId = ? ORDER BY creationDate DESC";
-      params = [category];
-    }
+    // if (category == 0) {
+    //   sql += " ORDER BY creationDate DESC";
+    // } else {
+    //   sql += " AND categoryId = ? ORDER BY creationDate DESC";
+    //   params = [category];
+    // }
 
     connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl", params, function (err, results) {
       if (err) throw err;
