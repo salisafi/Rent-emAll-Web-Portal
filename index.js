@@ -191,6 +191,7 @@ app.get('/list/:id', function (req, res) {
       var count = 0;
       averageRate = 0;
 
+      /*************  Rating not working *************/
       for (var j = 0; j < results.length; j++) {
         if (results[j].itemId == results[i].itemId) {
           averageRate += results[j].rating;
