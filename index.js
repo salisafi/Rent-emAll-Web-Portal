@@ -159,6 +159,8 @@ app.get('/list', function (req, res) {
         averageRate /= count;
         if (averageRate)
           rates.push(averageRate);
+        else
+          rates.push(0);
       }
 
       res.render('itemlisting', {
