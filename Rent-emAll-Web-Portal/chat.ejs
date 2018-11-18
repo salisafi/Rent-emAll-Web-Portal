@@ -1,67 +1,41 @@
 <style>
-    #chatform {
-        background: #000;
-        padding: 8px;
-        position: fixed;
-        bottom: 0;
-        width: 90%;
-        height: 60px;
-        margin-bottom: 20px;
+    .chat_log {
+        width: 95%; height: 200px;
     }
-
-    #chatform input {
-        border: 0;
-        padding: 10px;
-        width: 90%;
-        margin-right: .5%;
+    .name {
+        width: 10%;
     }
-
-    #messages {
-        list-style-type: none;
-        margin: 0;
-        padding: 20px;
+    .message {
+        width: 70%;
     }
-
-    #messages li {
-        padding: 5px 10px;
-    }
-
-    #messages li:nth-child(odd) {
-        background: #eee;
+    .chat {
+        width: 10%;
     }
 </style>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <ul id="messages"></ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <form id="chatform" action="">
-                <input id="m" autocomplete="off" />
-                <button class="btn btn-primary">Send</button>
-            </form>
-        </div>
-    </div>
+
+<div>
+    <textarea id="chatLog" class="chat_log" readonly></textarea>
 </div>
+<form id="chat">
+    <input id="name" class="name" type="text" readonly>
+    <input id="message" class="message" type="text">
+    <input type="submit" class="chat" value="chat" />
+</form>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    $(function () {
-        var socket = io();
-
-        $('#chatform').submit(function () {
-            if ($('#m').val()) {
-                socket.emit('chat message', $('#m').val());
-                $('#m').val('');
-            }
-            return false;
-        });
-
-        socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').text(msg));
-            window.scrollTo(0, document.body.scrollHeight);
-        });
+    var socket = io();
+    $('#chat').on('submit', function (e) {
+        socket.emit('send message', $('#name').val(), $('#message').val());
+        $('#message').val("");
+        $("#message").focus();
+        e.preventDefault();
+    });
+    socket.on('receive message', function (msg) {
+        $('#chatLog').append(msg + '\n');
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+    });
+    socket.on('change name', function (name) {
+        $('#name').val(name);
     });
 </script>

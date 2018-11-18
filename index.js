@@ -10,10 +10,10 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
 var crypto = require('crypto');
 
@@ -332,17 +332,23 @@ app.get('/chat', (req, res) => {
   }
 });
 
+var count = 1;
 io.on('connection', function (socket) {
-  console.log('a user connected');
+  console.log('user connected: ', socket.id);
+  var name = "user" + count++;
+  io.to(socket.id).emit('change name', name);
 
   socket.on('disconnect', function () {
-    console.log('user disconnected');
+    console.log('user disconnected: ', socket.id);
   });
 
-  socket.on('chat message', function (msg) {
-    io.emit('chat message', "sess.username" + ": " + msg);
+  socket.on('send message', function (name, text) {
+    var msg = name + ': ' + text;
+    console.log(msg);
+    io.emit('receive message', msg);
   });
 });
+
 
 app.get('/cart', function (req, res) {
   res.render('cart');
