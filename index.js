@@ -4,18 +4,16 @@ const path = require("path");
 const http = require('http');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
+var crypto = require('crypto');
 
 const hostname = '10.10.193.142';
 const port = 10034;
 // const hostname = 'localhost';
 // const port = 3030;
-
-var crypto = require('crypto');
 
 const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
@@ -29,6 +27,15 @@ var dbConfig = {
   password: 'pdXT9724',
   multipleStatements: true
 };
+
+const session = require('express-session')({
+  secret: '@#@$MYSIGN#@$#$',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 24 * 3600 * 1000
+  }
+});
 
 var connection;
 function handleDisconnect() {
@@ -57,18 +64,16 @@ app.use(expressLayouts);
 
 app.use(express.static('Rent-emAll-Web-Portal'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-  secret: '@#@$MYSIGN#@$#$',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 24 * 3600 * 1000
-  }
-}));
+app.use(session);
 app.use(function (req, res, next) {
   res.locals.sess = req.session;
   next();
 })
+
+const sharedsession = require('express-socket.io-session');
+io.use(sharedsession(session, {
+  autoSave: true
+}));
 
 
 /*************** GET Request **************/
@@ -332,20 +337,33 @@ app.get('/chat', (req, res) => {
   }
 });
 
-var count = 1;
 io.on('connection', function (socket) {
-  console.log('user connected: ', socket.id);
-  var name = "user" + count++;
-  io.to(socket.id).emit('change name', name);
+  var sess = socket.handshake.session;  // get session
+  console.log('user ' + sess.username + ' connected: ', socket.id);
+  var name = sess.username; // get username from session
+  io.to(socket.id).emit('change name', name); // set into chat name
 
   socket.on('disconnect', function () {
-    console.log('user disconnected: ', socket.id);
+    console.log('user ' + sess.username + ' disconnected: ', socket.id);
+  });
+
+  socket.on('leaveRoom', () => {
+    socket.leave(sess.userid, () => {
+      console.log(name + ' leave a room: ' + sess.userid);
+      io.to(sess.userid).emit('leaveRoom', sess.userid, name);  // room id must be changed
+    });
+  });
+
+  socket.on('joinRoom', () => {
+    socket.join(sess.userid, () => {
+      console.log(name + ' join a room: ' + sess.userid);
+      io.to(sess.userid).emit('joinRoom', sess.userid, name);  // room id must be changed
+    });
   });
 
   socket.on('send message', function (name, text) {
     var msg = name + ': ' + text;
-    console.log(msg);
-    io.emit('receive message', msg);
+    io.to(sess.userid).emit('receive message', msg);  // room id must be changed
   });
 });
 

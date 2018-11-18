@@ -14,6 +14,9 @@
 </style>
 
 <div>
+    <span>Room: #</span><span id="roomnum">5</span>
+</div>
+<div>
     <textarea id="chatLog" class="chat_log" readonly></textarea>
 </div>
 <form id="chat">
@@ -24,18 +27,37 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io();
-    $('#chat').on('submit', function (e) {
-        socket.emit('send message', $('#name').val(), $('#message').val());
-        $('#message').val("");
-        $("#message").focus();
-        e.preventDefault();
-    });
-    socket.on('receive message', function (msg) {
-        $('#chatLog').append(msg + '\n');
-        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
-    });
-    socket.on('change name', function (name) {
-        $('#name').val(name);
+    $(() => {
+        var name = $('#name').val();
+        var room = $('#roomnum').val();
+        var socket = io();
+
+        socket.emit('joinRoom', room, name);
+
+        $('#chat').on('submit', function (e) {
+            if ($('#message').val()) {
+                socket.emit('send message', $('#name').val(), $('#message').val());
+                $('#message').val("");
+                $("#message").focus();
+            }
+            e.preventDefault();
+        });
+        socket.on('receive message', function (msg) {
+            $('#chatLog').append(msg + '\n');
+            $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+        });
+        socket.on('change name', function (name) {
+            $('#name').val(name);
+        });
+
+        socket.on('leaveRoom', (id, name) => {
+            $('#chatLog').append(name + ' leaved '
+                + id + ' :(\n');
+        });
+
+        socket.on('joinRoom', (id, name) => {
+            $('#chatLog').append(name + ' joined '
+                + id + ' :)\n');
+        });
     });
 </script>
