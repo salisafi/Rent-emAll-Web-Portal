@@ -20,6 +20,7 @@ var crypto = require('crypto');
 const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
 });
+const io = require('socket.io')(server);
 
 var dbConfig = {
   database: 'prj566_183a15',
@@ -321,6 +322,27 @@ app.get('/lenderpage', function (req, res) {
 //   var sess = req.session;
 //   res.render('lenders-page', { sess: sess });
 // });
+
+app.get('/chat', (req, res) => {
+  var sess = req.session;
+  if (!sess.username) {
+    res.render('main');
+  } else {
+    res.render('chat');
+  }
+});
+
+io.on('connection', function (socket) {
+  console.log('a user connected');
+
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
+  });
+
+  socket.on('chat message', function (msg) {
+    io.emit('chat message', "sess.username" + ": " + msg);
+  });
+});
 
 app.get('/cart', function (req, res) {
   res.render('cart');
