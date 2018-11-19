@@ -379,7 +379,6 @@ app.get('/lenderpage/:id', function (req, res) {
 
       getItems(result[0].userId, function (err, data) {
         if (err) throw err;
-        console.log(data);
 
         var lender = {
           userid: result[0].userId,
