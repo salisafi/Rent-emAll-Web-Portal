@@ -62,30 +62,31 @@
                             <div class="col-md-4">
                                 <div class="vl"></div>
                                 <div class="container">
-                                    <div class="inline float-right" style="margin: 0 auto;">
-                                        <p>$<span id="deposit">
-                                                <%= item.deposit %></span><br /><br />
-                                            $<span id="rentalprice">
-                                                <%= item.rental_price_daily %></span><br />
-                                            <!-- x <span id="qty">4</span><br /> -->
-                                            x <span id="rentaldays">0</span></p>
+                                    <div>
+                                        <div class="inline float-right" style="margin: 0 auto;">
+                                            <p>$<span id="deposit">
+                                                    <%= item.deposit %></span><br /><br />
+                                                $<span id="rentalprice">
+                                                    <%= item.rental_price_daily %></span><br />
+                                                <!-- x <span id="qty">4</span><br /> -->
+                                                x <span id="rentaldays">0</span></p>
+                                        </div>
+                                        <div class="inline float-right" style="margin: 0 auto;">
+                                            <p>Deposit:<br /><br />
+                                                Pay per day:<br />
+                                                <!-- Quantity:<br /> -->
+                                                Rental period (days):&nbsp;&nbsp;&nbsp;</p>
+                                        </div>
+                                        <br /><br /><br /><br />
+                                        <hr />
+                                        <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
                                     </div>
-                                    <div class="inline float-right" style="margin: 0 auto;">
-                                        <p>Deposit:<br /><br />
-                                            Pay per day:<br />
-                                            <!-- Quantity:<br /> -->
-                                            Rental period (days):&nbsp;&nbsp;&nbsp;</p>
-                                    </div>
-                                    <br /><br /><br /><br />
-                                    <hr />
-                                    <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
                                     <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
-                                        <a href="/cart">
-                                            <button type="button" class="btn btn-primary" style="width: 80%; margin-bottom: 10px;">Add
-                                                to Shopping Cart</button>
-                                        </a>
+                                        <a href="/cart"><button type="button" class="btn btn-primary btn-cart text-uppercase"
+                                                style="width: 80%; margin-bottom: 10px;" disabled>Add to Shopping Cart</button></a>
                                         <br />
-                                        <button type="button" class="btn btn-secondary" style="width: 80%;" onclick="window.history.back();">Cancel</button>
+                                        <button type="button" class="btn btn-secondary text-uppercase" style="width: 80%;"
+                                            onclick="window.history.back();">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,6 +99,7 @@
 </div>
 
 <script>
+    $('.btn-cart').attr('disabled', 'disabled');
     calTotal();
     // $('#qty').text($('#Quantity').val());
 
@@ -115,11 +117,16 @@
         $('#rentalEnd').val('');
         $('#rentalEnd').removeAttr('readonly');
         $('#rentalEnd').attr('min', startdate);
+        $('.btn-cart').attr('disabled', 'disabled');
     })
 
     $('#rentalEnd').change(function () {
+        $('.btn-cart').attr('disabled', 'disabled');
         $('#rentaldays').text(GetDays());
         calTotal();
+        console.log(document.getElementById('rentaldays').innerHTML);
+        if (document.getElementById('rentaldays').innerHTML > 0)
+            $('.btn-cart').attr('disabled', false);
     })
 
     function calTotal() {
