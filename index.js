@@ -298,6 +298,43 @@ app.get('/edit/:id', function (req, res) {
   }
 });
 
+app.get('/rent/:id', function (req, res) {
+  var sess = req.session;
+
+  if (sess.username) {
+    var itemId = req.params.id;
+
+    connection.query("SELECT * FROM ItemTbl WHERE itemId = ?;", [itemId],
+      function (err, result) {
+        if (err) throw err;
+
+        var userid = result[0].userId;
+
+        function getUsername(userid, callback) {
+          connection.query("SELECT * FROM UserTbl WHERE userId = ?;", [userid],
+            function (err, results) {
+              if (err)
+                callback(err, null);
+              else
+                callback(null, results[0]);
+            });
+        }
+
+        getUsername(userid, function (err, data) {
+          if (err) throw err;
+
+          res.render('rent', {
+            item: result[0],
+            lender: data,
+            borrower: sess
+          });
+        });
+      });
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.get('/profile', function (req, res) {
   var sess = req.session;
   if (!sess.username) {
@@ -323,10 +360,46 @@ app.get('/lenderpage', function (req, res) {
   }
 });
 
-// app.get('/lenderpage/:id', function (req, res) {
-//   var sess = req.session;
-//   res.render('lenders-page', { sess: sess });
-// });
+app.get('/lenderpage/:id', function (req, res) {
+  var lenderUsername = req.params.id;
+
+  connection.query("SELECT * FROM UserTbl WHERE userName = ?;", [lenderUsername],
+    function (err, result) {
+      if (err) throw err;
+
+      function getItems(userid, callback) {
+        connection.query("SELECT * FROM ItemTbl WHERE userId = ?;", [userid],
+          function (err, results) {
+            if (err)
+              callback(err, null);
+            else
+              callback(null, results);
+          });
+      }
+
+      getItems(result[0].userId, function (err, data) {
+        if (err) throw err;
+        console.log(data);
+
+        var lender = {
+          userid: result[0].userId,
+          username: result[0].userName,
+          firstname: result[0].firstName,
+          lastname: result[0].lastName,
+          postalcode: result[0].postalCode,
+          phone: result[0].phoneNumber,
+          email: result[0].emailAddress,
+          prov: result[0].province
+        }
+
+        res.render('lenders-page', {
+          sess: lender,
+          items: data,
+          moment: moment
+        });
+      });
+    });
+});
 
 /************** eCommunication (Chatting app) **************/
 app.get('/chat/:id', (req, res) => {

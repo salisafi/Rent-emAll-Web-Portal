@@ -1,99 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="shadow-lg rounded">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="container">
+                                    <h5 class="card-title">Rental Information</h5><br>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <!-- first column -->
+                                            <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
+                                                width="100%" height="200" style="object-fit: cover; border: 1px solid #ddd" />
+                                        </div> <!-- col-md-4 -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 mx-auto">
-                <div class="shadow-lg rounded">
-                    <div class="card my-5">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="container">
-                                        <h5 class="card-title">Rental Information</h5><br>
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <!-- first column -->
-                                                <img id="myImg" class="mx-auto" src="asset/img/3_720p.jpg" alt="Upload image"
-                                                    width="100%" height="200" style="object-fit: cover; border: 1px solid #ddd" />
-                                            </div> <!-- col-md-4 -->
-
-                                            <div class="col-md-7">
-                                                <!-- second column -->
-                                                <div class="form-group row">
-                                                    <!-- first row -->
-                                                    <h5>Item Name</h5>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                                        sed
-                                                        do eiusmod tempor incididunt ut labore et dolore magna
-                                                        aliqua. Ut enim ad minim veniam, quis nostrud
-                                                        exercitation
-                                                        ullamco laboris nisi ut aliquip ex ea commodo
-                                                        consequat.</p>
-                                                    <h5>Lender:&nbsp;&nbsp;</h5>
-                                                    <h5>Username123</h5>
-                                                    <span>&nbsp;&nbsp;&nbsp;</span>
-                                                    <span class="star-prototype">4.5</span>
-                                                </div>
+                                        <div class="col-md-7">
+                                            <!-- second column -->
+                                            <div class="form-group row">
+                                                <!-- first row -->
+                                                <h5>
+                                                    <%= item.name %>
+                                                </h5>
+                                                <br />
+                                                <p>
+                                                    <%= item.description %>
+                                                </p>
+                                                <h5>Lender:&nbsp;&nbsp;</h5>
+                                                <h5>
+                                                    <%= lender.userName %>
+                                                </h5>
+                                                <!-- <span>&nbsp;&nbsp;&nbsp;</span>
+                                                <span class="star-prototype">4.5</span> -->
                                             </div>
-                                        </div> <!-- col-sm-8 -->
+                                        </div>
+                                    </div> <!-- col-sm-8 -->
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="Quantity">Quantity</label><br />
-                                                    <input id="Quantity" type="number" name="quantity" min="1" max="10"
-                                                        required>
-                                                </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Quantity">Quantity</label><br />
+                                                <input id="Quantity" type="number" name="quantity" min="1" max="10"
+                                                    value="1" required>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="DatePurchased">Date Purchased</label><br />
-                                                    <input type="date" class="" id="DatePurchased" required>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="DatePurchased">Rental From (start date)</label><br />
+                                                <input type="date" class="" id="rentalFrom" required>
+                                                <br />
+                                                <br />
+                                                <label for="DatePurchased">Rental To (end date)</label><br />
+                                                <input type="date" class="" id="rentalTo" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
-                                    <div class="vl"></div>
-                                    <div class="container">
-                                        <div class="inline float-right" style="margin: 0 auto;">
-                                            <p>$4<br />$4<br />$4</p>
-                                        </div>
-                                        <div class="inline float-right" style="margin: 0 auto;">
-                                            <p>Pay per day:<br />Quantity:<br />Rental period (days):&nbsp;&nbsp;&nbsp;</p>
-                                        </div>
-                                        <br /><br /><br />
-                                        <hr />
-                                        <h4 class="float-right">Total:&nbsp; $120</h4>
-                                        <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
-                                            <button type="button" class="btn btn-primary" style="width: 80%; margin-bottom: 10px;">Add to Shopping Cart</button>
-                                            <br />
-                                            <button type="button" class="btn btn-secondary" style="width: 80%;">Cancel</button>
-                                        </div>
+                            <div class="col-md-4">
+                                <div class="vl"></div>
+                                <div class="container">
+                                    <div class="inline float-right" style="margin: 0 auto;">
+                                        <p>$4<br />$4<br />$4</p>
+                                    </div>
+                                    <div class="inline float-right" style="margin: 0 auto;">
+                                        <p>Pay per day:<br />Quantity:<br />Rental period (days):&nbsp;&nbsp;&nbsp;</p>
+                                    </div>
+                                    <br /><br /><br />
+                                    <hr />
+                                    <h4 class="float-right">Total:&nbsp; $120</h4>
+                                    <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
+                                        <a href="/cart">
+                                            <button type="button" class="btn btn-primary" style="width: 80%; margin-bottom: 10px;">Add
+                                                to Shopping Cart</button>
+                                        </a>
+                                        <br />
+                                        <button type="button" class="btn btn-secondary" style="width: 80%;" onclick="window.history.back();">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -103,10 +87,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Custom JavaScript -->
-    <script type="text/javascript" src="asset/js/scripts.js"></script>
-
-</body>
-
-</html>
+</div>
