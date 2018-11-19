@@ -333,7 +333,7 @@ app.get('/chat', (req, res) => {
   if (!sess.username) {
     res.render('main');
   } else {
-    res.render('chat');
+    res.render('chat', { user: sess });
   }
 });
 
@@ -343,27 +343,27 @@ io.on('connection', function (socket) {
   var name = sess.username; // get username from session
   io.to(socket.id).emit('change name', name); // set into chat name
 
-  socket.on('disconnect', function () {
-    console.log('user ' + sess.username + ' disconnected: ', socket.id);
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
 
-  socket.on('leaveRoom', () => {
-    socket.leave(sess.userid, () => {
-      console.log(name + ' leave a room: ' + sess.userid);
-      io.to(sess.userid).emit('leaveRoom', sess.userid, name);  // room id must be changed
+  socket.on('leaveRoom', (num, name) => {
+    socket.leave(num, () => {
+      console.log(name + ' leave a ' + num);
+      io.to(num).emit('leaveRoom', num, name);
     });
   });
 
-  socket.on('joinRoom', () => {
-    socket.join(sess.userid, () => {
-      console.log(name + ' join a room: ' + sess.userid);
-      io.to(sess.userid).emit('joinRoom', sess.userid, name);  // room id must be changed
+  socket.on('joinRoom', (num, name) => {
+    socket.join(num, () => {
+      console.log(name + ' join a ' + num);
+      io.to(num).emit('joinRoom', num, name);
     });
   });
 
-  socket.on('send message', function (name, text) {
+  socket.on('send message', function (num, name, text) {
     var msg = name + ': ' + text;
-    io.to(sess.userid).emit('receive message', msg);  // room id must be changed
+    io.to(num).emit('receive message', msg);
   });
 });
 

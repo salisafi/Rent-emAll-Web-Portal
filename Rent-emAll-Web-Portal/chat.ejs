@@ -20,7 +20,7 @@
     <textarea id="chatLog" class="chat_log" readonly></textarea>
 </div>
 <form id="chat">
-    <input id="name" class="name" type="text" readonly>
+    <input id="name" class="name" type="text" value="<%= user.username %>">
     <input id="message" class="message" type="text">
     <input type="submit" class="chat" value="chat" />
 </form>
@@ -28,36 +28,36 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     $(() => {
-        var name = $('#name').val();
-        var room = $('#roomnum').val();
-        var socket = io();
+        const name = $('#name').val();
+        const socket = io();
+        const num = document.getElementById('roomnum').innerHTML;
 
-        socket.emit('joinRoom', room, name);
+        socket.emit('joinRoom', num, name);
 
-        $('#chat').on('submit', function (e) {
+        $('#chat').submit((e) => {
             if ($('#message').val()) {
-                socket.emit('send message', $('#name').val(), $('#message').val());
-                $('#message').val("");
+                socket.emit('send message', num, name, $('#message').val());
+                $('#message').val('');
                 $("#message").focus();
             }
             e.preventDefault();
         });
+
         socket.on('receive message', function (msg) {
             $('#chatLog').append(msg + '\n');
             $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
         });
+
         socket.on('change name', function (name) {
             $('#name').val(name);
         });
 
-        socket.on('leaveRoom', (id, name) => {
-            $('#chatLog').append(name + ' leaved '
-                + id + ' :(\n');
+        socket.on('leaveRoom', (num, name) => {
+            $('#chatLog').append(name + ' leaved ' + num + ' :(\n');
         });
 
-        socket.on('joinRoom', (id, name) => {
-            $('#chatLog').append(name + ' joined '
-                + id + ' :)\n');
+        socket.on('joinRoom', (num, name) => {
+            $('#chatLog').append(name + ' joined ' + num + ' :)\n');
         });
     });
 </script>
