@@ -75,6 +75,14 @@
                                                 </div>
                                             </div> <!-- col-sm-8 -->
                                         </div>
+                                        <br />
+                                        <div class="float-left">
+                                            <% if (sess.username) { %>
+                                            <a href="/chat/<%= item.userId %>">
+                                                <button type="button" class="btn btn-warning">&emsp;&emsp;eCommunication&emsp;&emsp;</button>
+                                            </a>
+                                            <% } %>
+                                        </div>
                                         <div class="float-right">
                                             <% if (sess.username == user.userName) { %>
                                             <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"

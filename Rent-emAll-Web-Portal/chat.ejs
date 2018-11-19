@@ -1,6 +1,13 @@
 <style>
     .chat_log {
-        width: 95%; height: 200px;
+        width: 100%;
+        height: 48vh;
+        resize: none;
+        background-color: #eee;
+        border-radius: 0.5rem;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
     }
     .name {
         width: 10%;
@@ -13,17 +20,37 @@
     }
 </style>
 
-<div>
-    <span>Room: #</span><span id="roomnum">5</span>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="shadow-lg rounded">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <div class="text-center h5">
+                            <span>Room: #</span>
+                            <span class="text-danger" id="roomnum"><%= id %></span>
+                            <span> - eCommunication with <span class="text-primary"><%= lender.userName %></span></span>
+                            <span>
+                                <button class="btn btn-secondary btn-sm ml-1 mr-1" onclick="window.history.back();">EXIT ROOM</button>
+                            </span>
+                        </div>
+                        <div>
+                            <textarea id="chatLog" class="chat_log" readonly></textarea>
+                        </div>
+                        <form id="chat">
+                            <div class="form-row align-items-center">
+                                <input id="name" class="form-control name ml-1 mr-2 col-md-2" type="text" value="<%= user.username %>"
+                                    readonly>
+                                <input id="message" class="form-control message mr-2 col-md-8" type="text">
+                                <input type="submit" class="btn btn-primary chat col-md-1" value="SEND" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <textarea id="chatLog" class="chat_log" readonly></textarea>
-</div>
-<form id="chat">
-    <input id="name" class="name" type="text" value="<%= user.username %>">
-    <input id="message" class="message" type="text">
-    <input type="submit" class="chat" value="chat" />
-</form>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -53,11 +80,11 @@
         });
 
         socket.on('leaveRoom', (num, name) => {
-            $('#chatLog').append(name + ' leaved ' + num + ' :(\n');
+            $('#chatLog').append(name + ' leaved Room #' + num + ' :(\n');
         });
 
         socket.on('joinRoom', (num, name) => {
-            $('#chatLog').append(name + ' joined ' + num + ' :)\n');
+            $('#chatLog').append(name + ' joined Room #' + num + ' :)\n');
         });
     });
 </script>

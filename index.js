@@ -328,12 +328,33 @@ app.get('/lenderpage', function (req, res) {
 //   res.render('lenders-page', { sess: sess });
 // });
 
-app.get('/chat', (req, res) => {
+/************** eCommunication (Chatting app) **************/
+app.get('/chat/:id', (req, res) => {
   var sess = req.session;
+  var id = req.params.id;
+
   if (!sess.username) {
     res.render('main');
   } else {
-    res.render('chat', { user: sess });
+    function getUsername(userid, callback) {
+      connection.query("SELECT * FROM UserTbl WHERE userId = ?;", [userid],
+        function (err, results) {
+          if (err)
+            callback(err, null);
+          else
+            callback(null, results[0]);
+        });
+    }
+
+    getUsername(id, function (err, data) {
+      if (err) throw err;
+
+      res.render('chat', {
+        user: sess,
+        id: id,
+        lender: data
+      });
+    });
   }
 });
 
@@ -341,6 +362,7 @@ io.on('connection', function (socket) {
   var sess = socket.handshake.session;  // get session
   console.log('user ' + sess.username + ' connected: ', socket.id);
   var name = sess.username; // get username from session
+
   io.to(socket.id).emit('change name', name); // set into chat name
 
   socket.on('disconnect', () => {
