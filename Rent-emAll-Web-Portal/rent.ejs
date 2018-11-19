@@ -39,20 +39,20 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="Quantity">Quantity</label><br />
+                                                <!-- <label for="Quantity">Quantity</label><br />
                                                 <input id="Quantity" type="number" class="form-control" name="quantity"
-                                                    min="1" max="10" value="1" required>
+                                                    min="1" max="10" value="1" required> -->
+                                                <label for="DatePurchased">Rental From (start date)</label><br />
+                                                <input type="date" class="form-control" id="rentalStart" required>
+                                                <br />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="DatePurchased">Rental From (start date)</label><br />
-                                                <input type="date" class="form-control" id="rentalStart" required>
-                                                <br />
-                                                <br />
                                                 <label for="DatePurchased">Rental To (end date)</label><br />
                                                 <input type="date" class="form-control" id="rentalEnd" required
                                                     readonly>
+                                                <br />
                                             </div>
                                         </div>
                                     </div>
@@ -67,14 +67,16 @@
                                                 <%= item.deposit %></span><br /><br />
                                             $<span id="rentalprice">
                                                 <%= item.rental_price_daily %></span><br />
-                                            x <span id="qty">4</span><br />
+                                            <!-- x <span id="qty">4</span><br /> -->
                                             x <span id="rentaldays">0</span></p>
                                     </div>
                                     <div class="inline float-right" style="margin: 0 auto;">
-                                        <p>Deposit:<br /><br />Pay per day:<br />Quantity:<br />Rental period
-                                            (days):&nbsp;&nbsp;&nbsp;</p>
+                                        <p>Deposit:<br /><br />
+                                            Pay per day:<br />
+                                            <!-- Quantity:<br /> -->
+                                            Rental period (days):&nbsp;&nbsp;&nbsp;</p>
                                     </div>
-                                    <br /><br /><br /><br /><br />
+                                    <br /><br /><br /><br />
                                     <hr />
                                     <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
                                     <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
@@ -97,13 +99,13 @@
 
 <script>
     calTotal();
-    $('#qty').text($('#Quantity').val());
+    // $('#qty').text($('#Quantity').val());
 
-    $('#Quantity').change(function () {
-        var qty = $('#Quantity').val();
-        $('#qty').text(qty);
-        calTotal();
-    });
+    // $('#Quantity').change(function () {
+    //     var qty = $('#Quantity').val();
+    //     $('#qty').text(qty);
+    //     calTotal();
+    // });
 
     var date = new Date();
     var today = dateFormatter(date);
@@ -123,14 +125,13 @@
     function calTotal() {
         var deposit = parseInt(document.getElementById('deposit').innerHTML);
         var rentalprice = parseInt(document.getElementById('rentalprice').innerHTML);
-        var quantity = parseInt(document.getElementById('qty').innerHTML);
+        // var quantity = parseInt(document.getElementById('qty').innerHTML);
         var rentaldays = parseInt(document.getElementById('rentaldays').innerHTML);
 
-        var total = deposit + (rentalprice * quantity * rentaldays);
+        var total = deposit + (rentalprice * rentaldays);
 
         $('#totalprice').text(total);
     }
-
 
     function dateFormatter(date) {
         var dd = date.getDate();
