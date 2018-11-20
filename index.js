@@ -497,13 +497,13 @@ app.get('/success', function (req, res) {
       throw error;
     } else {
       console.log(JSON.stringify(payment));
-      res.send('Success');
+      res.send('Your payment has been successfully processed. Thank you.');
     }
   });
 });
 
 app.get('/cancel', function (req, res) {
-  res.send('Cencelled');
+  res.send('Payment has been cancelled.');
 });
 
 app.get('/logout', function (req, res) {
