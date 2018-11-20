@@ -9,6 +9,7 @@ const nodemailer = require('nodemailer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 var crypto = require('crypto');
+var paypal = require('paypal-rest-sdk');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -35,6 +36,12 @@ const session = require('express-session')({
   cookie: {
     maxAge: 24 * 3600 * 1000
   }
+});
+
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'ATHArmjcEG1iYfsEZLOIuaqIX0yItp4mIxXt0lul4J6AUvYpJBvNHtRDKbIZKel6XPVtfyXv1deJHydI',
+  'client_secret': 'EKkmgVT7B5q56wowHZLETqBrvVaUXHULu5mFelQrFuEM5ZkRa8CoSbyqkxGPwPxkl5rNwQCPF0v8gchh'
 });
 
 var connection;
@@ -466,6 +473,39 @@ app.get('/cart', function (req, res) {
   res.render('cart');
 });
 
+app.get('/payment', function (req, res) {
+  res.render('payment');
+});
+
+app.get('/success', function (req, res) {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+      "amount": {
+        "currency": "CAD",
+        "total": "320.00"
+      }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+      console.log(error.response);
+      throw error;
+    } else {
+      console.log(JSON.stringify(payment));
+      res.send('Success');
+    }
+  });
+});
+
+app.get('/cancel', function (req, res) {
+  res.send('Cencelled');
+});
+
 app.get('/logout', function (req, res) {
   var sess = req.session;
   if (sess.username) {
@@ -755,6 +795,47 @@ app.post('/profile', function (req, res) {
       }
     });
   }
+});
+
+app.post('/pay', function (req, res) {
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+      "payment_method": "paypal"
+    },
+    "redirect_urls": {
+      "return_url": "http://localhost:3030/success",
+      "cancel_url": "http://localhost:3030/cancel"
+    },
+    "transactions": [{
+      "item_list": {
+        "items": [{
+          "name": "Dyson Vacuum Cleaner",
+          "sku": "001",
+          "price": "320.00",
+          "currency": "CAD",
+          "quantity": 1
+        }]
+      },
+      "amount": {
+        "currency": "CAD",
+        "total": "320.00"
+      },
+      "description": "Cord-free, hassle-free. Powerful suction. Powered by the Dyson digital motor v6."
+    }]
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+      throw error;
+    } else {
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === 'approval_url') {
+          res.redirect(payment.links[i].href);
+        }
+      }
+    }
+  });
 });
 
 /*************** 404 Not Found **************/

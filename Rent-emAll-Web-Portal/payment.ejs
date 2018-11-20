@@ -1,49 +1,57 @@
 <div class="container">
     <div class="row">
-      <div class="col-md-10 card shadow-lg rounded my-5 mx-auto">
-        <div class="card-body">
-          <h3>Payment</h3>
-          <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="w-50"></th>
-                        <th>Deposit</th>
-                        <th>Price Per Day</th>
-                        <th>Rental Period</th>
-                    </tr>
-                    <tr>
-                        <td class="text-center">[itemName]</td>
-                        <td>$ 250.00</td>
-                        <td>$ 4.00</td>
-                        <td>30 days</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">[itemName]</td>
-                        <td>$ 100.00</td>
-                        <td>$ 2.00</td>
-                        <td>5 days</td>
-                    </tr>
-                </thead>
-            </table>
-          </div>
+        <div class="col-md-10 card shadow-lg rounded my-5 mx-auto">
+            <div class="card-body">
+                <h3>Payment</h3>
+                <br />
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="w-50">Rental Item Name</th>
+                                <th>Deposit</th>
+                                <th>Price Per Day</th>
+                                <th>Rental Period</th>
+                            </tr>
+                            <tr>
+                                <td class="">Dyson Vacuum Cleaner</td>
+                                <td>$ 120.00</td>
+                                <td>$ 20.00</td>
+                                <td>10 days</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
 
-          <hr class="my-5">
-          
-          <h3>Payment Method</h3>
-          <hr>
-            <form class="ml-5">
-                <div class="form-check">
-                    <i class="far fa-credit-card fa-lg mr-5"></i>
-                    <input class="form-check-input" type="radio" id="paymentMethod" name="paymentMethod">
-                    <label class="form-check-label" for="paymentMethod" id="paymentMethodLabel">Credit Card XXXX-XXXX-XXXX-1234</label>
-                </div>
-                <div class="float-right mt-5">
-                    <h2 class="text-primary font-weight-bold">Subtotal: $ 480</h2>
-                    <button class="btn btn-primary text-uppercase my-3 w-100" type="submit">Purchase</button>
-                </div>
-            </form>
-      </div>
+                <br /><br />
+
+                <h3>Payment Method</h3>
+                <hr>
+                <form class="ml-3" action="/pay" method="POST">
+                    <div class="form-check">
+                        <i class="fab fa-paypal fa-3x mr-4 text-primary"></i>
+                        <input class="form-check-input mt-4" type="radio" id="paymentMethod" name="paymentMethod">
+                        <label class="form-check-label mr-2" for="paymentMethod" id="paymentMethodLabel">PAYPAL</label>
+                        <span style="font-size:10px;color:red;">Please select a payment method.</span>
+                    </div>
+                    <div class="float-right">
+                        <h3 class="text-primary">Subtotal: $ 320</h3>
+                        <button id="btn-purchase" class="btn btn-primary text-uppercase my-3 w-100" type="submit"
+                            disabled>Purchase</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+<script>
+    $('#paymentMethod').prop('checked', false);
+    $('#btn-purchase').attr('disabled', 'disabled');
+
+    $('#paymentMethod').change(function () {
+        if (this.checked) {
+            $('#btn-purchase').attr('disabled', false);
+        }
+    });
+</script>
