@@ -1,7 +1,3 @@
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
 <div class="container">
   <div class="row">
     <div class="col-md-10 mx-auto card my-5 shadow-lg rounded">
@@ -82,7 +78,7 @@
           <!-- third row - first column -->
           <div class="form-group">
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="purchasedYear">Year Purchased</label><br />
                   <input type="text" class="date-own form-control" id="purchasedYear" name="purchasedYear" max="2018"
@@ -91,68 +87,59 @@
                 </div>
               </div>
 
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="purchasedPrice">Purchased Price $ </label><br />
-                  <input type="number" min="0.01" step="0.01" max="2500.45" class="form-control num-only" id="purchasedPrice"
+                  <input type="number" max="2500" class="form-control num-only" id="purchasedPrice"
                     name="purchasedPrice">
                   <div class="errorMsg" id="purchasedPriceError"></div>
                 </div>
               </div>
+			</div>
+            <br>
 
-              <br>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="condition">Condition</label><br />
-                  <select class="form-control" id="condition" name="condition">
-                    <option value="1">Used</option>
-                    <option value="2">Refurbished</option>
-                    <option value="3">New</option>
-                    <option value="4">New but open box</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- third row -->
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="availability">Availability Duration</label><br />
-                  <input type="calendar" class="demo form-control" id="availability" name="availability">
-                  <div class="errorMsg" id="availabilityError"></div>
-                </div>
-              </div>
-
-              <div class="col-sm-4">
+            <!-- third row -->
+			<div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="depositPrice">Deposite Price $ </label><br />
-                  <input type="number" min="0.01" step="0.01" max="2500.45" class="form-control num-only" id="depositPrice"
+                  <input type="number" max="2500" class="form-control num-only" id="depositPrice"
                     name="depositPrice">
                   <div class="errorMsg" id="depositError"></div>
                 </div>
               </div>
 
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="rentPerDay">Rental Price $ (Daily)</label><br />
-                  <input type="number" min="0.01" step="0.01" max="2500.45" class="form-control num-only" id="rentPerDay"
+                  <input type="number"  max="2500" class="form-control num-only" id="rentPerDay"
                     name="rentPerDay">
                   <div class="errorMsg" id="rentError"></div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="city">City</label><br />
-                  <input type="text" class="form-control" id="city" name="city">
-                  <div class="errorMsg" id="cityError"></div>
-                </div>
-              </div>
-
-              <div class="col-sm-4">
+			<br />
+			<!-- forth row -->
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-2">
+					<div class="form-group">
+						<label for="DatePurchased">Rental From (start date)</label><br />
+						<input type="date" class="form-control" id="rentalStart" required>
+						<div class="errorMsg" id="availabilityError"></div>
+					</div>
+				</div>
+				<div class="col-sm-4 col-sm-offset-2">
+					<div class="form-group">
+						<label for="DatePurchased">Rental To (end date)</label><br />
+						<input type="date" class="form-control" id="rentalEnd" required readonly>
+						<div class="errorMsg" id="availabilityError"></div>
+					</div>
+				</div>
+			</div>
+			<br />
+			<!-- fifth row -->
+			<div class="row">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="postalcode">Postal code</label><br />
                   <input type="text" class="form-control" id="postalcode" name="postalcode" maxlength="6" placeholder="X3X3X3">
@@ -160,7 +147,7 @@
                 </div>
               </div>
               <br>
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="province">Province</label><br />
                   <select class="form-control" id="province" name="province">
@@ -197,142 +184,52 @@
   var yyyy = today.getFullYear();
   document.getElementById("purchasedYear").setAttribute("max", yyyy);
 </script>
-<script>
+ 
+ <script>
+     var date = new Date();
+    var today = dateFormatter(date);
+    $('#rentalStart').attr('min', today);
+    $('#rentalStart').change(function () {
+        var startdate = $('#rentalStart').val();
+        $('#rentalEnd').val('');
+        $('#rentalEnd').removeAttr('readonly');
+        $('#rentalEnd').attr('min', startdate);
+        $('.btn-cart').attr('disabled', 'disabled');
+    })
 
-  /**
-   * jQuery UI Datepicker add-on which can help select date range
-   * First click selects start date of range. Second click selects
-   * end date of range and closes calendar.
-   *
-   * Plugin accept all Datepicker options. Also, plugin introduce one more
-   * option -- rangeSeparator.
-   *
-   * http://noteskeeper.ru/38/
-   *
-   * Copyright 2009-2013 Vladimir Kuznetsov <mistakster@gmail.com>
-   * Released under the MIT license
-   * http://opensource.org/licenses/MIT
-   *
-   */
-  (function ($) {
+    $('#rentalEnd').change(function () {
+        $('.btn-cart').attr('disabled', 'disabled');
+        $('#rentaldays').text(GetDays());
+        calTotal();
+        console.log(document.getElementById('rentaldays').innerHTML);
+        if (document.getElementById('rentaldays').innerHTML > 0)
+            $('.btn-cart').attr('disabled', false);
+    })
 
-    function compareDates(start, end, format) {
-      var temp, dateStart, dateEnd;
+    function calTotal() {
+        var deposit = parseInt(document.getElementById('deposit').innerHTML);
+        var rentalprice = parseInt(document.getElementById('rentalprice').innerHTML);
+        // var quantity = parseInt(document.getElementById('qty').innerHTML);
+        var rentaldays = parseInt(document.getElementById('rentaldays').innerHTML);
 
-      try {
-        dateStart = $.datepicker.parseDate(format, start);
-        dateEnd = $.datepicker.parseDate(format, end);
-        if (dateEnd < dateStart) {
-          temp = start;
-          start = end;
-          end = temp;
-        }
-      } catch (ex) { }
+        var total = deposit + (rentalprice * rentaldays);
 
-      return { start: start, end: end };
+        $('#totalprice').text(total);
     }
 
-    $.fn.daterange = function (opts) {
+    function dateFormatter(date) {
+        var dd = date.getDate();
+        var mm = date.getMonth() + 1;
+        var yyyy = date.getFullYear();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        date = yyyy + '-' + mm + '-' + dd;
+        return date;
+    }
 
-      // defaults
-      opts = $.extend({
-        "changeMonth": false,
-        "changeYear": false,
-        "numberOfMonths": 2,
-        "rangeSeparator": " - "
-      }, opts || {});
-
-      var onSelect = opts.onSelect || $.noop;
-      var onClose = opts.onClose || $.noop;
-      var beforeShow = opts.beforeShow || $.noop;
-      var beforeShowDay = opts.beforeShowDay;
-
-      var lastDateRange;
-
-      function storeLastDateRange(dateText, dateFormat) {
-        var start, end;
-        dateText = dateText.split(opts.rangeSeparator);
-        if (dateText.length > 0) {
-          start = $.datepicker.parseDate(dateFormat, dateText[0]);
-          if (dateText.length > 1) {
-            end = $.datepicker.parseDate(dateFormat, dateText[1]);
-          }
-          lastDateRange = { start: start, end: end };
-        } else {
-          lastDateRange = null;
-        }
-      }
-
-      opts.beforeShow = function (input, inst) {
-        // store dateText to highlight it latter
-        var dateFormat = $(this).datepicker("option", "dateFormat");
-        storeLastDateRange($(input).val(), dateFormat);
-        beforeShow.apply(this, arguments);
-      };
-
-      opts.beforeShowDay = function (date) {
-
-        var out = [true, ""], extraOut;
-
-        if (lastDateRange && lastDateRange.start <= date) {
-          if (lastDateRange.end && date <= lastDateRange.end) {
-            out[1] = "ui-datepicker-range";
-          }
-        }
-
-        if (beforeShowDay) {
-          extraOut = beforeShowDay.apply(this, arguments);
-          out[0] = out[0] && extraOut[0];
-          out[1] = out[1] + " " + extraOut[1];
-          out[2] = extraOut[2];
-        }
-
-        return out;
-      };
-
-      // datepicker's select date event handler
-      opts.onSelect = function (dateText, inst) {
-        var textStart;
-        if (!inst.rangeStart) {
-          inst.inline = true;
-          inst.rangeStart = dateText;
-        } else {
-          inst.inline = false;
-          textStart = inst.rangeStart;
-          if (textStart !== dateText) {
-            var dateFormat = $(this).datepicker("option", "dateFormat");
-            var dateRange = compareDates(textStart, dateText, dateFormat);
-            $(this).val(dateRange.start + opts.rangeSeparator + dateRange.end);
-            inst.rangeStart = null;
-          }
-        }
-        // call original callback for select event
-        onSelect.apply(this, arguments);
-      };
-
-      opts.onClose = function (dateText, inst) {
-        // reset state
-        inst.rangeStart = null;
-        inst.inline = false;
-        // call original callback for close event
-        onClose.apply(this, arguments);
-      };
-
-      return this.each(function () {
-        var input = $(this);
-        if (input.is("input")) {
-          input.datepicker(opts);
-        }
-      });
-    };
-
-  }(jQuery));
-
-
-  $(function () {
-    $("#availability").daterange({
-      dateFormat: "yy/mm/dd", //date format
-      rangeSeparator: "  # #  " // the string between first and last date
-    });
-  });
+    function GetDays() {
+        var start = new Date($('#rentalStart').val());
+        var end = new Date($('#rentalEnd').val());
+        return parseInt((end - start) / (24 * 3600 * 1000));
+    }
 </script>
