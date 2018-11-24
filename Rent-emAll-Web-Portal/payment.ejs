@@ -8,10 +8,11 @@
                     <table class="paymentTable" style="width:100%;">
                         <thead>
                             <tr>
-                                <th style="width:60%;">Rental Item Name</th>
+                                <th style="width:50%;">Rental Item Name</th>
                                 <th style="width:10%;">Deposit</th>
                                 <th style="width:15%;">Price Per Day</th>
                                 <th style="width:15%;">Rental Period</th>
+                                <th style="width:10%;text-align:right;">Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,10 +31,10 @@
                                 </td>
                                 <td>
                                     <%= item.rentaldays %> day(s)</td>
+                                <td style="text-align:right;">
+                                    $ <span class="totals_payment"><%= item.total %></span>
+                                </td>
                             </tr>
-                            <div class="totals_payment" style="display:none;">
-                                <%= item.total %>
-                            </div>
                             <% }); } %>
 
                         </tbody>

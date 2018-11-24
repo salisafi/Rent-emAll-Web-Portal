@@ -904,8 +904,10 @@ app.post('/cart/:id', function (req, res) {
 });
 
 app.post('/pay', function (req, res) {
+  var sess = req.session;
   var body = req.body;
   console.log(body);
+  console.log(sess.cart);
 
   const create_payment_json = {
     "intent": "sale",
