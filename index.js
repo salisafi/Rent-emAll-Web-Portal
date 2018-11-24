@@ -733,8 +733,8 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
 
-  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
-    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
+  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
+    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice ,body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to post your item.' });
@@ -909,7 +909,7 @@ app.post('/pay', function (req, res) {
   console.log(cart);
   console.log(subtotal);
 
-  var create_payment_json = {
+  const create_payment_object = {
     "intent": "sale",
     "payer": {
       "payment_method": "paypal"
@@ -923,19 +923,20 @@ app.post('/pay', function (req, res) {
         "items": [{
           "name": "Dyson Vacuum Cleaner",
           "sku": "001",
-          "price": 20,
+          "price": subtotal,
           "currency": "CAD",
           "quantity": 1
         }]
       },
       "amount": {
         "currency": "CAD",
-        "total": "10"
+        "total": subtotal
       }
     }]
   };
 
-  console.log(create_payment_json.transactions.amount[total]);
+  create_payment_json = JSON.stringify(create_payment_object);
+  console.log(create_payment_json);
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
