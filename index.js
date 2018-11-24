@@ -904,12 +904,12 @@ app.post('/cart/:id', function (req, res) {
 });
 
 app.post('/pay', function (req, res) {
-  var sess = req.session;
-  var body = req.body;
-  console.log(body);
-  console.log(sess.cart);
+  var cart = req.session.cart;
+  var subtotal = req.body.subtotal;
+  console.log(cart);
+  console.log(subtotal);
 
-  const create_payment_json = {
+  var create_payment_json = {
     "intent": "sale",
     "payer": {
       "payment_method": "paypal"
@@ -923,18 +923,19 @@ app.post('/pay', function (req, res) {
         "items": [{
           "name": "Dyson Vacuum Cleaner",
           "sku": "001",
-          "price": "320.00",
+          "price": 20,
           "currency": "CAD",
           "quantity": 1
         }]
       },
       "amount": {
         "currency": "CAD",
-        "total": "320.00"
-      },
-      "description": "Cord-free, hassle-free. Powerful suction. Powered by the Dyson digital motor v6."
+        "total": "10"
+      }
     }]
   };
+
+  console.log(create_payment_json.transactions.amount[total]);
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {

@@ -162,9 +162,13 @@ function validPhoneNum() {
 		"519", "226", "548", "613", "343", "705", "249", "807", "905", "289",
 		"365", "418", "581", "450", "579", "514", "438", "819", "873", "306", "639"];
 	var areaValid = false;
+	if (!input) {
+		showErrors('phone_errors', "Phone number must be 10 numbers.");
+		elem.focus(); return false;
+	}
 	if (input.length > 0) {
 		if (!regex.test(input)) {
-			showErrors('phone_errors', "Phone number must be 10 numeric characters only.");
+			showErrors('phone_errors', "Phone number must be 10 numbers only.");
 			elem.focus(); return false;
 		}
 		var phoneArea = input.substr(0, 3);
