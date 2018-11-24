@@ -468,13 +468,47 @@ io.on('connection', function (socket) {
   });
 });
 
-
 app.get('/cart', function (req, res) {
-  res.render('cart');
+  var sess = req.session;
+  if (!sess.username) {
+    res.render('main');
+  } else {
+    res.render('cart', { cart: sess.cart });
+  }
+});
+
+app.get('/remove/:id', function (req, res) {
+  var sess = req.session;
+  var id = req.params.id;
+
+  if (!sess.username) {
+    res.redirect('/cart');
+  } else {
+    if (sess.cart) {
+      var cart = sess.cart;
+    } else {
+      var cart = [];
+    }
+
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].id == id) {
+        console.log(cart[i]);
+        cart.splice(i, 1);
+      }
+    }
+
+    sess.cart = cart;
+    res.redirect('/cart');
+  }
 });
 
 app.get('/payment', function (req, res) {
-  res.render('payment');
+  var sess = req.session;
+  if (!sess.username) {
+    res.redirect('/');
+  } else {
+    res.render('payment', { cart: sess.cart });
+  }
 });
 
 app.get('/success', function (req, res) {
@@ -797,7 +831,82 @@ app.post('/profile', function (req, res) {
   }
 });
 
+app.post('/cart/:id', function (req, res) {
+  var sess = req.session;
+  var id = req.params.id;
+  var body = req.body;
+
+  if (!sess.username) {
+    res.redirect('/item/' + id);
+  } else {
+    if (sess.cart) {
+      var cart = sess.cart;
+    } else {
+      var cart = [];
+    }
+
+    function getItem(id, callback) {
+      connection.query("SELECT * FROM ItemTbl WHERE itemId = ?;", [id],
+        function (err, results) {
+          if (err)
+            callback(err, null);
+          else
+            callback(null, results[0]);
+        });
+    }
+
+    function getUser(userid, callback) {
+      connection.query("SELECT * FROM UserTbl WHERE userId = ?;", [userid],
+        function (err, results) {
+          if (err)
+            callback(err, null);
+          else
+            callback(null, results[0]);
+        });
+    }
+
+    getItem(id, function (err, data) {
+      if (err) throw err;
+
+      getUser(data.userId, function (err, userdata) {
+        if (err) throw err;
+
+        // temporary shopping object
+        var shoppingItem = {
+          id: id,
+          name: data.name,
+          image: data.photoURL,
+          lender: userdata.userName,
+          deposit: body.deposit,
+          rentalprice: body.rentalprice,
+          rentaldays: body.rentaldays,
+          total: body.total,
+          startDate: body.rentalStart,
+          endDate: body.rentalEnd
+        }
+        console.log(shoppingItem);
+
+        var exist = false;
+        for (var i = 0; i < cart.length; i++) {
+          if (cart[i].id == id) {
+            exist = true;
+          }
+        }
+        if (!exist) {
+          cart.push(shoppingItem);
+        }
+        sess.cart = cart;
+
+        res.redirect('/cart');
+      });
+    });
+  }
+});
+
 app.post('/pay', function (req, res) {
+  var body = req.body;
+  console.log(body);
+
   const create_payment_json = {
     "intent": "sale",
     "payer": {

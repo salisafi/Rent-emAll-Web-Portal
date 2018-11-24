@@ -4,95 +4,102 @@
             <div class="shadow-lg rounded">
                 <div class="card my-5">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="container">
-                                    <h5 class="card-title">Rental Information</h5><br>
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <!-- first column -->
-                                            <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
-                                                width="100%" height="200" style="object-fit: cover; border: 1px solid #ddd" />
-                                        </div> <!-- col-md-4 -->
+                        <form id="form-payment" action="/cart/<%= item.itemId %>" method="POST">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="container">
+                                        <h5 class="card-title">Rental Information</h5><br>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <!-- first column -->
+                                                <img id="myImg" class="mx-auto" src="<%= item.photoURL %>" alt="Upload image"
+                                                    width="100%" height="200" style="object-fit: cover; border: 1px solid #ddd" />
+                                            </div> <!-- col-md-4 -->
 
-                                        <div class="col-md-7">
-                                            <!-- second column -->
-                                            <div class="form-group row">
-                                                <!-- first row -->
-                                                <h5>
-                                                    <%= item.name %>
-                                                </h5>
-                                                <p>
-                                                    <%= item.description %>
-                                                </p>
-                                                <h5>Lender:&nbsp;&nbsp;</h5>
-                                                <h5>
-                                                    <%= lender.userName %>
-                                                </h5>
-                                                <!-- <span>&nbsp;&nbsp;&nbsp;</span>
+                                            <div class="col-md-7">
+                                                <!-- second column -->
+                                                <div class="form-group row">
+                                                    <!-- first row -->
+                                                    <h5>
+                                                        <%= item.name %>
+                                                    </h5>
+                                                    <p>
+                                                        <%= item.description %>
+                                                    </p>
+                                                    <h5>Lender:&nbsp;&nbsp;</h5>
+                                                    <h5>
+                                                        <%= lender.userName %>
+                                                    </h5>
+                                                    <!-- <span>&nbsp;&nbsp;&nbsp;</span>
                                                 <span class="star-prototype">4.5</span> -->
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div> <!-- col-sm-8 -->
+                                        </div> <!-- col-sm-8 -->
 
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <!-- <label for="Quantity">Quantity</label><br />
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <!-- <label for="Quantity">Quantity</label><br />
                                                 <input id="Quantity" type="number" class="form-control" name="quantity"
                                                     min="1" max="10" value="1" required> -->
-                                                <label for="DatePurchased">Rental From (start date)</label><br />
-                                                <input type="date" class="form-control" id="rentalStart" required>
-                                                <br />
+                                                    <label for="DatePurchased">Rental From (start date)</label><br />
+                                                    <input type="date" class="form-control" id="rentalStart" name="rentalStart"
+                                                        required>
+                                                    <br />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="DatePurchased">Rental To (end date)</label><br />
-                                                <input type="date" class="form-control" id="rentalEnd" required
-                                                    readonly>
-                                                <br />
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="DatePurchased">Rental To (end date)</label><br />
+                                                    <input type="date" class="form-control" id="rentalEnd" name="rentalEnd"
+                                                        required readonly>
+                                                    <br />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="vl"></div>
-                                <div class="container">
-                                    <div>
-                                        <div class="inline float-right" style="margin: 0 auto;">
-                                            <p>$<span id="deposit">
-                                                    <%= item.deposit %></span><br /><br />
-                                                $<span id="rentalprice">
-                                                    <%= item.rental_price_daily %></span><br />
-                                                <!-- x <span id="qty">4</span><br /> -->
-                                                x <span id="rentaldays">0</span></p>
+                                <div class="col-md-4">
+                                    <div class="vl"></div>
+                                    <div class="container">
+                                        <div>
+                                            <div class="inline float-right" style="margin: 0 auto;">
+                                                <p>$<span id="deposit">
+                                                        <%= item.deposit %></span><br /><br />
+                                                    $<span id="rentalprice">
+                                                        <%= item.rental_price_daily %></span><br />
+                                                    x <span id="rentaldays">0</span></p>
+                                            </div>
+                                            <div class="inline float-right" style="margin: 0 auto;">
+                                                <p>Deposit:<br /><br />
+                                                    Pay per day:<br />
+                                                    Rental period (days):&nbsp;&nbsp;&nbsp;</p>
+                                            </div>
+                                            <div id="hidden-inputs">
+                                                <input type="hidden" id="depositInput" name="deposit" value="">
+                                                <input type="hidden" id="rentalpriceInput" name="rentalprice" value="">
+                                                <input type="hidden" id="rentaldaysInput" name="rentaldays" value="">
+                                                <input type="hidden" id="totalInput" name="total" value="">
+                                            </div>
+                                            <br /><br /><br /><br />
+                                            <hr />
+                                            <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
                                         </div>
-                                        <div class="inline float-right" style="margin: 0 auto;">
-                                            <p>Deposit:<br /><br />
-                                                Pay per day:<br />
-                                                <!-- Quantity:<br /> -->
-                                                Rental period (days):&nbsp;&nbsp;&nbsp;</p>
+                                        <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
+                                            <button type="submit" class="btn btn-primary btn-cart text-uppercase" style="width:80%; margin-bottom:10px;"
+                                                disabled>Add to Shopping Cart</button>
+                                            <!-- <button type="submit" class="btn btn-primary btn-cart text-uppercase" style="width: 80%; margin-bottom: 10px;"
+                                                disabled>Payment</button> -->
+                                            <br />
+                                            <button type="button" class="btn btn-secondary text-uppercase" style="width: 80%;"
+                                                onclick="window.history.back();">Cancel</button>
                                         </div>
-                                        <br /><br /><br /><br />
-                                        <hr />
-                                        <h4 class="float-right">Total:&nbsp; $ <span id="totalprice">0</span></h4>
-                                    </div>
-                                    <div class="text-center" style="position: absolute; right: 0; left: 0; bottom: 0; margin: auto;">
-                                        <!-- <a href="/cart"><button type="button" class="btn btn-primary btn-cart text-uppercase"
-                                                style="width: 80%; margin-bottom: 10px;" disabled>Add to Shopping Cart</button></a> -->
-                                        <a href="/payment"><button type="button" class="btn btn-primary btn-cart text-uppercase"
-                                            style="width: 80%; margin-bottom: 10px;" disabled>Payment</button></a>
-                                        <br />
-                                        <button type="button" class="btn btn-secondary text-uppercase" style="width: 80%;"
-                                            onclick="window.history.back();">Cancel</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -131,13 +138,21 @@
             $('.btn-cart').attr('disabled', false);
     })
 
+    console.log($('#depositInput').val());
+    console.log($('#rentalpriceInput').val());
+    console.log($('#rentaldaysInput').val());
+
     function calTotal() {
         var deposit = parseInt(document.getElementById('deposit').innerHTML);
         var rentalprice = parseInt(document.getElementById('rentalprice').innerHTML);
-        // var quantity = parseInt(document.getElementById('qty').innerHTML);
         var rentaldays = parseInt(document.getElementById('rentaldays').innerHTML);
 
         var total = deposit + (rentalprice * rentaldays);
+
+        $('#depositInput').val(deposit);
+        $('#rentalpriceInput').val(rentalprice);
+        $('#rentaldaysInput').val(rentaldays);
+        $('#totalInput').val(total);
 
         $('#totalprice').text(total);
     }
