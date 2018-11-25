@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require("path");
 const http = require('http');
+const https = require('https');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -83,7 +84,9 @@ io.use(sharedsession(session, {
 }));
 
 
-/*************** GET Request **************/
+/*****************************************************************************/
+/********************              GET Request              ******************/
+/*****************************************************************************/
 
 app.get("/", function (req, res) {
   const sess = req.session;
@@ -559,7 +562,7 @@ app.get('/logout', function (req, res) {
   if (sess.username) {
     req.session.destroy(function (err) {
       if (err) {
-        console.log('Logout Error: ' + err);
+        throw err;
       } else {
         res.redirect('/');
       }
@@ -570,7 +573,9 @@ app.get('/logout', function (req, res) {
 });
 
 
-/************************ POST Request ***********************/
+/*****************************************************************************/
+/********************             POST Request              ******************/
+/*****************************************************************************/
 
 app.post('/signup', function (req, res) {
   var body = req.body;
@@ -603,7 +608,7 @@ app.post('/login', function (req, res) {
 
   connection.query('SELECT * FROM UserTbl WHERE BINARY userName = ?', [userid], function (err, result) {
     if (err) {
-      console.log('Error: ' + err);
+      throw err;
     } else {
       if (result.length === 0) {
         res.render('error', { errormessage: 'You just entered invalid username.' });
@@ -647,7 +652,7 @@ app.post('/forgotuser', function (req, res) {
 
   connection.query('SELECT * FROM UserTbl WHERE emailAddress = ?', [email], function (err, result) {
     if (err) {
-      console.log('Error: ' + err);
+      throw err;
     } else {
       if (result.length === 0) {
         res.render('error', { errormessage: 'Email address does not exist.' });
@@ -676,13 +681,12 @@ app.post('/forgotpass', function (req, res) {
 
   connection.query('SELECT * FROM UserTbl WHERE emailAddress = ? AND BINARY userName = ?', [email, username], function (err, result) {
     if (err) {
-      console.log('Error: ' + err);
+      throw + err;
     } else {
       if (result.length === 0) {
         res.render('error', { errormessage: 'Invalid email and/or username.' });
       } else {
         var newPW = randomPassword();
-        console.log('your new password is ' + newPW);
 
         var key = 'myKey';
         var cipher = crypto.createCipher('aes192', key);
@@ -691,7 +695,7 @@ app.post('/forgotpass', function (req, res) {
 
         connection.query('UPDATE UserTbl SET password = ? WHERE userName = ?', [cipheredOutput, username], function (err, result) {
           if (err) {
-            console.log('Error: ' + err);
+            throw err;
           } else {
             res.redirect('/');
           }
@@ -753,7 +757,6 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
     if (err) {
       res.render('error', { errormessage: 'Unable to post your item.' });
     } else {
-      console.log(result.insertId);
       res.redirect('/item/' + result.insertId);
     }
   });
@@ -763,7 +766,6 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
   var sess = req.session;
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
-  console.log(body.itemId);
 
   connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?,  purchasedPrice = ?, rental_price_daily = ?, deposit = ?, itemStartDate = ?, itemFinishDate = ?, photoURL = ? WHERE itemId =?", [
     body.category, body.name, body.description, body.purchasedYear, body. body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.itemStartDate, sess.itemFinishDate, filePath, body.itemId
@@ -771,7 +773,6 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
     if (err) {
       res.render('error', { errormessage: 'Unable to update your item.' });
     } else {
-      console.log(body.itemId);
       res.redirect('/item/' + body.itemId);
     }
   });
@@ -804,7 +805,7 @@ app.post('/profile', function (req, res) {
       body.postalcode, body.phoneNum, body.email, body.username
     ], function (err, result) {
       if (err) {
-        console.log('Error: ' + err);
+        throw err;
       } else {
         var province = verifyProvince(body.postalcode);
         if (province) {
@@ -828,7 +829,7 @@ app.post('/profile', function (req, res) {
       cipheredOutput, body.postalcode, body.phoneNum, body.email, body.username
     ], function (err, result) {
       if (err) {
-        console.log('Error: ' + err);
+        throw err;
       } else {
         var province = verifyProvince(body.postalcode);
         if (province) {
@@ -898,7 +899,6 @@ app.post('/cart/:id', function (req, res) {
           startDate: body.rentalStart,
           endDate: body.rentalEnd
         }
-        console.log(shoppingItem);
 
         var exist = false;
         for (var i = 0; i < cart.length; i++) {
@@ -960,7 +960,6 @@ app.post('/pay', function (req, res) {
   };
 
   create_payment_json = JSON.stringify(create_payment_object);
-  console.log(create_payment_json);
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
@@ -975,7 +974,10 @@ app.post('/pay', function (req, res) {
   });
 });
 
-/*************** 404 Not Found **************/
+
+/*****************************************************************************/
+/********************             404 Not Found             ******************/
+/*****************************************************************************/
 
 app.all('*', function (req, res) {
   res.status(404).send('<h1>Error 404: Page Not Found</h1>');
