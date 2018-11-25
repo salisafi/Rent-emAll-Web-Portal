@@ -922,8 +922,8 @@ app.post('/pay', function (req, res) {
   var subtotal = req.body.subtotal;
   req.session.subtotal = subtotal;
 
-  var successlink = 'http://' + hostname + ':' + port + '/success';
-  var cancellink = 'http://' + hostname + ':' + port + '/cancel';
+  var successlink = 'http://myvmlab.senecacollege.ca:6311/success';
+  var cancellink = 'http://myvmlab.senecacollege.ca:6311/cancel';
 
   var items = [];
   var item = {};
