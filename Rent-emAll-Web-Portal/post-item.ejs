@@ -111,7 +111,7 @@
 
               <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
-                  <label for="rentPerDay">Rental Price $ (Daily)</label><br />
+                  <label for="rentPerDay">Rental Price $ <small>(Daily)</small></label><br />
                   <input type="number"  max="2500" class="form-control num-only" id="rentPerDay"
                     name="rentPerDay">
                   <div class="errorMsg" id="rentError"></div>
@@ -123,51 +123,21 @@
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-2">
 					<div class="form-group">
-						<label for="DatePurchased">Rental From (start date)</label><br />
-						<input type="date" class="form-control" id="rentalStart" required>
-						<div class="errorMsg" id="availabilityError"></div>
+						<label for="itemStartDate">Rental From <small>(start date)</small></label><br />
+						<input type="date" class="form-control" id="itemStartDate" required>
+						<div class="errorMsg" id="itemStartDateError"></div>
 					</div>
 				</div>
 				<div class="col-sm-4 col-sm-offset-2">
 					<div class="form-group">
-						<label for="DatePurchased">Rental To (end date)</label><br />
-						<input type="date" class="form-control" id="rentalEnd" required readonly>
-						<div class="errorMsg" id="availabilityError"></div>
+						<label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
+						<input type="date" class="form-control" id="itemFinishDate" required>
+						<div class="errorMsg" id="itemFinishDateError"></div>
 					</div>
 				</div>
 			</div>
 			<br />
-			<!-- fifth row -->
-			<div class="row">
-              <div class="col-sm-4 col-sm-offset-2">
-                <div class="form-group">
-                  <label for="postalcode">Postal code</label><br />
-                  <input type="text" class="form-control" id="postalcode" name="postalcode" maxlength="6" placeholder="X3X3X3">
-                  <div class="errorMsg" id="postal_errors"></div>
-                </div>
-              </div>
-              <br>
-              <div class="col-sm-4 col-sm-offset-2">
-                <div class="form-group">
-                  <label for="province">Province</label><br />
-                  <select class="form-control" id="province" name="province">
-                    <option value="AB">Alberta</option>
-                    <option value="BC">British Columbia</option>
-                    <option value="MB">Manitoba</option>
-                    <option value="NB">New Brunswick</option>
-                    <option value="NL">Newfoundland and Labrador</option>
-                    <option value="NS">Nova Scotia</option>
-                    <option value="ON" selected="selected">Ontario</option>
-                    <option value="PE">Prince Edward Island</option>
-                    <option value="QC">Quebec</option>
-                    <option value="SK">Saskatchewan</option>
-                    <option value="NT">Northwest Territories</option>
-                    <option value="NU">Nunavut</option>
-                    <option value="YT">Yukon</option>
-                  </select>
-                </div>
-              </div>
-            </div> <!-- row -->
+                       
           </div> <!-- form-group -->
 
           <div class="text-center">
@@ -184,7 +154,7 @@
   var yyyy = today.getFullYear();
   document.getElementById("purchasedYear").setAttribute("max", yyyy);
 </script>
- 
+
  <script>
      var date = new Date();
     var today = dateFormatter(date);
