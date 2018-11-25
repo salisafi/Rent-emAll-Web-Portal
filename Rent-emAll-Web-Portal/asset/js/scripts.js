@@ -208,10 +208,15 @@ function clearErrors() {
 
 /**************************** User Profile Retype Password ****************************/
 $('.retype').hide();
-$('#ChangePasswordBtn').click(function () {
-	$(this).data('clicked', true);
-	$(this).hide();
-	$('.retype').show();
+$('#ChangePasswordBtn').click(function (e) {
+	var ok = confirm('Do you want to change your password?');
+	if (ok) {
+		$(this).data('clicked', true);
+		$(this).hide();
+		$('.retype').show();
+	} else {
+		e.preventDefault();
+	}
 })
 
 /**************************** User Profile Retype Password ****************************/
@@ -312,13 +317,13 @@ $(function () {
 			valid = false;
 		}
 		/* if (!condition) {
-								$('#conditionError').text('Please enter the product condition.');
-														valid = false;
-																		}
-																						if (!availability) {
-																												$('#availabilityError').text('Please enter the product condition.');
-																																		valid = false;
-																																						} */
+			$('#conditionError').text('Please enter the product condition.');
+			valid = false;
+		}
+		if (!availability) {
+			$('#availabilityError').text('Please enter the product condition.');
+			valid = false;
+		} */
 		if (!depositPrice) {
 			$('#depositError').text('Please enter the product deposit price.');
 			valid = false;

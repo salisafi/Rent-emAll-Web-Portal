@@ -514,30 +514,44 @@ app.get('/payment', function (req, res) {
 app.get('/success', function (req, res) {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
+  const subtotal = req.session.subtotal;
 
-  const execute_payment_json = {
+  console.log('PayerID: ' + payerId);
+  console.log('PaymentID: ' + paymentId);
+
+  var execute_payment_object = {
     "payer_id": payerId,
     "transactions": [{
       "amount": {
         "currency": "CAD",
-        "total": "320.00"
+        "total": subtotal
       }
     }]
   };
+
+  const execute_payment_json = JSON.stringify(execute_payment_object);
 
   paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
     if (error) {
       console.log(error.response);
       throw error;
     } else {
-      console.log(JSON.stringify(payment));
-      res.send('Your payment has been successfully processed. Thank you.');
+      req.session.subtotal = 0;
+      req.session.cart = {};
+      res.render('message', {
+        title: 'Payment Success!',
+        content: 'Your payment has been successfully processed. Thank you.'
+      });
     }
   });
 });
 
 app.get('/cancel', function (req, res) {
-  res.send('Payment has been cancelled.');
+  res.send('');
+  res.render('message', {
+    title: 'Payment Failure!',
+    content: 'Unfortunately, your payment has been cancelled.'
+  });
 });
 
 app.get('/logout', function (req, res) {
@@ -556,7 +570,7 @@ app.get('/logout', function (req, res) {
 });
 
 
-/*************** POST Request **************/
+/************************ POST Request ***********************/
 
 app.post('/signup', function (req, res) {
   var body = req.body;
@@ -734,7 +748,7 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var filePath = '../uploads/images/' + req.file.filename;
 
   connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
-    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice ,body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
+    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to post your item.' });
@@ -906,8 +920,24 @@ app.post('/cart/:id', function (req, res) {
 app.post('/pay', function (req, res) {
   var cart = req.session.cart;
   var subtotal = req.body.subtotal;
-  console.log(cart);
-  console.log(subtotal);
+  req.session.subtotal = subtotal;
+
+  var successlink = 'http://' + hostname + ':' + port + '/success';
+  var cancellink = 'http://' + hostname + ':' + port + '/cancel';
+
+  var items = [];
+  var item = {};
+  
+  cart.forEach(function(eachItem) {
+    item = {
+      "name": eachItem.name,
+      "sku": eachItem.id,
+      "price": eachItem.total,
+      "currency": "CAD",
+      "quantity": 1
+    }
+    items.push(item);
+  })
 
   const create_payment_object = {
     "intent": "sale",
@@ -915,18 +945,12 @@ app.post('/pay', function (req, res) {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "http://localhost:3030/success",
-      "cancel_url": "http://localhost:3030/cancel"
+      "return_url": successlink,
+      "cancel_url": cancellink
     },
     "transactions": [{
       "item_list": {
-        "items": [{
-          "name": "Dyson Vacuum Cleaner",
-          "sku": "001",
-          "price": subtotal,
-          "currency": "CAD",
-          "quantity": 1
-        }]
+        "items": items
       },
       "amount": {
         "currency": "CAD",
