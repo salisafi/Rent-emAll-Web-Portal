@@ -747,8 +747,8 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
 
-  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, postalCode, province, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
-    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath
+  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, itemStartDate, itemFinishDate, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
+    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice ,body.rentPerDay, body.depositPrice, body.itemStartDate, body.itemFinishDate, filePath
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to post your item.' });
@@ -765,8 +765,8 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
   var filePath = '../uploads/images/' + req.file.filename;
   console.log(body.itemId);
 
-  connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?, rental_price_daily = ?, deposit = ?, postalCode = ?, province = ?, photoURL = ? WHERE itemId =?", [
-    body.category, body.name, body.description, body.purchasedYear, body.rentPerDay, body.depositPrice, sess.postalcode, sess.prov, filePath, body.itemId
+  connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?,  purchasedPrice = ?, rental_price_daily = ?, deposit = ?, itemStartDate = ?, itemFinishDate = ?, photoURL = ? WHERE itemId =?", [
+    body.category, body.name, body.description, body.purchasedYear, body. body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.itemStartDate, sess.itemFinishDate, filePath, body.itemId
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to update your item.' });

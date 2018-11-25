@@ -18,9 +18,9 @@
                                 <div class="col-sm-9">
                                     <select id="categoryselect" name="category" class="form-control mr-sm-2" style="background-color: rgb(223, 244, 255);">
                                         <% var options = [ "Please select one...", "Homeware", "Tools & Equip", "Sports & Rec", "Entertainment", "Babies & Kids", "Fashion" ];
-                                        for ( var i = 1; i < options.length; i++ )
-                                        { var selected = ( item.categoryId == i ) ? "selected" : "";
-                                        %>
+                                            for ( var i = 1; i < options.length; i++ )
+                                            { var selected = ( item.categoryId == i ) ? "selected" : "";
+                                            %>
                                         <option value="<%= i %>" <%=selected %>>
                                             <%=options[i] %>
                                         </option>
@@ -88,7 +88,7 @@
                                 <br>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="rentPerDay">Rental Price $ (per day)</label><br />
+                                        <label for="rentPerDay">Rental Price $ <small>(per day)</small></label><br />
                                         <input type="number" class="form-control num-only" id="rentPerDay" name="rentPerDay"
                                             placeholder="2.99" min="1" value="<%= item.rental_price_daily %>">
                                         <div class="errorMsg" id="rentError"></div>
@@ -96,36 +96,27 @@
                                 </div> <!-- col-sm-6 -->
                             </div> <!-- row -->
 
+                            <br />
+                            <!-- forth row -->
                             <div class="row">
-                                <!-- third row -->
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="postalcode">Postal code</label><br />
-                                        <input type="text" class="form-control" id="postalcode" name="postalcode"
-                                            maxlength="6" placeholder="X3X3X3" value="<%= item.postalCode %>">
-                                        <div class="errorMsg" id="postal_errors"></div>
-                                    </div> <!-- form-group row -->
-                                </div> <!-- col-sm-6 -->
-                                <br>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="province">Province</label><br />
-                                        <select class="form-control" id="province" name="province">
-                                            <% var provinces = [ "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Nova Scotia", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Northwest Territories", "Nunavut", "Yukon" ];
-                                            var provValues = [ "AB", "BC", "MB", "NB", "NL", "NS", "ON", "PE", "QC", "SK", "NT", "NU", "YT" ];
-                                                for ( var i = 0; i < provValues.length; i++ )
-                                                { var selected = ( item.province == provValues[i] ) ? "selected" : "";
-                                                %>
-                                            <option value="<%= provValues[i] %>" <%=selected %>>
-                                                <%=provinces[i] %>
-                                            </option>
-                                            <% } %>
-                                        </select>
+                                        <label for="DatePurchased">Rental From <small>(start date)</small></label><br />
+                                        <input type="date" class="form-control" id="rentalStart" required>
+                                        <div class="errorMsg" id="availabilityError"></div>
                                     </div>
-                                </div> <!-- col-sm-6 -->
-                            </div> <!-- row -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="DatePurchased">Rental To <small>(end date)</small></label><br />
+                                        <input type="date" class="form-control" id="rentalEnd" required readonly>
+                                        <div class="errorMsg" id="availabilityError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div> <!-- end of col-sm-7 -->
 
-                        </div>
 
 
                         <div class="col-md-1">
@@ -145,7 +136,8 @@
 
                     </div> <!-- col-sm-8 -->
                     <div class="text-center">
-                        <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel" onclick="window.history.back();">
+                        <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel"
+                            onclick="window.history.back();">
                         <input form="itemform" class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Update&emsp;&emsp;">
                     </div>
                 </form>
