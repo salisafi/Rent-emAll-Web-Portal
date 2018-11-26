@@ -47,6 +47,8 @@ $('#stars li').on('click', function(){
 	$('#ratingVal').val(ratingValue);
 });
 
+$('#reviewExistErrorModal').modal('show');
+
 function reviewValidation() {
         $(".errorMsg").empty();
         
