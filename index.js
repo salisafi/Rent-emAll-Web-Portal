@@ -11,6 +11,7 @@ const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
 var crypto = require('crypto');
 var paypal = require('paypal-rest-sdk');
+var flash = require('connect-flash');
 
 const hostname = '10.10.193.142';
 const port = 10034;
@@ -77,6 +78,7 @@ app.use(function (req, res, next) {
   res.locals.sess = req.session;
   next();
 })
+app.use(flash());
 
 const sharedsession = require('express-socket.io-session');
 io.use(sharedsession(session, {
@@ -275,7 +277,8 @@ app.get("/item/:id", function (req, res) {
           review: results[1],
           reviewPostedDate: fReviewPostedDate,
           averageRate: averageRate,
-          sess: sess
+          sess: sess,
+          message: req.flash('warning')
         });
       });
     });
@@ -1056,7 +1059,9 @@ app.post('/item/:id', function(req, res) {
       }
 
       if (doesUserIdExist) {
-        res.redirect('/item/' + itemId);
+        req.flash('warning', 'Cannot post more than one review per item.')
+        // res.redirect('/item/' + itemId);
+        res.redirect('back');
       }
       else {
         connection.query("INSERT INTO ReviewTbl (userId, userName, itemId, creationDate, reviewTitle, reviewText, rating) VALUES(?,?,?,?,?,?,?)",
