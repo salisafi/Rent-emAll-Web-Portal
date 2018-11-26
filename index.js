@@ -184,7 +184,8 @@ app.get('/list', function (req, res) {
       res.render('itemlisting', {
         items: results[0],
         postedDates: fDates,
-        rates: rates
+        rates: rates,
+        searchKeyword: searchKeyword
       });
     });
   }
