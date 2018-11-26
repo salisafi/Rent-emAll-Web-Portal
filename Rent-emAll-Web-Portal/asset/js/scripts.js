@@ -47,14 +47,18 @@ $('#stars li').on('click', function(){
 	$('#ratingVal').val(ratingValue);
 });
 
+// Display error message when posing more than one review per item
 $('#reviewExistErrorModal').modal('show');
 
+/*********************************** Review Validation ***********************************/
+/********** Validate when submit **********/
 function reviewValidation() {
         $(".errorMsg").empty();
         
         return validateReviewTitle() && validateReviewText();
 }
 
+/********** Validate review title **********/
 function validateReviewTitle() {
         var elem = document.querySelector("#title");
         var reviewTitle = elem.value.trim();
@@ -73,6 +77,7 @@ function validateReviewTitle() {
         return true;
 }
 
+/********** Validate review contents **********/
 function validateReviewText() {
         var elem = document.querySelector("#review");
         var reviewText = elem.value.trim();
