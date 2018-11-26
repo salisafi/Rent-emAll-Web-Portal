@@ -121,14 +121,14 @@
               <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="itemStartDate">Rental From <small>(start date)</small></label><br />
-                  <input type="date" class="form-control" id="itemStartDate" required>
+                  <input type="date" class="form-control" id="itemStartDate" name="itemStartDate">
                   <div class="errorMsg" id="itemStartDateError"></div>
                 </div>
               </div>
               <div class="col-sm-4 col-sm-offset-2">
                 <div class="form-group">
                   <label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
-                  <input type="date" class="form-control" id="itemFinishDate" required>
+                  <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate">
                   <div class="errorMsg" id="itemFinishDateError"></div>
                 </div>
               </div>
@@ -139,7 +139,7 @@
 
           <div class="text-center">
             <input class="btn btn-lg btn-secondary text-uppercase mr-3" type="button" value="Cancel" onclick="window.history.back();">
-            <input form="itemform" class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Post&emsp;&emsp;">
+            <input class="btn btn-lg btn-primary text-uppercase" type="submit" value="&emsp;&emsp;Post&emsp;&emsp;">
           </div>
         </form>
       </div> <!-- card-body -->
@@ -152,7 +152,7 @@
   document.getElementById("purchasedYear").setAttribute("max", yyyy);
 </script>
 
-<script>
+<!-- <script>
   var date = new Date();
   var today = dateFormatter(date);
   $('#rentalStart').attr('min', today);
@@ -199,4 +199,4 @@
     var end = new Date($('#rentalEnd').val());
     return parseInt((end - start) / (24 * 3600 * 1000));
   }
-</script>
+</script> -->

@@ -12,10 +12,10 @@ const moment = require('moment');
 var crypto = require('crypto');
 var paypal = require('paypal-rest-sdk');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
 const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
@@ -105,7 +105,7 @@ app.get('/login', function (req, res) {
 app.get('/register', function (req, res) {
   const sess = req.session;
   if (!sess.username) {
-    res.render('register');
+    res.render('verifyemail');
   } else {
     res.render('main', { username: sess.username });
   }
@@ -590,13 +590,55 @@ app.post('/signup', function (req, res) {
       body.firstname, body.lastname, body.username, cipheredOutput, body.email, body.phoneNum, province, body.postalcode
     ], function (err, result) {
       if (err) {
-        res.render('error', { errormessage: 'Unable to register a new user.' });
+        res.render('error', { errormessage: 'Unable to register a new user to the database.' });
       } else {
         res.redirect('login');
       }
     });
   } else {
     res.render('error', { errormessage: 'Postal code does not exist.' });
+  }
+});
+
+var rand, host, link;
+app.post('/verifyemail', function (req, res) {
+  rand = Math.floor((Math.random() * 100) + 54);
+  host = req.get('host');
+  link = "http://" + req.get('host') + "/verify?id=" + rand;
+  mailOptions = {
+    to: req.body.v_email,
+    subject: "Please confirm your Email account",
+    html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+  }
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, function (error, response) {
+    if (error) {
+      throw error;
+    } else {
+      console.log("Message sent: " + response.message);
+      res.render('message', {
+        title: 'Email has been sent.',
+        content: 'Please look for the verification email in your inbox and click the link in that email.'
+      });
+    }
+  });
+});
+
+app.get('/verify', function (req, res) {
+  console.log(req.protocol + ":/" + req.get('host'));
+  if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
+    console.log("Domain is matched. Information is from Authentic email");
+    if (req.query.id == rand) {
+      console.log("email is verified");
+      res.render('register', { email: mailOptions.to });
+    }
+    else {
+      console.log("email is not verified");
+      res.end("<h1>Bad Request</h1>");
+    }
+  }
+  else {
+    res.end("<h1>Request is from unknown source");
   }
 });
 
@@ -751,8 +793,8 @@ app.post('/postItem', upload.single('photoURL'), function (req, res) {
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
 
-  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, itemStartDate, itemFinishDate, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?)", [
-    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice ,body.rentPerDay, body.depositPrice, body.itemStartDate, body.itemFinishDate, filePath
+  connection.query("INSERT INTO ItemTbl(userId, categoryId, name, description, purchasedYear, purchasedPrice, rental_price_daily, deposit, itemStartDate, itemFinishDate, photoURL) VALUES (?,?,?,?,?,?,?,?,?,?,?)", [
+    sess.userid, body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice, body.rentPerDay, body.depositPrice, body.itemStartDate, body.itemFinishDate, filePath
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to post your item.' });
@@ -768,7 +810,7 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
   var filePath = '../uploads/images/' + req.file.filename;
 
   connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?,  purchasedPrice = ?, rental_price_daily = ?, deposit = ?, itemStartDate = ?, itemFinishDate = ?, photoURL = ? WHERE itemId =?", [
-    body.category, body.name, body.description, body.purchasedYear, body. body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.itemStartDate, sess.itemFinishDate, filePath, body.itemId
+    body.category, body.name, body.description, body.purchasedYear, body.body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.itemStartDate, sess.itemFinishDate, filePath, body.itemId
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to update your item.' });
@@ -927,8 +969,8 @@ app.post('/pay', function (req, res) {
 
   var items = [];
   var item = {};
-  
-  cart.forEach(function(eachItem) {
+
+  cart.forEach(function (eachItem) {
     item = {
       "name": eachItem.name,
       "sku": eachItem.id,

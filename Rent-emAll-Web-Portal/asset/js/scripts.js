@@ -209,14 +209,14 @@ function clearErrors() {
 /**************************** User Profile Retype Password ****************************/
 $('.retype').hide();
 $('#ChangePasswordBtn').click(function (e) {
-	var ok = confirm('Do you want to change your password?');
-	if (ok) {
-		$(this).data('clicked', true);
-		$(this).hide();
-		$('.retype').show();
-	} else {
-		e.preventDefault();
-	}
+        var ok = confirm('Do you want to change your password?');
+        if (ok) {
+                $(this).data('clicked', true);
+                $(this).hide();
+                $('.retype').show();
+        } else {
+                e.preventDefault();
+        }
 })
 
 /**************************** User Profile Retype Password ****************************/
@@ -273,7 +273,7 @@ $(function () {
                 var purchasedPrice = $('#purchasedPrice').val();
                 var depositPrice = $('#depositPrice').val();
                 var rentPerDay = $('#rentPerDay').val();
-				var itemStartDate = $('#itemStartDate').val();
+                var itemStartDate = $('#itemStartDate').val();
                 var itemFinishDate = $('#itemFinishDate').val();
 
                 var postalcode = $('#postalcode').val();
@@ -315,7 +315,7 @@ $(function () {
                 } else if (purchasedPrice > 10000.00) {
                         $('#purchasedPriceError').text('Purchased price must be maximum $10000.00.');
                         valid = false;
-                }                                           
+                }
                 if (!depositPrice) {
                         $('#depositError').text('Please enter the product deposit price.');
                         valid = false;
@@ -336,14 +336,14 @@ $(function () {
                         $('#rentError').text('Rental price must be maximum $500.00.');
                         valid = false;
                 }
-				if (!itemStartDate) {
+                if (!itemStartDate) {
                         $('#itemStartDateError').text('Please enter the rental period start date.');
                         valid = false;
                 }
                 if (!itemFinishDate) {
                         $('#itemFinishDateError').text('Please enter the rental period end date.');
                         valid = false;
-                }  
+                }
                 return valid;
         })
 });
@@ -352,9 +352,9 @@ String.prototype.hashCode = function () {
         var hash = 0, i, chr;
         if (this.length === 0) return hash;
         for (i = 0; i < this.length; i++) {
-			chr = this.charCodeAt(i);
-			hash = ((hash << 5) - hash) + chr;
-			hash |= 0; // Convert to 32bit integer
+                chr = this.charCodeAt(i);
+                hash = ((hash << 5) - hash) + chr;
+                hash |= 0; // Convert to 32bit integer
         }
-	return hash;
+        return hash;
 }
