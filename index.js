@@ -252,6 +252,7 @@ app.get("/item/:id", function (req, res) {
         }
 
         averageRate /= results[1].length;
+        averageRate = Math.round(averageRate * 10) / 10;
       }
 
       function getUser(username, callback) {
@@ -1029,6 +1030,68 @@ app.post('/pay', function (req, res) {
   });
 });
 
+app.post('/item/:id', function(req, res) {
+  const itemId = req.params.id;
+  const body = req.body;
+  const sess = req.session;
+  const userIdItemIdSet = sess.userid + itemId;
+  var currentDate = new Date();
+  var rating = 0;
+
+  if (body.ratingVal)
+    rating = body.ratingVal;
+
+  connection.query("SELECT userName FROM UserTbl WHERE userId = ?", [sess.userid], function(err, result) {
+    if (err) throw err;
+
+    var userName = result[0].userName;
+
+    connection.query("SELECT userId FROM ReviewTbl WHERE itemId = ?", [itemId], function(err, result2) {
+      if (err) throw err;
+
+      var doesUserIdExist = false;
+      for (var i = 0; i < result2.length && !doesUserIdExist; i++) {
+        if (result2[i].userId == sess.userid)
+          doesUserIdExist = true;
+      }
+
+      if (doesUserIdExist) {
+        res.redirect('/item/' + itemId);
+      }
+      else {
+        connection.query("INSERT INTO ReviewTbl (userId, userName, itemId, creationDate, reviewTitle, reviewText, rating) VALUES(?,?,?,?,?,?,?)",
+          [sess.userid, userName, itemId, currentDate, body.title, body.review, rating],
+          function(err, result3) {
+            if (err) throw err;
+
+            res.redirect('/item/' + itemId);
+        });
+      }
+    })
+  });
+});
+
+app.post('/deleteReview/:reviewId', function(req, res) {
+  connection.query("DELETE FROM ReviewTbl WHERE reviewId = ?", [req.params.reviewId], function(err, result) {
+    if (err) throw err;
+
+    res.redirect('/item/' + req.body.reviewItemId);
+  });
+});
+
+app.post('/editReview/:reviewId', function(req, res) {
+  const body = req.body;
+  var rating = 0;
+
+  if (body.ratingVal)
+    rating = body.ratingVal;
+
+  connection.query("UPDATE ReviewTbl SET reviewTitle = ?, reviewText = ?, rating = ? WHERE reviewId = ?" , [body.editTitle, body.editReviewContent, rating, req.params.reviewId], function(err, result) {
+    if (err) throw err;
+
+    res.redirect('/item/' + body.editReviewItemId);
+  });
+});
 
 /*****************************************************************************/
 /********************             404 Not Found             ******************/

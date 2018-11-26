@@ -132,12 +132,13 @@
                         <!--Review Page-->
                         <hr class="my-5">
                         <div class="container">
-                            <h5 class="font-weight-bold">Renter Reviews</h5>
+                            <!-- Display reviews -->
+                            <h4 class="font-weight-bold">Renter Reviews</h4>
                             <div class="d-inline" id="avgRating">
                                 <span class="star-prototype">
                                     <%= averageRate %></span>
                                 <span class="ml-2 text-info" id="noOfReviews">(
-                                    <%= review.length %>)</span>
+                                    <%= review.length %> )</span>
                                 <span class="d-block text-info mt-2" id="noOfStars">
                                     <%= averageRate %> out of 5 stars</span>
                             </div>
@@ -156,16 +157,146 @@
                                 <span class="font-weight-bold ml-3" id="reviewTitle">
                                     <%= review[i].reviewTitle %></span><br>
                                 <span id="username">By
-                                    <%= review[i].userId %></span><span class="ml-2" id="postedDate">on
+                                    <%= review[i].userName %></span><span class="ml-2" id="postedDate">on
                                     <%= reviewPostedDate[i] %></span>
                                 <br><br>
                                 <p id="reviewContent">
                                     <%= review[i].reviewText %>
                                 </p>
+                                <% if (sess.username && review[i].userName == sess.username) { %>
+                                <div class="offset-10">
+                                    <button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#edit-<%= review[i].reviewId %>">EDIT</button>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteReview">DELETE</button>
+                                    <input type="hidden" id="currentReviewId" value="<%= review[i].reviewId %>">
+                                </div>
+
+                                <!-- Edit Review -->
+                                <div class="collapse" id="edit-<%= review[i].reviewId %>">
+                                    <form action="/editReview/<%= review[i].reviewId %>" method="POST">
+                                        <input type="hidden" id="editReviewItemId" name="editReviewItemId" value="<%= item.itemId %>">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2>Edit Review</h2>
+                                                <div class='rating-stars'>
+                                                    <ul id='stars' name="stars">
+                                                        <li class='star' data-value='1'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='2'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='3'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='4'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                        <li class='star' data-value='5'>
+                                                            <i class='fa fa-star fa-fw'></i>
+                                                        </li>
+                                                    </ul>
+                                                    <input id="ratingVal" name="ratingVal" type="hidden">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Title" name="editTitle" value="<%= review[i].reviewTitle %>" />
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <textarea class="form-control" rows="8" placeholder="Leave a Review" name="editReviewContent"><%= review[i].reviewText %></textarea>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2 offset-10">
+                                                        <button type="submit"class="btn btn-primary form-control">Update</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Confirm Deleting Review -->
+                                <div class="modal" id="deleteReview" tabindex="-1" role="dialog" aria-labelledby="deleteReviewLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Review</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form name="deleteReviewForm" method="POST" action="/deleteReview/<%= review[i].reviewId %>">
+                                                <!--<input type="hidden" id="reviewId" name="reviewId">-->
+                                                <input type="hidden" id="reviewItemId" name="reviewItemId" value="<%= item.itemId %>">
+                                                <div class="modal-body">
+                                                    <p>Do you really want to delete this review?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button id="deleteReviewBtn" type="submit" class="btn btn-primary btn-sm">Delete</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
                             </div>
                             <% } %>
-                        </div>
 
+                            <!-- Leave a review if logged in -->
+                            <% if (sess.username && sess.username != user.userName) { %>
+                            <hr class="my-5">
+                            <form action="/item/<%= item.itemId %>" method="POST">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2>Rate <%= item.name %></h2>
+                                        <div class='rating-stars'>
+                                            <ul id='stars' name="stars">
+                                                <li class='star' data-value='1'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='2'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='3'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='4'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                                <li class='star' data-value='5'>
+                                                    <i class='fa fa-star fa-fw'></i>
+                                                </li>
+                                            </ul>
+                                            <input id="ratingVal" name="ratingVal" type="hidden">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control" placeholder="Title" name="title" />
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <textarea class="form-control" rows="8" placeholder="Leave a Review" name="review"></textarea>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2 offset-10">
+                                                <button type="submit"class="btn btn-primary form-control">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
