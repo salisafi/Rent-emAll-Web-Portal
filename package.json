@@ -18,6 +18,7 @@
   "homepage": "https://github.com/salisafi/Rent-emAll-Web-Portal#readme",
   "dependencies": {
     "connect": "^3.6.6",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
     "ejs-locals": "^1.0.2",
     "express": "^4.16.4",
