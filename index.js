@@ -518,6 +518,7 @@ app.get('/success', function (req, res) {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
   const subtotal = req.session.subtotal;
+  const cart = req.session.cart;
 
   console.log('PayerID: ' + payerId);
   console.log('PaymentID: ' + paymentId);
@@ -539,6 +540,12 @@ app.get('/success', function (req, res) {
       console.log(error.response);
       throw error;
     } else {
+      // put transaction information into database here
+      console.log(cart);
+
+
+
+      //
       req.session.subtotal = 0;
       req.session.cart = {};
       res.render('message', {
@@ -605,6 +612,10 @@ app.post('/verifyemail', function (req, res) {
   rand = Math.floor((Math.random() * 100) + 54);
   host = req.get('host');
   link = "http://" + req.get('host') + "/verify?id=" + rand;
+  // Check email does exist in the database
+
+
+  //
   mailOptions = {
     to: req.body.v_email,
     subject: "Please confirm your Email account",
@@ -966,6 +977,8 @@ app.post('/pay', function (req, res) {
 
   var successlink = 'http://myvmlab.senecacollege.ca:6311/success';
   var cancellink = 'http://myvmlab.senecacollege.ca:6311/cancel';
+  // var successlink = 'http://localhost:3030/success';
+  // var cancellink = 'http://localhost:3030/cancel';
 
   var items = [];
   var item = {};
