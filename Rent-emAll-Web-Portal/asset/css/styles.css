@@ -350,3 +350,26 @@ span.star-prototype > * {
         margin-left: 30px;
     }
 }
+
+/************ Rating Stars *****************/
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+}
+
+.rating-stars ul > li.star > i.fa {
+  font-size:2em;
+  color:#ccc;
+}
+
+.rating-stars ul > li.star.hover > i.fa {
+  cursor: pointer;
+  color:#FFCC36;
+}
+
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FF912C;
+}
