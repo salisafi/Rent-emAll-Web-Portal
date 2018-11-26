@@ -172,7 +172,7 @@
 
                                 <!-- Edit Review -->
                                 <div class="collapse" id="edit-<%= review[i].reviewId %>">
-                                    <form action="/editReview/<%= review[i].reviewId %>" method="POST">
+                                    <form action="/editReview/<%= review[i].reviewId %>" method="POST" onsubmit="return reviewValidation();">
                                         <input type="hidden" id="editReviewItemId" name="editReviewItemId" value="<%= item.itemId %>">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -199,13 +199,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <input type="text" class="form-control" placeholder="Title" name="editTitle" value="<%= review[i].reviewTitle %>" />
+                                                        <input type="text" class="form-control" placeholder="Title" id="title" name="editTitle" value="<%= review[i].reviewTitle %>" />
+                                                        <div class="errorMsg" id="titleError"></div>
                                                         <br>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <textarea class="form-control" rows="8" placeholder="Leave a Review" name="editReviewContent"><%= review[i].reviewText %></textarea>
+                                                        <textarea class="form-control" rows="8" placeholder="Leave a Review" id="review" name="editReviewContent"><%= review[i].reviewText %></textarea>
+                                                        <div class="errorMsg" id="reviewTextError"></div>
                                                         <br>
                                                     </div>
                                                 </div>
@@ -251,7 +253,7 @@
                             <!-- Leave a review if logged in -->
                             <% if (sess.username && sess.username != user.userName) { %>
                             <hr class="my-5">
-                            <form action="/item/<%= item.itemId %>" method="POST">
+                            <form action="/item/<%= item.itemId %>" method="POST" onsubmit="return reviewValidation();">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h2>Rate <%= item.name %></h2>
@@ -277,13 +279,15 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control" placeholder="Title" name="title" />
+                                                <input type="text" class="form-control" placeholder="Title" id="title" name="title" />
+                                                <div class="errorMsg" id="titleError"></div>
                                                 <br>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <textarea class="form-control" rows="8" placeholder="Leave a Review" name="review"></textarea>
+                                                <textarea class="form-control" rows="8" placeholder="Leave a Review" id="review" name="review"></textarea>
+                                                <div class="errorMsg" id="reviewTextError"></div>
                                                 <br>
                                             </div>
                                         </div>

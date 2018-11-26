@@ -47,6 +47,48 @@ $('#stars li').on('click', function(){
 	$('#ratingVal').val(ratingValue);
 });
 
+function reviewValidation() {
+        $(".errorMsg").empty();
+        
+        return validateReviewTitle() && validateReviewText();
+}
+
+function validateReviewTitle() {
+        var elem = document.querySelector("#title");
+        var reviewTitle = elem.value.trim();
+
+        if (reviewTitle.length < 1) {
+                showErrors("titleError", "Review Title should be filled in.")
+                elem.focus();
+                return false;
+        }
+        else if (reviewTitle.length > 20) {
+                showErrors("titleError", "Review Title should not exceed 20 characters.")
+                elem.focus();
+                return false;
+        }
+
+        return true;
+}
+
+function validateReviewText() {
+        var elem = document.querySelector("#review");
+        var reviewText = elem.value.trim();
+
+        if (reviewText.length < 1) {
+                showErrors("reviewTextError", "Please leave a review.")
+                elem.focus();
+                return false;
+        }
+        else if (reviewText.length > 200) {
+                showErrors("reviewTextError", "Review cannot exceed 200 characters.")
+                elem.focus();
+                return false;
+        }
+
+        return true;
+}
+
 /* FAQ */
 $('.collapse').on('shown.bs.collapse', function () {
         $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
