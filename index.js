@@ -225,47 +225,6 @@ app.get('/list', function (req, res) {
   }
 });
 
-app.get('/list/:id', function (req, res) {
-  const categoryId = req.params.id;
-
-  connection.query("SELECT * FROM ItemTbl WHERE categoryId = ? ORDER BY creationDate DESC", [categoryId], function (err, results) {
-    if (err) throw err;
-
-    let mDates = [];
-    let fDates = [];
-
-    for (var i = 0; i < results.length; i++) {
-      mDates[i] = moment(results[i].creationDate);
-      fDates[i] = mDates[i].format('LL');
-    }
-
-    var rates = [];
-    var averageRate = 0;
-
-    for (var i = 0; i < results.length; i++) {
-      var count = 0;
-      averageRate = 0;
-
-      /*************  Rating not working *************/
-      for (var j = 0; j < results.length; j++) {
-        if (results[j].itemId == results[i].itemId) {
-          averageRate += results[j].rating;
-          count++;
-        }
-      }
-      averageRate /= count;
-      if (averageRate)
-        rates.push(averageRate);
-    }
-
-    res.render('itemlisting', {
-      items: results,
-      postedDates: fDates,
-      rates: rates
-    });
-  });
-});
-
 app.get("/item/:id", function (req, res) {
   const sess = req.session;
   var itemId = req.params.id;
