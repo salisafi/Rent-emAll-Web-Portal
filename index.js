@@ -13,16 +13,18 @@ var crypto = require('crypto');
 var paypal = require('paypal-rest-sdk');
 var flash = require('connect-flash');
 
-const hostname = '10.10.193.142';
-const port = 10034;
-// const hostname = 'localhost';
-// const port = 3030;
+// const hostname = '10.10.193.142';
+// const port = 10034;
+const hostname = 'localhost';
+const port = 3030;
 
+// Creating Server
 const server = http.createServer(app).listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
 });
 const io = require('socket.io')(server);
 
+// Database
 var dbConfig = {
   database: 'prj566_183a15',
   host: 'mymysql.senecacollege.ca',
@@ -31,6 +33,7 @@ var dbConfig = {
   multipleStatements: true
 };
 
+// Session
 const session = require('express-session')({
   secret: '@#@$MYSIGN#@$#$',
   resave: false,
@@ -40,12 +43,25 @@ const session = require('express-session')({
   }
 });
 
+// Nodemailer Transporter
+var transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'rentemallapp@gmail.com',
+    pass: 'xfchjinuvfpucgcb'
+  }
+});
+
+// Paypal Configuration
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'ATHArmjcEG1iYfsEZLOIuaqIX0yItp4mIxXt0lul4J6AUvYpJBvNHtRDKbIZKel6XPVtfyXv1deJHydI',
   'client_secret': 'EKkmgVT7B5q56wowHZLETqBrvVaUXHULu5mFelQrFuEM5ZkRa8CoSbyqkxGPwPxkl5rNwQCPF0v8gchh'
 });
 
+// Server Connection
 var connection;
 function handleDisconnect() {
   connection = mysql.createConnection(dbConfig);
@@ -612,30 +628,44 @@ app.post('/signup', function (req, res) {
   }
 });
 
-var rand, host, link;
+var rand, mailOptions, host, link;
 app.post('/verifyemail', function (req, res) {
   rand = Math.floor((Math.random() * 100) + 54);
   host = req.get('host');
   link = "http://" + req.get('host') + "/verify?id=" + rand;
+  var enteredEmail = req.body.v_email;
+
   // Check email does exist in the database
-
-
-  //
-  mailOptions = {
-    to: req.body.v_email,
-    subject: "Please confirm your Email account",
-    html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
-  }
-  console.log(mailOptions);
-  transporter.sendMail(mailOptions, function (error, response) {
-    if (error) {
-      throw error;
+  connection.query('SELECT * FROM UserTbl WHERE emailAddress = ?', [enteredEmail], function (err, result) {
+    if (err) {
+      throw err;
     } else {
-      console.log("Message sent: " + response.message);
-      res.render('message', {
-        title: 'Email has been sent.',
-        content: 'Please look for the verification email in your inbox and click the link in that email.'
-      });
+      if (result.length > 0) {  // email does exist in the database
+        res.render('error', {
+          errormessage: 'The email address you have entered is already registered.'
+        });
+      } else {
+        // create confirmation email
+        mailOptions = {
+          from: 'rentemallapp@gmail.com',
+          to: enteredEmail,
+          subject: "Please confirm your Email account",
+          html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+        }
+        console.log(mailOptions);
+        // send confirmation email
+        transporter.sendMail(mailOptions, function (error, response) {
+          if (error) {
+            throw error;
+          } else {
+            console.log("Message sent: " + response.message);
+            res.render('message', {
+              title: 'Email has been sent.',
+              content: 'Please look for the verification email in your inbox and click the link in that email.'
+            });
+          }
+        });
+      }
     }
   });
 });
@@ -692,17 +722,6 @@ app.post('/login', function (req, res) {
       }
     }
   });
-});
-
-// Nodemailer Transporter
-var transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'rentemallapp@gmail.com',
-    pass: 'xfchjinuvfpucgcb'
-  }
 });
 
 app.post('/forgotuser', function (req, res) {
@@ -1034,7 +1053,7 @@ app.post('/pay', function (req, res) {
   });
 });
 
-app.post('/item/:id', function(req, res) {
+app.post('/item/:id', function (req, res) {
   const itemId = req.params.id;
   const body = req.body;
   const sess = req.session;
@@ -1045,12 +1064,12 @@ app.post('/item/:id', function(req, res) {
   if (body.ratingVal)
     rating = body.ratingVal;
 
-  connection.query("SELECT userName FROM UserTbl WHERE userId = ?", [sess.userid], function(err, result) {
+  connection.query("SELECT userName FROM UserTbl WHERE userId = ?", [sess.userid], function (err, result) {
     if (err) throw err;
 
     var userName = result[0].userName;
 
-    connection.query("SELECT userId FROM ReviewTbl WHERE itemId = ?", [itemId], function(err, result2) {
+    connection.query("SELECT userId FROM ReviewTbl WHERE itemId = ?", [itemId], function (err, result2) {
       if (err) throw err;
 
       var doesUserIdExist = false;
@@ -1067,32 +1086,32 @@ app.post('/item/:id', function(req, res) {
       else {
         connection.query("INSERT INTO ReviewTbl (userId, userName, itemId, creationDate, reviewTitle, reviewText, rating) VALUES(?,?,?,?,?,?,?)",
           [sess.userid, userName, itemId, currentDate, body.title, body.review, rating],
-          function(err, result3) {
+          function (err, result3) {
             if (err) throw err;
 
             res.redirect('/item/' + itemId);
-        });
+          });
       }
     })
   });
 });
 
-app.post('/deleteReview/:reviewId', function(req, res) {
-  connection.query("DELETE FROM ReviewTbl WHERE reviewId = ?", [req.params.reviewId], function(err, result) {
+app.post('/deleteReview/:reviewId', function (req, res) {
+  connection.query("DELETE FROM ReviewTbl WHERE reviewId = ?", [req.params.reviewId], function (err, result) {
     if (err) throw err;
 
     res.redirect('/item/' + req.body.reviewItemId);
   });
 });
 
-app.post('/editReview/:reviewId', function(req, res) {
+app.post('/editReview/:reviewId', function (req, res) {
   const body = req.body;
   var rating = 0;
 
   if (body.ratingVal)
     rating = body.ratingVal;
 
-  connection.query("UPDATE ReviewTbl SET reviewTitle = ?, reviewText = ?, rating = ? WHERE reviewId = ?" , [body.editTitle, body.editReviewContent, rating, req.params.reviewId], function(err, result) {
+  connection.query("UPDATE ReviewTbl SET reviewTitle = ?, reviewText = ?, rating = ? WHERE reviewId = ?", [body.editTitle, body.editReviewContent, rating, req.params.reviewId], function (err, result) {
     if (err) throw err;
 
     res.redirect('/item/' + body.editReviewItemId);
