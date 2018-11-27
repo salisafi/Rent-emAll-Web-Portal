@@ -13,10 +13,10 @@ var crypto = require('crypto');
 var paypal = require('paypal-rest-sdk');
 var flash = require('connect-flash');
 
-// const hostname = '10.10.193.142';
-// const port = 10034;
-const hostname = 'localhost';
-const port = 3030;
+const hostname = '10.10.193.142';
+const port = 10034;
+// const hostname = 'localhost';
+// const port = 3030;
 
 // Creating Server
 const server = http.createServer(app).listen(port, hostname, () => {
