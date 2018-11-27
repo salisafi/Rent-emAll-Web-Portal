@@ -439,3 +439,14 @@ String.prototype.hashCode = function () {
         }
         return hash;
 }
+
+
+/**************************** Item Listing Page - display range value ****************************/
+
+function displayDeposit(val) {
+        document.getElementById("depositVal").innerHTML = val;
+}
+
+function displayDailyRate(val) {
+        document.getElementById("dailyRateVal").innerHTML = val;
+}

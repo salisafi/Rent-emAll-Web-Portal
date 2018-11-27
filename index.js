@@ -151,20 +151,32 @@ app.get('/contactus', function (req, res) {
 
 app.get('/list', function (req, res) {
   const searchKeyword = req.query.searchbar;
-  // const category = req.query.category;
-  const sortby = req.query.sortby;
-  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
+  const category = req.query.category;
+  const deposit = req.query.deposit;
+  const dailyRate = req.query.rate;
+  // var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
+  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
   var params = [];
 
   if (!searchKeyword)
     res.redirect('back');
   else {
-    // if (category == 0) {
-    //   sql += " ORDER BY creationDate DESC";
-    // } else {
-    //   sql += " AND categoryId = ? ORDER BY creationDate DESC";
-    //   params = [category];
-    // }
+    if (category) {
+      sql += " AND categoryId = ?";
+      params.push(category);
+    }
+
+    if (deposit) {
+      sql += " AND deposit <= ?";
+      params.push(deposit);
+    }
+
+    if (dailyRate) {
+      sql += " AND rental_price_daily <= ?";
+      params.push(dailyRate);
+    }
+
+    sql += " ORDER BY creationDate DESC";
 
     connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl", params, function (err, results) {
       if (err) throw err;

@@ -3,85 +3,75 @@
     <div class="card my-5 col-md-3">
       <div class="card-body">
         <!--<form action="#" method="get">-->
-          <h6>Category:</h6>
+        <br>
+        <h6>Category:</h6>
+        <!-- <form action="/list" method="get"> -->
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="home" name="home" value="home"/>
-            <label class="form-check-label" for="home">Home</label>
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="category" value="1">Home
+              </label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="tools" name="tools" value="tools" />
-            <label class="form-check-label" for="tools">Tools and Equipment</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="sports" name="sports" value="sports" />
-            <label class="form-check-label" for="sports">Sports and Recreations</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="entertainment" />
-            <label class="form-check-label" for="entertainment">Entertainment</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="babies" name="babies" value="babies" />
-            <label class="form-check-label" for="babies">Babies and Kids</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="fashion" />
-            <label class="form-check-label" for="fashion">Fashion</label>
-          </div>
-          <br>
-        <!--</form>
-        <form action="#" method="get">-->
-          <!-- <h6>Location:</h6>
-          <div class="form-check">
-            <a href="/list?toronto"><input type="checkbox" class="form-check-input" id="toronto" name="toronto" value="toronto" /></a>
-            <label class="form-check-label" for="fashion">City of Toronto</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="markham" name="markham" value="markham" />
-            <label class="form-check-label" for="fashion">Markham / York Region</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="mississauga" name="mississauga" value="mississauga" />
-            <label class="form-check-label" for="fashion">Mississauga / Peel Region</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="oakville" name="oakville" value="oakville" />
-            <label class="form-check-label" for="fashion">Oakville / Halton Region</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="oshawa" name="oshawa" value="oshawa" />
-            <label class="form-check-label" for="fashion">Oshawa / Durham Region</label>
-          </div>
-          <br> -->
-        <!--</form>-->
-        <form action="#" method="get">
-          <div class="form-group">
-            <label for="deposit">
-              <h6>Deposit Price:</h6>
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="category" value="2">Tools and Equipment
             </label>
-            <div class="d-flex justify-content-center">
-              <span class="mr-2">$0</span>
-              <input class="custom-range mx-auto" type="range" id="deposit" name="deposit" min="0" max="1000" step="10"
-                value="500" />
-              <span class="ml-2">$1000</span>
-            </div>
           </div>
-          <input class="btn btn-sm btn-primary float-right" type="submit" value="GO">
-        </form>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="category" value="3">Sports and Recreations
+            </label>
+          </div>
+          <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="category" value="4">Entertainment
+              </label>
+          </div>
+          <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="category" value="5">Babies and Kids
+              </label>
+          </div>
+          <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="category" value="6">Fashion
+              </label>
+          </div>
+          <br><br>
+        <!-- <form action="#" method="get"> -->
+            <div class="form-group">
+              <label for="deposit">
+                <h6>Deposit Price:</h6>
+              </label>
+              <div class="d-flex justify-content-center">
+                <span class="mr-2">$0</span>
+                <input class="custom-range" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value="500" oninput="displayDeposit(this.value)" />
+                <span class="ml-2">$1000</span>
+              </div>
+              <div class="text-center mr-4">
+                  <span id="depositVal">500</span>
+                  <input type="hidden" id="depositValue" name="depositValue" value="500">
+              </div>
+            </div>
+          <!-- <input class="btn btn-sm btn-primary float-right" type="submit" value="GO"> -->
+        <!-- </form> -->
         <br><br>
-        <form action="#" method="get">
+        <!-- <form action="#" method="get"> -->
           <div class="form-group">
             <label for="rate">
               <h6>Rental Price Per Day:</h6>
             </label>
             <div class="d-flex justify-content-center">
               <span class="mr-2">$0</span>
-              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" />
+              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" oninput="displayDailyRate(this.value)" />
               <span class="ml-2">$50</span>
             </div>
-          </div>
-          <input class="btn btn-sm btn-primary float-right" type="submit" value="GO">
-        </form>
+            <div class="text-center mr-2">
+                <span id="dailyRateVal">25</span>
+                <input type="hidden" id="dailyRateValue" name="dailyRateValue" value="25">
+            </div>
+          </div><br><br>
+          <a href="/list"><input class="btn btn-primary" value="Apply Filter"></a>
+        <!-- </form> -->
       </div>
     </div>
 
@@ -89,15 +79,6 @@
       <div class="card my-5">
         <div class="card-body">
           <span class="font-italic float-left"><%= items.length %> results</span>
-          <div class="float-right">
-            <form action="/list" class="form-inline">
-              <span class="mr-2 mb-2">Sort by:</span>
-              <select class="form-control btn btn-md btn-info mb-2" id="sortby" name="sortby" onchange="this.form.submit()">
-                <option value="postedDate">Posted Date</option>
-                <option value="price">Price</option>
-              </select>
-            </form>
-          </div>
           <div class="table-responsive table-wrapper-scroll-y" style="height:570px">
             <table id="itemTable" class="table table-condensed table-hover">
               <tbody>
