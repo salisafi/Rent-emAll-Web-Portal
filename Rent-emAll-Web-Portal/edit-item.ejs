@@ -61,7 +61,7 @@
                                         <label for="purchasedYear">Year Purchased</label><br />
                                         <input type="text" class="date-own form-control" id="purchasedYear" name="purchasedYear"
                                             value="<%= item.purchasedYear %>">
-                                        <div class="errorMsg" id="dateError"></div>
+                                        <div class="errorMsg" id="purchasedYearError"></div>
                                     </div> <!-- form-group row -->
                                 </div> <!-- col-sm-6 -->
 
@@ -70,7 +70,7 @@
                                         <label for="purchasedPrice">Purchased Price $ </label><br />
                                         <input type="number" class="form-control num-only" id="purchasedPrice" name="purchasedPrice"
                                             placeholder="4.99" min="1" value="<%= item.purchasedPrice %>">
-                                        <div class="errorMsg" id=""></div>
+                                        <div class="errorMsg" id="purchasedPriceError"></div>
                                     </div> <!-- form-group row -->
                                 </div> <!-- col-sm-6 -->
                             </div> <!-- row -->
@@ -101,16 +101,16 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="DatePurchased">Rental From <small>(start date)</small></label><br />
-                                        <input type="date" class="form-control" id="rentalStart" required>
-                                        <div class="errorMsg" id="availabilityError"></div>
+                                        <label for="itemStartDate">Rental From <small>(start date)</small></label><br />
+                                        <input type="date" class="form-control" id="itemStartDate" name="itemStartDate" value="<%= item.itemStartDate %>" required>
+                                        <div class="errorMsg" id="itemStartDateError"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="DatePurchased">Rental To <small>(end date)</small></label><br />
-                                        <input type="date" class="form-control" id="rentalEnd" required readonly>
-                                        <div class="errorMsg" id="availabilityError"></div>
+                                        <label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
+                                        <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate" value="<%= item.itemFinishDate %>" required>
+                                        <div class="errorMsg" id="itemFinishDateError"></div>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                             <label for="photoURL" class="btn btn-secondary btn-block">Upload item's image</label>
                             <input type="file" id="photoURL" name="photoURL" accept="image/*" style="display: none">
                             <div style="margin: 5px;color: #ff0000;font-size: 12px;">To edit this post, you need to
-                                upload a new (or same) photo for security reason.</div>
+                                upload a new or the same photo </div>
                         </div> <!-- col-md-4 -->
 
                     </div> <!-- col-sm-8 -->
