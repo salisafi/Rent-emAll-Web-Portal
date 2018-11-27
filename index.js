@@ -46,8 +46,8 @@ const session = require('express-session')({
 // Nodemailer Transporter
 var transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: 'rentemallapp@gmail.com',
     pass: 'xfchjinuvfpucgcb'
