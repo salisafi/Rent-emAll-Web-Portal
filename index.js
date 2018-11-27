@@ -154,15 +154,21 @@ app.get('/list', function (req, res) {
   const category = req.query.category;
   const deposit = req.query.deposit;
   const dailyRate = req.query.rate;
-  // var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%' ORDER BY creationDate DESC";
-  var sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
+  var sql = "";
+  if (searchKeyword == 0)
+    sql = "SELECT * FROM ItemTbl";
+  else
+    sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
   var params = [];
 
   if (!searchKeyword)
     res.redirect('back');
   else {
     if (category) {
-      sql += " AND categoryId = ?";
+      if (searchKeyword == 0)
+        sql += " WHERE categoryId = ?";
+      else
+        sql += " AND categoryId = ?";
       params.push(category);
     }
 

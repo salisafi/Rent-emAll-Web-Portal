@@ -2,42 +2,40 @@
   <div class="row">
     <div class="card my-5 col-md-3">
       <div class="card-body">
-        <!--<form action="#" method="get">-->
         <br>
         <h6>Category:</h6>
-        <!-- <form action="/list" method="get"> -->
+         <form method="get"> 
           <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="category" value="1">Home
+                <input type="radio" class="form-check-input" id="category" name="category" value="1">Home
               </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="category" value="2">Tools and Equipment
+              <input type="radio" class="form-check-input" id="category" name="category" value="2">Tools and Equipment
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="category" value="3">Sports and Recreations
+              <input type="radio" class="form-check-input" id="category" name="category" value="3">Sports and Recreations
             </label>
           </div>
           <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="category" value="4">Entertainment
+                <input type="radio" class="form-check-input" id="category" name="category" value="4">Entertainment
               </label>
           </div>
           <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="category" value="5">Babies and Kids
+                <input type="radio" class="form-check-input" id="category" name="category" value="5">Babies and Kids
               </label>
           </div>
           <div class="form-check">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="category" value="6">Fashion
+                <input type="radio" class="form-check-input" id="category" name="category" value="6">Fashion
               </label>
           </div>
           <br><br>
-        <!-- <form action="#" method="get"> -->
             <div class="form-group">
               <label for="deposit">
                 <h6>Deposit Price:</h6>
@@ -49,13 +47,10 @@
               </div>
               <div class="text-center mr-4">
                   <span id="depositVal">500</span>
-                  <input type="hidden" id="depositValue" name="depositValue" value="500">
+                  <input type="hidden">
               </div>
             </div>
-          <!-- <input class="btn btn-sm btn-primary float-right" type="submit" value="GO"> -->
-        <!-- </form> -->
-        <br><br>
-        <!-- <form action="#" method="get"> -->
+        <br>
           <div class="form-group">
             <label for="rate">
               <h6>Rental Price Per Day:</h6>
@@ -67,11 +62,12 @@
             </div>
             <div class="text-center mr-2">
                 <span id="dailyRateVal">25</span>
-                <input type="hidden" id="dailyRateValue" name="dailyRateValue" value="25">
+                <input type="hidden">
             </div>
           </div><br><br>
-          <a href="/list"><input class="btn btn-primary" value="Apply Filter"></a>
-        <!-- </form> -->
+          <input type="hidden" name="searchbar" value="<%= searchKeyword %>">
+          <button type="submit" formaction="/list" class="btn btn-primary float-right">Apply Filter</button>
+         </form>
       </div>
     </div>
 
