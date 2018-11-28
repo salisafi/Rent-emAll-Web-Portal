@@ -4,8 +4,34 @@
       <div class="card-body">
         <br>
         <h6>Category:</h6>
-         <form method="get"> 
+         <form method="get">
+           <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="home" name="home" value="1" <% if (query.home) { %> checked <% } %>/>
+            <label class="form-check-label" for="home">Home</label>
+          </div>
           <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="tools" name="tools" value="2" <% if (query.tools) { %> checked <% } %>/>
+            <label class="form-check-label" for="tools">Tools and Equipment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="sports" name="sports" value="3" <% if (query.sports) { %> checked <% } %>/>
+            <label class="form-check-label" for="sports">Sports and Recreations</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="entertainment" name="entertainment" value="4" <% if (query.entertainment) { %> checked <% } %>/>
+            <label class="form-check-label" for="entertainment">Entertainment</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="babies" name="babies" value="5" <% if (query.babies) { %> checked <% } %>/>
+            <label class="form-check-label" for="babies">Babies and Kids</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="6" <% if (query.fashion) { %> checked <% } %>/>
+            <label class="form-check-label" for="fashion">Fashion</label>
+          </div>
+
+
+          <!--<div class="form-check">
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" id="category" name="category" value="1" checked>Home
               </label>
@@ -34,7 +60,9 @@
               <label class="form-check-label">
                 <input type="radio" class="form-check-input" id="category" name="category" value="6">Fashion
               </label>
-          </div>
+          </div>-->
+
+
           <br><br>
             <div class="form-group">
               <label for="deposit">
@@ -42,11 +70,11 @@
               </label>
               <div class="d-flex justify-content-center">
                 <span class="mr-2">$0</span>
-                <input class="custom-range" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value="500" oninput="displayDeposit(this.value)" />
+                <input class="custom-range" type="range" id="deposit" name="deposit" min="0" max="1000" step="10" value=<% if (query.deposit) { %>"<%= query.deposit %>" <% } else { %> "500" <% } %> oninput="displayDeposit(this.value)" />
                 <span class="ml-2">$1000</span>
               </div>
               <div class="text-center mr-4">
-                  <span id="depositVal">500</span>
+                  <span id="depositVal"><% if (query.deposit) { %><%= query.deposit %><% } else { %> 500 <% } %></span>
                   <input type="hidden">
               </div>
             </div>
@@ -57,15 +85,15 @@
             </label>
             <div class="d-flex justify-content-center">
               <span class="mr-2">$0</span>
-              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="50" step="1" value="25" oninput="displayDailyRate(this.value)" />
-              <span class="ml-2">$50</span>
+              <input class="custom-range" type="range" id="rate" name="rate" min="0" max="200" step="1" value=<% if (query.rate) { %>"<%= query.rate %>" <% } else { %> "100" <% } %> oninput="displayDailyRate(this.value)" />
+              <span class="ml-2">$200</span>
             </div>
-            <div class="text-center mr-2">
-                <span id="dailyRateVal">25</span>
+            <div class="text-center mr-4">
+                <span id="dailyRateVal"><% if (query.rate) { %><%= query.rate %><% } else { %> 100 <% } %></span>
                 <input type="hidden">
             </div>
           </div><br><br>
-          <input type="hidden" name="searchbar" value="<%= searchKeyword %>">
+          <input type="hidden" name="searchbar" value="<%= query.searchbar %>">
           <button type="submit" formaction="/list" class="btn btn-primary float-right">Apply Filter</button>
          </form>
       </div>
@@ -94,7 +122,7 @@
                       <div class="border rounded pb-4 px-1" style="background: #EFF0F0">
                         <div style="width: 160px"><span class="text-danger font-weight-bold" id="price" style="font-size: 25pt;">$<%= items[i].rental_price_daily %></span> / day
                         </div>
-                        <a href="/lenderpage"><span class="font-weight-bold" id="username">Lender: <%= items[i].userId %></span></a><br>
+                        <a href="/lenderpage/<%= userNames[i] %>"><span class="font-weight-bold" id="username">Lender: <%= userNames[i] %></span></a><br>
                         <div id="rating" class="mt-2">
                             <span class="star-prototype"><%= rates[i] %></span>
                         </div>
