@@ -150,41 +150,41 @@ app.get('/contactus', function (req, res) {
 });
 
 app.get('/list', function (req, res) {
-  const searchKeyword = req.query.searchbar;
-  const category = req.query.category;
-  const deposit = req.query.deposit;
-  const dailyRate = req.query.rate;
+  const query = req.query;
   var sql = "";
-  if (searchKeyword == 0)
-    sql = "SELECT * FROM ItemTbl";
-  else
-    sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + searchKeyword + "%'";
   var params = [];
 
-  if (!searchKeyword)
+  console.log(req.query);
+
+  if (query.searchbar == 0)
+    sql = "SELECT * FROM ItemTbl";
+  else
+    sql = "SELECT * FROM ItemTbl WHERE name LIKE '%" + query.searchbar + "%'";
+
+  if (!query.searchbar)
     res.redirect('back');
   else {
-    if (category) {
-      if (searchKeyword == 0)
+    if (query.category) {
+      if (query.searchbar == 0)
         sql += " WHERE categoryId = ?";
       else
         sql += " AND categoryId = ?";
-      params.push(category);
+      params.push(query.category);
     }
 
-    if (deposit) {
+    if (query.deposit) {
       sql += " AND deposit <= ?";
-      params.push(deposit);
+      params.push(query.deposit);
     }
 
-    if (dailyRate) {
+    if (query.rate) {
       sql += " AND rental_price_daily <= ?";
-      params.push(dailyRate);
+      params.push(query.rate);
     }
 
     sql += " ORDER BY creationDate DESC";
 
-    connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl", params, function (err, results) {
+    connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl;SELECT userId, userName FROM UserTbl", params, function (err, results) {
       if (err) throw err;
 
       let mDates = [];
@@ -215,11 +215,25 @@ app.get('/list', function (req, res) {
           rates.push(0);
       }
 
+      var userNames = [];
+      var found = false;
+      for (var i = 0; i < results[0].length; i++) {
+        found = false;
+
+        for (var j = 0; j < results[2].length && !found; j++) {
+          if (results[2][j].userId == results[0][i].userId) {
+            userNames.push(results[2][j].userName);
+            found = true;
+          }
+        }
+      }
+
       res.render('itemlisting', {
         items: results[0],
         postedDates: fDates,
         rates: rates,
-        searchKeyword: searchKeyword
+        userNames: userNames,
+        query: req.query
       });
     });
   }
