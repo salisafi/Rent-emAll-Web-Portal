@@ -516,7 +516,7 @@ app.get('/success', function (req, res) {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
   const subtotal = req.session.subtotal;
-  const cart = req.session.cart;
+  const sess = req.session;
 
   console.log('PayerID: ' + payerId);
   console.log('PaymentID: ' + paymentId);
@@ -538,12 +538,55 @@ app.get('/success', function (req, res) {
       console.log(error.response);
       throw error;
     } else {
+      var mailOpts;
+      console.log(sess.cart);
       // put transaction information into database here
-      console.log(cart);
 
 
 
-      //
+
+
+
+
+      itemListString = ""; // temporary string to contain item list
+
+      // Mail(s) will be sent to the lender(s)
+      sess.cart.forEach(function (eachItem) {
+        itemListString += "<p>- " + eachItem.name + " (From " + eachItem.startDate + " to " + eachItem.endDate + ")"
+          + " Total $: " + eachItem.total + " Lender: " + eachItem.lender + "(" + eachItem.lenderemail + ")</p>";
+
+        // Compose confirm email(s) to lender(s)
+        mailOpts = {
+          from: 'rentemallapp@gmail.com',
+          to: eachItem.lenderemail,
+          subject: eachItem.lender + ". Your item has been rented!",
+          html: "<p>Hello, <b>" + eachItem.lender + "</b>.</p>"
+            + "<p>Your item <b>'" + eachItem.name + "\'</b> has been rented by <b>" + sess.username + "</b>(" + sess.email + ").</p><br>"
+            + "<p>- Rental Start Date: <b>" + eachItem.startDate + "</b></p>"
+            + "<p>- Rental End Date: <b>" + eachItem.endDate + "</b></p>"
+            + "<br><p>Please lend the item according to the arranged delivery method.<br>Thank you.</p>"
+        }
+        transporter.sendMail(mailOpts, function (error, response) {
+          if (error) throw error;
+          else console.log("Email to lender(s) has been sent!");
+        });
+      });
+
+      // Mail will be sent to the borrower (current session user)
+      mailOptsUser = {
+        from: 'rentemallapp@gmail.com',
+        to: sess.email,
+        subject: sess.username + ". Your payment has processed succesfully!",
+        html: "<p>Hello, <b>" + sess.username + "</b>.</p>"
+          + "<p>You have rent the item(s) successfully. Below is the list:</p><br>"
+          + itemListString
+          + "<br><p>Please borrow the item(s) according to the arranged delivery method.<br>Thank you.</p>"
+      }
+      transporter.sendMail(mailOptsUser, function (error, response) {
+        if (error) throw error;
+        else console.log("Email to borrower has been sent!");
+      });
+
       req.session.subtotal = 0;
       req.session.cart = {};
       res.render('message', {
@@ -597,7 +640,27 @@ app.post('/signup', function (req, res) {
       if (err) {
         res.render('error', { errormessage: 'Unable to register a new user to the database.' });
       } else {
-        res.redirect('login');
+        // send registration success email
+        var mailOpts = {
+          from: 'rentemallapp@gmail.com',
+          to: body.email,
+          subject: "Welcome to Rent'emAll!",
+          html: "<p>Hello, <b>" + body.firstname + "</b>.</p>"
+            + "<p>You have successfully registered.</p>"
+            + "<p>Your username is <b>" + body.username + "</b>.</p>"
+            + "<p>Thank you.</p>"
+        }
+        transporter.sendMail(mailOpts, function (error, response) {
+          if (error) {
+            throw error;
+          } else {
+            console.log("Email to a new user has been sent!");
+
+            // Success message and redirect to login page
+            req.flash('Success', 'Your account has been registered. Please log in.')
+            res.redirect('login');
+          }
+        });
       }
     });
   } else {
@@ -629,7 +692,6 @@ app.post('/verifyemail', function (req, res) {
           subject: "Please confirm your Email account",
           html: "Hello,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
         }
-        console.log(mailOptions);
         // send confirmation email
         transporter.sendMail(mailOptions, function (error, response) {
           if (error) {
@@ -945,7 +1007,9 @@ app.post('/cart/:id', function (req, res) {
           id: id,
           name: data.name,
           image: data.photoURL,
+          lenderid: userdata.userId,
           lender: userdata.userName,
+          lenderemail: userdata.emailAddress,
           deposit: body.deposit,
           rentalprice: body.rentalprice,
           rentaldays: body.rentaldays,
@@ -964,6 +1028,8 @@ app.post('/cart/:id', function (req, res) {
           cart.push(shoppingItem);
         }
         sess.cart = cart;
+
+        console.log(cart);
 
         res.redirect('/cart');
       });
