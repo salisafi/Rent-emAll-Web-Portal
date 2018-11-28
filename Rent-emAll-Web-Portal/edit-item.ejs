@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label for="purchasedPrice">Purchased Price $ </label><br />
                                         <input type="number" class="form-control num-only" id="purchasedPrice" name="purchasedPrice"
-                                            placeholder="4.99" min="1" value="<%= item.purchasedPrice %>">
+                                            min="1" value="<%= item.purchasedPrice %>">
                                         <div class="errorMsg" id="purchasedPriceError"></div>
                                     </div> <!-- form-group row -->
                                 </div> <!-- col-sm-6 -->
@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <label for="depositPrice">Deposite Price $ </label><br />
                                         <input type="number" class="form-control num-only" id="depositPrice" name="depositPrice"
-                                            placeholder="9.99" min="1" value="<%= item.deposit %>">
+                                            min="1" value="<%= item.deposit %>">
                                         <div class="errorMsg" id="depositError"></div>
                                     </div> <!-- form-group row -->
                                 </div> <!-- col-sm-6 -->
@@ -90,26 +90,31 @@
                                     <div class="form-group">
                                         <label for="rentPerDay">Rental Price $ <small>(per day)</small></label><br />
                                         <input type="number" class="form-control num-only" id="rentPerDay" name="rentPerDay"
-                                            placeholder="2.99" min="1" value="<%= item.rental_price_daily %>">
+                                            min="1" value="<%= item.rental_price_daily %>">
                                         <div class="errorMsg" id="rentError"></div>
                                     </div> <!-- form-group row -->
                                 </div> <!-- col-sm-6 -->
                             </div> <!-- row -->
 
-                            <br />
                             <!-- forth row -->
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="itemStartDate">Rental From <small>(start date)</small></label><br />
-                                        <input type="date" class="form-control" id="itemStartDate" name="itemStartDate" value="<%= item.itemStartDate %>" required>
+                                        <input type="date" class="form-control" id="itemStartDate" name="itemStartDate"
+                                            value="" required>
+                                        <input type="hidden" id="getItemStartDate" value="<%= item.itemStartDate %>"
+                                            required>
                                         <div class="errorMsg" id="itemStartDateError"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="itemFinishDate">Rental To <small>(end date)</small></label><br />
-                                        <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate" value="<%= item.itemFinishDate %>" required>
+                                        <input type="date" class="form-control" id="itemFinishDate" name="itemFinishDate"
+                                            value="" required>
+                                        <input type="hidden" id="getItemFinishDate" value="<%= item.itemFinishDate %>"
+                                            required>
                                         <div class="errorMsg" id="itemFinishDateError"></div>
                                     </div>
                                 </div>
@@ -149,4 +154,11 @@
     var today = new Date();
     var yyyy = today.getFullYear();
     document.getElementById("purchasedYear").setAttribute("max", yyyy);
+
+    var startdate = new Date($('#getItemStartDate').val());
+    var finishdate = new Date($('#getItemFinishDate').val());
+    var startdateString = startdate.getFullYear() + '-' + ("0" + (startdate.getMonth() + 1)).slice(-2) + '-' + ("0" + startdate.getDate()).slice(-2);
+    var finishdateString = finishdate.getFullYear() + '-' + ("0" + (finishdate.getMonth() + 1)).slice(-2) + '-' + ("0" + finishdate.getDate()).slice(-2);
+    $('#itemStartDate').val(startdateString);
+    $('#itemFinishDate').val(finishdateString);
 </script>

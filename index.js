@@ -883,8 +883,8 @@ app.post('/editItem', upload.single('photoURL'), function (req, res) {
   var body = req.body;
   var filePath = '../uploads/images/' + req.file.filename;
 
-  connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?,  purchasedPrice = ?, rental_price_daily = ?, deposit = ?, itemStartDate = ?, itemFinishDate = ?, photoURL = ? WHERE itemId =?", [
-    body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice, body.rentPerDay, body.depositPrice, sess.itemStartDate, sess.itemFinishDate, filePath, body.itemId
+  connection.query("UPDATE ItemTbl SET categoryId = ?, name = ?, description = ?, purchasedYear = ?, purchasedPrice = ?, rental_price_daily = ?, deposit = ?, itemStartDate = ?, itemFinishDate = ?, photoURL = ? WHERE itemId =?", [
+    body.category, body.name, body.description, body.purchasedYear, body.purchasedPrice, body.rentPerDay, body.depositPrice, body.itemStartDate, body.itemFinishDate, filePath, body.itemId
   ], function (err, result) {
     if (err) {
       res.render('error', { errormessage: 'Unable to update your item.' });
