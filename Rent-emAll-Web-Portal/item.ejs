@@ -103,17 +103,23 @@
                                         <div class="float-right">
                                             <% if (sess.username) { %>
                                             <% if (sess.username == user.userName) { %>
+                                            <% if (item.availability != 0) { %>
                                             <a href="/edit/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
                                                     type="button" value="&emsp;&emsp;Edit&emsp;&emsp;"></a>
                                             <span>&nbsp;&nbsp;&nbsp;</span>
                                             <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal"
                                                 data-target="#deleteModal">&emsp;&emsp;Delete&emsp;&emsp;</button>
                                             <% } else { %>
+                                            <input class="btn btn-secondary text-uppercase" type="button" value="Unavailable"
+                                                disabled>
+                                            <% } %>
+                                            <% } else { %>
                                             <% if (item.availability != 0) { %>
                                             <a href="/rent/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
                                                     type="button" value="&emsp;&emsp;Rent&emsp;&emsp;"></a>
                                             <% } else { %>
-                                            <input class="btn btn-secondary text-uppercase" type="button" value="Unavailable" disabled>
+                                            <input class="btn btn-secondary text-uppercase" type="button" value="Unavailable"
+                                                disabled>
                                             <% } %>
                                             <% } %>
                                             <% } %>
