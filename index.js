@@ -590,15 +590,34 @@ app.get('/success', function (req, res) {
     } else {
       var mailOpts;
       console.log(sess.cart);
-      // put transaction information into database here
+      // put "transaction information" into database here
+      sess.cart.forEach(function (eachItem) {
+        connection.query("INSERT INTO OrderLineTbl (itemId, itemName, photoURL, borrowerid, borrower, lenderid, lender, lenderemail, rentalStartDate, rentalEndDate, rentaldays, rentPerDay, depositPrice, total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", [
+          eachItem.id, eachItem.name, eachItem.image, sess.userid, sess.username, eachItem.lenderid, eachItem.lender, eachItem.lenderemail, eachItem.startDate, eachItem.endDate, eachItem.rentaldays, eachItem.rentalprice, eachItem.deposit, eachItem.total
+        ], function (err, result) {
+          if (err) {
+            console.log("Error while inserting order data: " + err);
+          } else {
+            console.log("Successfully insert data: " + result);
+          }
+        });
+      })
+
+      // update "availability of rented item(s)" and "returning date"
+      sess.cart.forEach(function (eachItem) {
+        connection.query("UPDATE ItemTbl SET availability = false WHERE itemId = ?", [eachItem.id], function (err, result) {
+          if (err) {
+            console.log("Error while updating availability: " + err);
+          } else {
+            console.log("Item #" + eachItem.id + " has been disabled due to rent out.");
+          }
+        });
+      })
 
 
-     
 
 
-
-
-      itemListString = ""; // temporary string to contain item list
+      var itemListString = ""; // temporary string to contain item list
 
       // Mail(s) will be sent to the lender(s)
       sess.cart.forEach(function (eachItem) {
