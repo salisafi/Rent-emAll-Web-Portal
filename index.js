@@ -162,18 +162,14 @@ app.get('/list', function (req, res) {
   if (!query.searchbar)
     res.redirect('back');
   else {
-    if (query.category) {
-      if (query.searchbar == 0)
-        sql += " WHERE categoryId = ?";
-      else
-        sql += " AND categoryId = ?";
-      params.push(query.category);
-    }
-
+    
     var firstCategory = Object.values(query)[0];
 
     if (query.home || query.tools || query.sports || query.entertainment || query.babies || query.fashion) {
-      sql += " AND categoryId IN(";
+      if (query.searchbar == 0)
+        sql += " WHERE categoryId IN(";
+      else
+        sql += " AND categoryId IN(";
       
       if (query.home)
         sql += "1";
