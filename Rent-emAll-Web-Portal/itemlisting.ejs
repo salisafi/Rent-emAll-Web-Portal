@@ -97,7 +97,7 @@
                         <img style="width: 150px; height: auto;" src="<%= items[i].photoURL %>">
                     </td>
                     <td>
-                      <h3 id="itemName"><%= items[i].name %></h3>
+                      <h3 id="itemName"><%= items[i].name %><% if (items[i].availability == 0) { %><div class="text-danger">(Unavailable)</div><% } %></h3>
                       <p id="itemDescription">
                         <%= items[i].description %>
                       </p>
