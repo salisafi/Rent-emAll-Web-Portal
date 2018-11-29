@@ -592,7 +592,7 @@ app.get('/success', function (req, res) {
       console.log(sess.cart);
       // put "transaction information" into database here
       sess.cart.forEach(function (eachItem) {
-        connection.query("INSERT INTO OrderLineTbl (itemId, itemName, photoURL, borrowerid, borrower, lenderid, lender, lenderemail, rentalStartDate, rentalEndDate, rentaldays, rentPerDay, depositPrice, total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", [
+        connection.query("INSERT INTO OrderLineTbl (itemId, itemName, photoURL, borrowerid, borrower, lenderid, lender, lenderemail, rentalStartDate, rentalEndDate, rentaldays, rentPerDay, depositPrice, total) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
           eachItem.id, eachItem.name, eachItem.image, sess.userid, sess.username, eachItem.lenderid, eachItem.lender, eachItem.lenderemail, eachItem.startDate, eachItem.endDate, eachItem.rentaldays, eachItem.rentalprice, eachItem.deposit, eachItem.total
         ], function (err, result) {
           if (err) {
