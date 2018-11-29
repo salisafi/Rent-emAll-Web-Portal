@@ -29,44 +29,10 @@
             <input type="checkbox" class="form-check-input" id="fashion" name="fashion" value="6" <% if (query.fashion) { %> checked <% } %>/>
             <label class="form-check-label" for="fashion">Fashion</label>
           </div>
-
-
-          <!--<div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="category" name="category" value="1" checked>Home
-              </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" id="category" name="category" value="2">Tools and Equipment
-            </label>
-          </div>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" id="category" name="category" value="3">Sports and Recreations
-            </label>
-          </div>
-          <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="category" name="category" value="4">Entertainment
-              </label>
-          </div>
-          <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="category" name="category" value="5">Babies and Kids
-              </label>
-          </div>
-          <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="category" name="category" value="6">Fashion
-              </label>
-          </div>-->
-
-
           <br><br>
             <div class="form-group">
               <label for="deposit">
-                <h6>Deposit Price:</h6>
+                <h6>Max. Deposit Price:</h6>
               </label>
               <div class="d-flex justify-content-center">
                 <span class="mr-2">$0</span>
@@ -81,7 +47,7 @@
         <br>
           <div class="form-group">
             <label for="rate">
-              <h6>Daily Rate:</h6>
+              <h6>Max. Daily Rate:</h6>
             </label>
             <div class="d-flex justify-content-center">
               <span class="mr-2">$0</span>
@@ -94,6 +60,7 @@
             </div>
           </div><br><br>
           <input type="hidden" name="searchbar" value="<%= query.searchbar %>">
+          <input type="hidden" name="sortby" value="<%= query.sortby %>">
           <button type="submit" formaction="/list" class="btn btn-primary float-right">Apply Filter</button>
          </form>
       </div>
@@ -103,6 +70,24 @@
       <div class="card my-5">
         <div class="card-body">
           <span class="font-italic float-left"><%= items.length %> results</span>
+          <div class="float-right">
+            <form action="/list" class="form-inline">
+              <% if (query.home) { %><input type="hidden" name="home" value="<%= query.home %>"><% } %>
+              <% if (query.tools) { %><input type="hidden" name="tools" value="<%= query.tools %>"><% } %>
+              <% if (query.sports) { %><input type="hidden" name="sports" value="<%= query.sports %>"><% } %>
+              <% if (query.entertainment) { %><input type="hidden" name="entertainment" value="<%= query.entertainment %>"><% } %>
+              <% if (query.babies) { %><input type="hidden" name="babies" value="<%= query.babies %>"><% } %>
+              <% if (query.fashion) { %><input type="hidden" name="fashion" value="<%= query.fashion %>"><% } %>
+              <% if (query.deposit) { %><input type="hidden" name="deposit" value="<%= query.deposit %>"><% } %>
+              <% if (query.rate) { %><input type="hidden" name="rate" value="<%= query.rate %>"><% } %>
+              <span class="mr-2 mb-2">Sort by:</span>
+              <select class="form-control btn btn-md btn-info mb-2" id="sortby" name="sortby" onchange="this.form.submit()">
+                <option value="postedDate" <% if (query.sortby == "postedDate") { %> selected <% } %>>Posted Date</option>
+                <option value="price" <% if (query.sortby == "price") { %> selected <% } %>>Price</option>
+              </select>
+              <input type="hidden" name="searchbar" value="<%= query.searchbar %>">
+            </form>
+          </div>
           <div class="table-responsive table-wrapper-scroll-y" style="height:570px">
             <table id="itemTable" class="table table-condensed table-hover">
               <tbody>

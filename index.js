@@ -162,7 +162,7 @@ app.get('/list', function (req, res) {
   if (!query.searchbar)
     res.redirect('back');
   else {
-    
+
     var firstCategory = Object.values(query)[0];
 
     if (query.home || query.tools || query.sports || query.entertainment || query.babies || query.fashion) {
@@ -212,7 +212,10 @@ app.get('/list', function (req, res) {
       params.push(query.rate);
     }
 
-    sql += " ORDER BY creationDate DESC";
+    if (query.sortby == "price")
+      sql += " ORDER BY rental_price_daily";
+    else
+      sql += " ORDER BY creationDate DESC";
 
     console.log(sql);
 
