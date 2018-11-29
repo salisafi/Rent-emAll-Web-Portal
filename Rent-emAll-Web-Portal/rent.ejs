@@ -46,6 +46,7 @@
                                                     <label for="DatePurchased">Rental From (start date)</label><br />
                                                     <input type="date" class="form-control" id="rentalStart" name="rentalStart"
                                                         required>
+                                                    <input type="hidden" id="getRentalStart" value="<%= item.itemStartDate %>">
                                                     <br />
                                                 </div>
                                             </div>
@@ -54,6 +55,7 @@
                                                     <label for="DatePurchased">Rental To (end date)</label><br />
                                                     <input type="date" class="form-control" id="rentalEnd" name="rentalEnd"
                                                         required readonly>
+                                                    <input type="hidden" id="getRentalEnd" value="<%= item.itemFinishDate %>">
                                                     <br />
                                                 </div>
                                             </div>
@@ -120,7 +122,20 @@
 
     var date = new Date();
     var today = dateFormatter(date);
-    $('#rentalStart').attr('min', today);
+
+    var getRentalStart = new Date($('#getRentalStart').val());
+    var getRentalEnd = new Date($('#getRentalEnd').val());
+    var getRentalStartString = getRentalStart.getFullYear() + '-' + ("0" + (getRentalStart.getMonth() + 1)).slice(-2) + '-' + ("0" + getRentalStart.getDate()).slice(-2);
+    var getRentalEndString = getRentalEnd.getFullYear() + '-' + ("0" + (getRentalEnd.getMonth() + 1)).slice(-2) + '-' + ("0" + getRentalEnd.getDate()).slice(-2);
+
+    // limit rental period selection between item's rental start and end date
+    if (today > getRentalStartString) {
+        $('#rentalStart').attr('min', today);
+    } else {
+        $('#rentalStart').attr('min', getRentalStartString);
+    }
+    $('#rentalEnd').attr('max', getRentalEndString);
+
     $('#rentalStart').change(function () {
         var startdate = $('#rentalStart').val();
         $('#rentalEnd').val('');
