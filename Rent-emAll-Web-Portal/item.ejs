@@ -9,6 +9,9 @@
                                 <div class="col-md-12">
                                     <h4 class="card-title text-center" style="color:rgb(0, 86, 215);width: 100%;background-color: rgb(215, 244, 255);padding: 5px;">
                                         <%= item.name %>
+                                        <% if (item.availability == 0) { %>
+                                        <span> (Unavailable)</span>
+                                        <% } %>
                                     </h4><br>
                                 </div>
                             </div>
@@ -91,8 +94,12 @@
                                             <button type="button" class="btn btn-primary text-uppercase" data-toggle="modal"
                                                 data-target="#deleteModal">&emsp;&emsp;Delete&emsp;&emsp;</button>
                                             <% } else { %>
+                                            <% if (item.availability != 0) { %>
                                             <a href="/rent/<%= item.itemId %>"><input class="btn btn-primary text-uppercase"
                                                     type="button" value="&emsp;&emsp;Rent&emsp;&emsp;"></a>
+                                            <% } else { %>
+                                            <span class="text-danger font-weight-bold">This item is currently being rented.</span>
+                                            <% } %>
                                             <% } %>
                                             <% } %>
                                         </div>
