@@ -170,7 +170,7 @@ app.get('/list', function (req, res) {
         sql += " WHERE categoryId IN(";
       else
         sql += " AND categoryId IN(";
-      
+
       if (query.home)
         sql += "1";
 
@@ -611,10 +611,18 @@ app.get('/success', function (req, res) {
             console.log("Item #" + eachItem.id + " has been disabled due to rent out.");
           }
         });
+
+        // Create event scheduler
+        var eventQuery = "CREATE EVENT rentevent" + eachItem.id + " ON SCHEDULE AT '" + eachItem.endDate + "' + INTERVAL 1 DAY DO UPDATE ItemTbl SET availability = 1 WHERE itemId = " + eachItem.id + ";";
+        console.log(eventQuery);
+        connection.query(eventQuery, function (err, result) {
+          if (err) {
+            console.log("Error while updating availability: " + err);
+          } else {
+            console.log("Event Scheduler has created successfully.");
+          }
+        });
       })
-
-
-
 
       var itemListString = ""; // temporary string to contain item list
 
