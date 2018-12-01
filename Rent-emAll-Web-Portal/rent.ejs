@@ -23,15 +23,26 @@
                                                     <h5>
                                                         <%= item.name %>
                                                     </h5>
+                                                </div>
+                                                <div class="form-group row">
                                                     <p>
                                                         <%= item.description %>
                                                     </p>
+                                                </div>
+                                                <div class="form-group row">
                                                     <h5>Lender:&nbsp;&nbsp;</h5>
                                                     <h5>
                                                         <%= lender.userName %>
                                                     </h5>
-                                                    <!-- <span>&nbsp;&nbsp;&nbsp;</span>
-                                                <span class="star-prototype">4.5</span> -->
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <p>Available Rental Period:<br>From <span class="font-weight-bold text-success"
+                                                            id="itemFrom"></span>
+                                                        To <span class="font-weight-bold text-success" id="itemTo"></span>
+                                                    </p>
+                                                    <input type="hidden" id="itemStartDate" value="<%= item.itemStartDate %>">
+                                                    <input type="hidden" id="itemFinishDate" value="<%= item.itemFinishDate %>">
                                                 </div>
                                             </div>
                                         </div> <!-- col-sm-8 -->
@@ -119,6 +130,12 @@
     //     $('#qty').text(qty);
     //     calTotal();
     // });
+    var startdate = new Date($('#itemStartDate').val());
+    var finishdate = new Date($('#itemFinishDate').val());
+    var startdateString = startdate.getFullYear() + '-' + ("0" + (startdate.getMonth() + 1)).slice(-2) + '-' + ("0" + startdate.getDate()).slice(-2);
+    var finishdateString = finishdate.getFullYear() + '-' + ("0" + (finishdate.getMonth() + 1)).slice(-2) + '-' + ("0" + finishdate.getDate()).slice(-2);
+    $('#itemFrom').text(startdateString);
+    $('#itemTo').text(finishdateString);
 
     var date = new Date();
     var today = dateFormatter(date);
@@ -129,10 +146,17 @@
     var getRentalEndString = getRentalEnd.getFullYear() + '-' + ("0" + (getRentalEnd.getMonth() + 1)).slice(-2) + '-' + ("0" + getRentalEnd.getDate()).slice(-2);
 
     // limit rental period selection between item's rental start and end date
-    if (today > getRentalStartString) {
-        $('#rentalStart').attr('min', today);
-    } else {
+    if (today < getRentalStartString) {
         $('#rentalStart').attr('min', getRentalStartString);
+        $('#rentalStart').attr('max', getRentalEndString);
+    }
+    else {
+        if (today < getRentalEndString) {
+            $('#rentalStart').attr('min', today);
+            $('#rentalStart').attr('max', getRentalEndString);
+        } else {
+            $('#rentalStart').attr('disabled', 'disabled');
+        }
     }
     $('#rentalEnd').attr('max', getRentalEndString);
 
