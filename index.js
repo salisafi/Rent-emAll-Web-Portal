@@ -149,8 +149,10 @@ app.get('/contactus', function (req, res) {
   res.render('contactus');
 });
 
-app.get('/list', function (req, res) {
+app.get('/list/:page', function (req, res) {
   const query = req.query;
+  const page = parseInt(req.params.page);
+  const allQueries = req.originalUrl.substring(7);
   var sql = "";
   var params = [];
 
@@ -174,27 +176,27 @@ app.get('/list', function (req, res) {
       if (query.home)
         sql += "1";
 
-      if (query.tools && firstCategory == 2)
+      if (firstCategory == 2)
         sql += "2";
       else if (query.tools)
         sql += ",2"
 
-      if (query.sports && firstCategory == 3)
+      if (firstCategory == 3)
         sql += "3";
       else if (query.sports)
         sql += ",3";
 
-      if (query.entertainment && firstCategory == 4)
+      if (firstCategory == 4)
         sql += "4";
       else if (query.entertainment)
         sql += ",4";
 
-      if (query.babies && firstCategory == 5)
+      if (firstCategory == 5)
         sql += "5";
       else if (query.babies)
         sql += ",5";
 
-      if (query.fashion && firstCategory == 6)
+      if (firstCategory == 6)
         sql += "6";
       else if (query.fashion)
         sql += ",6";
@@ -202,25 +204,31 @@ app.get('/list', function (req, res) {
       sql += ")";
     }
 
-    if (query.deposit) {
-      sql += " AND deposit <= ?";
-      params.push(query.deposit);
-    }
+    if (query.deposit)
+      sql += " AND deposit <= " + query.deposit;
 
-    if (query.rate) {
-      sql += " AND rental_price_daily <= ?";
-      params.push(query.rate);
-    }
+    if (query.rate)
+      sql += " AND rental_price_daily <= " + query.rate;
 
     if (query.sortby == "price")
       sql += " ORDER BY rental_price_daily";
+    else if (query.sortby == "availability")
+      sql += " ORDER BY availability DESC, creationDate DESC";
     else
       sql += " ORDER BY creationDate DESC";
 
     console.log(sql);
 
-    connection.query(sql + ";SELECT itemId, rating FROM ReviewTbl;SELECT userId, userName FROM UserTbl", params, function (err, results) {
+    var offset = 0;
+
+    for (var i = 1; i < page; i++)
+      offset += 10;
+
+    connection.query(sql + " LIMIT 10 OFFSET " + offset + ";SELECT itemId, rating FROM ReviewTbl;SELECT userId, userName FROM UserTbl;" + sql, function (err, results) {
       if (err) throw err;
+
+      const noOfItems = results[3].length;
+      const totalPages = Math.ceil(noOfItems / 10);
 
       let mDates = [];
       let fDates = [];
@@ -265,10 +273,15 @@ app.get('/list', function (req, res) {
 
       res.render('itemlisting', {
         items: results[0],
+        noOfItems: noOfItems,
+        totalPages: totalPages,
+        currentPage: page,
         postedDates: fDates,
         rates: rates,
         userNames: userNames,
-        query: req.query
+        query: req.query,
+        page: page,
+        queries: allQueries
       });
     });
   }
@@ -1199,7 +1212,6 @@ app.post('/item/:id', function (req, res) {
 
       if (doesUserIdExist) {
         req.flash('warning', 'Cannot post more than one review per item.')
-        // res.redirect('/item/' + itemId);
         res.redirect('back');
       }
       else {
