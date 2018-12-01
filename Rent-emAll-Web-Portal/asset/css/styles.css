@@ -375,3 +375,10 @@ span.star-prototype > * {
 }
 
 /************ Item Listing Page *****************/
+
+div#sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: 50%
+}
