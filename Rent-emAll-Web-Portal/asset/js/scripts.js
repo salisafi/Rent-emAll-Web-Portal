@@ -13,38 +13,38 @@ $.fn.generateStars = function () {
 $('.star-prototype').generateStars();
 
 /* Post Review */
-$('#stars li').on('mouseover', function(){
-	var onStar = parseInt($(this).data('value'), 10);
+$('#stars li').on('mouseover', function () {
+        var onStar = parseInt($(this).data('value'), 10);
 
-	$(this).parent().children('li.star').each(function(e){
-		if (e < onStar) {
-			$(this).addClass('hover');
-		}
-		else {
-			$(this).removeClass('hover');
-		}
-	});
-}).on('mouseout', function(){
-	$(this).parent().children('li.star').each(function(e){
-		$(this).removeClass('hover');
-	});
+        $(this).parent().children('li.star').each(function (e) {
+                if (e < onStar) {
+                        $(this).addClass('hover');
+                }
+                else {
+                        $(this).removeClass('hover');
+                }
+        });
+}).on('mouseout', function () {
+        $(this).parent().children('li.star').each(function (e) {
+                $(this).removeClass('hover');
+        });
 });
 
-$('#stars li').on('click', function(){
-    var onStar = parseInt($(this).data('value'), 10);
-    var stars = $(this).parent().children('li.star');
-    
-    for (i = 0; i < stars.length; i++) {
-      $(stars[i]).removeClass('selected');
-    }
-    
-    for (i = 0; i < onStar; i++) {
-      $(stars[i]).addClass('selected');
-    }
+$('#stars li').on('click', function () {
+        var onStar = parseInt($(this).data('value'), 10);
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+                $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+                $(stars[i]).addClass('selected');
+        }
 
         var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
 
-	$('#ratingVal').val(ratingValue);
+        $('#ratingVal').val(ratingValue);
 });
 
 // Display error message when posing more than one review per item
@@ -54,7 +54,7 @@ $('#reviewExistErrorModal').modal('show');
 /********** Validate when submit **********/
 function reviewValidation() {
         $(".errorMsg").empty();
-        
+
         return validateReviewTitle() && validateReviewText();
 }
 
@@ -108,7 +108,7 @@ $('.collapse').on('shown.bs.collapse', function () {
 function formValidation() {
         /* clearErrors(); */
         $(".errorMsg").empty();
-        return validUsername() && validPassword() && validFirstName() && validLastName() && validEmail() && validPhoneNum() && validPostalCode();
+        return validUsername() && validPassword() && validFirstName() && validLastName() && validEmail() && validPhoneNum() && validPostalCode() && validTerms();
 }
 
 /********** Validate when editing user profile **********/
@@ -228,6 +228,15 @@ function validEmail() {
         if (!regex.test(input)) {
                 showErrors('email_errors', "Email address is not valid.");
                 elem.focus(); return false;
+        }
+        return true;
+}
+
+/********** Terms and Conditions validation **********/
+function validTerms() {
+        if ($('#termsCheck').prop("checked") == false) {
+                showErrors('terms_errors', "You must agree to terms and conditions.");
+                return false;
         }
         return true;
 }
