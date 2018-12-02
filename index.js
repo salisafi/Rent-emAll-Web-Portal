@@ -108,7 +108,15 @@ io.use(sharedsession(session, {
 
 app.get("/", function (req, res) {
   const sess = req.session;
-  res.render('main', { name: sess.name, username: sess.username });
+  var query = "SELECT * FROM ItemTbl ORDER BY creationDate DESC LIMIT 6;"
+  connection.query(query, function (err, results) {
+    if (err) throw err;
+    res.render('main', {
+      name: sess.name,
+      username: sess.username,
+      items: results
+    });
+  });
 });
 
 app.get('/login', function (req, res) {

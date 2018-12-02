@@ -88,8 +88,70 @@
             </a>
         </div>
         <% } else { %>
-        <div class="col-md-12 mb-4">
-            <div class="text-center text-secondary">
+        <div class="col-md-12 mb-4 mt-3">
+            <div id="carouselIndicators" class="carousel slide" data-ride="carousel" data-pause="hover">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselIndicators" data-slide-to="1"></li>
+                </ol>
+                <h4 class="text-center">Recently Listed Items</h4>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="background-color:#ddd;width:100%;height:auto;padding:50px 100px;">
+                        <div class="container" style="background-color:white;height:auto;padding:0 30px;border-radius:2rem;">
+                            <div class="row justify-content-center">
+                                <% for (var i = 0; i < 3; i++) { %>
+                                <div class="col-md-4 text-center my-4" id="itemLink" onclick="window.location.assign('/item/<%= items[i].itemId %>')"
+                                    style="cursor:pointer;">
+                                    <img src="<%= items[i].photoURL %>" style="border:1px solid #ddd;width:100%;height:150px;object-fit:contain;">
+                                    <h3 class="h5 mt-2">
+                                        <%= items[i].name %>
+                                    </h3>
+                                    <p class="item_desc">
+                                        <%= items[i].description %>
+                                    </p>
+                                    <div class="border text-center" style="background:#EFF0F0;border-radius:1rem;padding:10px;">
+                                        <span class="h2 text-danger font-weight-bold" id="price">$
+                                            <%= items[i].rental_price_daily %></span> / day
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item" style="background-color:#ddd;width:100%;height:auto;padding:50px 100px;">
+                        <div class="container" style="background-color:white;height:auto;padding:0 30px;border-radius:2rem;">
+                            <div class="row justify-content-center">
+                                <% for (var i = 3; i < 6; i++) { %>
+                                <div class="col-md-4 text-center my-4" id="itemLink" onclick="window.location.assign('/item/<%= items[i].itemId %>')"
+                                    style="cursor:pointer;">
+                                    <img src="<%= items[i].photoURL %>" style="border:1px solid #ddd;width:100%;height:150px;object-fit:contain;">
+                                    <h3 class="h5 mt-2">
+                                        <%= items[i].name %>
+                                    </h3>
+                                    <p class="item_desc">
+                                        <%= items[i].description %>
+                                    </p>
+                                    <div class="border text-center" style="background:#EFF0F0;border-radius:1rem;padding:10px;">
+                                        <span class="h2 text-danger font-weight-bold" id="price">$
+                                            <%= items[i].rental_price_daily %></span> / day
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <!-- <div class="text-center text-secondary">
                 <i class="fas fa-arrow-down fa-10x"></i>
             </div>
             <br />
@@ -137,10 +199,21 @@
                 </div>
                 <br />
                 <br />
-            </div>
+            </div> -->
         </div>
         <% } %>
     </div>
     <br />
     <br />
 </div>
+
+<style>
+    .item_desc {
+        margin: 20px 10px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        height: 4.5em;
+    }
+</style>
